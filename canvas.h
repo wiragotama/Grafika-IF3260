@@ -13,7 +13,7 @@ class Canvas {
 		void putPixelRGB(int x, int y, uint8_t r, uint8_t g, uint8_t b);
 		void putPixelColor(int x, int y, uint32_t color);
 		void putColorInfo(int cursor_x, int cursor_y, const char* message);
-		long getCursorLocation(int coor_x, int coor_y); //mendapatkan koordinat pixel tengah dari curcor_x dan cursor_y di layar
+		long getCursorLocation(int coor_x, int coor_y); //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada posisi coor_x,coor_y di layar
 		uint32_t getColor(int coor_x, int coor_y); //mendapatkan warna yang sedang ditunjuk kursor pada posisi coor_x, coor_y di layar
 		
 		/* getter */

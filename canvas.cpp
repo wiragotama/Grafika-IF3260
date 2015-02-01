@@ -99,7 +99,7 @@ void Canvas::putColorInfo(int cursor_x, int cursor_y, const char* message) {
 	printf("Warna %s: %#08x\n",message,*((uint32_t*)(fbp + middle_of_cursor)));
 }
 
-long Canvas::getCursorLocation(int coor_x, int coor_y) { //mendapatkan lokasi pixel (pointer) dari curcor_x dan cursor_y di layar
+long Canvas::getCursorLocation(int coor_x, int coor_y) { //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada posisi coor_x,coor_y di layar
 	return (coor_x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (coor_y+vinfo.yoffset) * finfo.line_length;
 }
 
