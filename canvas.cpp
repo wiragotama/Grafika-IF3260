@@ -99,12 +99,12 @@ void Canvas::putColorInfo(int cursor_x, int cursor_y, const char* message) {
 	printf("Warna %s: %#08x\n",message,*((uint32_t*)(fbp + middle_of_cursor)));
 }
 
-long Canvas::getMiddleCoordinate(int coor_x, int coor_y) { //mendapatkan koordinat pixel tengah dari curcor_x dan cursor_y di layar
+long Canvas::getCursorLocation(int coor_x, int coor_y) { //mendapatkan lokasi pixel (pointer) dari curcor_x dan cursor_y di layar
 	return (coor_x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (coor_y+vinfo.yoffset) * finfo.line_length;
 }
 
 uint32_t Canvas::getColor(int coor_x, int coor_y) {
-	return *((uint32_t*)(fbp + getMiddleCoordinate(coor_x, coor_y)));
+	return *((uint32_t*)(fbp + getCursorLocation(coor_x, coor_y)));
 }
 
 /* getter */
