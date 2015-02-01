@@ -27,10 +27,10 @@ void GradientPalette::drawColorGradient(uint32_t color, Canvas *canvas) {
 
 void GradientPalette::drawCursor(Canvas *canvas) {
 	int x, y;
-	int coor_x = getCoorXCursor();
-	int coor_y = getCoorYCursor();
-	for (y = coor_y-radius; y <= coor_y+radius; y++) {
-		for (x = coor_x-radius; x <= coor_x+radius; x++) {
+	int coor_x = getScreenX();
+	int coor_y = getScreenY();
+	for (y = coor_y-MOUSE_RADIUS; y <= coor_y+MOUSE_RADIUS; y++) {
+		for (x = coor_x-MOUSE_RADIUS; x <= coor_x+MOUSE_RADIUS; x++) {
 			if ((y==coor_y || x==coor_x) && !(y==coor_y && x==coor_x)) {
 				canvas->putPixelRGB(x,y,255,255,255);
 			}
@@ -85,10 +85,10 @@ int GradientPalette::getCursorY() { //mendapatkan posisi kursor pada gradient pa
 	return cursor_y;
 }
 
-int GradientPalette::getCoorXCursor() { //mendapatkan posisi kursor pada pixel di layar (global)
+int GradientPalette::getScreenX() { //mendapatkan posisi kursor pada pixel di layar (global)
 	return x_offset + (cursor_x*CELLSIZE);
 }
 
-int GradientPalette::getCoorYCursor() { //mendapatkan posisi kursor pada pixel di layar (global)
+int GradientPalette::getScreenY() { //mendapatkan posisi kursor pada pixel di layar (global)
 	return y_offset + (cursor_y*CELLSIZE);
 }

@@ -8,13 +8,13 @@ class Canvas {
 		Canvas();
 		~Canvas();
 		
-		uint32_t giveRainbowColor(double position);
+		uint32_t getRainbowColor(double position);
 		uint32_t pixel_color(uint8_t r, uint8_t g, uint8_t b);
-		void putPixelRGB(int x, int y, uint8_t r, uint8_t g, uint8_t b);
-		void putPixelColor(int x, int y, uint32_t color);
-		void putColorInfo(int cursor_x, int cursor_y, const char* message);
-		long getCursorLocation(int coor_x, int coor_y); //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada posisi coor_x,coor_y di layar
-		uint32_t getColor(int coor_x, int coor_y); //mendapatkan warna yang sedang ditunjuk kursor pada posisi coor_x, coor_y di layar
+		void putPixelRGB(int screen_x, int screen_y, uint8_t r, uint8_t g, uint8_t b);
+		void putPixelColor(int screen_x, int screen_y, uint32_t color); //letakkan warna pada koordinat screen_x,screen_y di layar
+		void putColorInfo(int screen_x, int screen_y, const char* message); //mengeluarkan nomor warna rgb pada koordinat screen_x,screen_y di layar
+		long getCursorLocation(int screen_x, int screen_y); //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada koordinat screen_x,screen_y di layar
+		uint32_t getColor(int screen_x, int screen_y); //mendapatkan warna yang sedang ditunjuk kursor pada koordinat screen_x,screen_y di layar
 		
 		/* getter */
 		struct fb_fix_screeninfo get_finfo();

@@ -14,7 +14,7 @@ void RainbowPalette::initRainbowColor(Canvas *canvas) {
 	float colorRainbow = 0;
 	for(y=0; y<COLORTABLE_HEIGHT ;y++) {
 		for(x=0; x<COLORTABLE_WIDTH ;x++) {
-			 color_table[y][x] = canvas->giveRainbowColor(colorRainbow);
+			 color_table[y][x] = canvas->getRainbowColor(colorRainbow);
 			 colorRainbow+=(1.0/(double)(COLORTABLE_HEIGHT*COLORTABLE_WIDTH));
 		}
 	}
@@ -22,11 +22,11 @@ void RainbowPalette::initRainbowColor(Canvas *canvas) {
 
 void RainbowPalette::drawCursor(Canvas *canvas) {
 	int x, y;
-	int coor_x = getCoorXCursor();
-	int coor_y = getCoorYCursor();
+	int coor_x = getScreenX();
+	int coor_y = getScreenY();
       
-	for (y = coor_y-radius; y <= coor_y+radius; y++) {
-		for (x = coor_x-radius; x <= coor_x+radius; x++) {
+	for (y = coor_y-MOUSE_RADIUS; y <= coor_y+MOUSE_RADIUS; y++) {
+		for (x = coor_x-MOUSE_RADIUS; x <= coor_x+MOUSE_RADIUS; x++) {
 			if ((y==coor_y || x==coor_x) && !(y==coor_y && x==coor_x)) {
 				canvas->putPixelRGB(x, y, 255, 255, 255);
 			}
@@ -93,19 +93,19 @@ int RainbowPalette::getYOffset() {
 }
 
 
-int RainbowPalette::getCursorX() {
+int RainbowPalette::getCursorX() { //mendapatkan posisi kursor pada rainbow palette (lokal)
 	return cursor_x;
 }
 
-int RainbowPalette::getCursorY() {
+int RainbowPalette::getCursorY() { //mendapatkan posisi kursor pada rainbow palette (lokal)
 	return cursor_x;
 }
 	
-int RainbowPalette::getCoorXCursor() {
+int RainbowPalette::getScreenX() { //mendapatkan posisi kursor pada pixel di layar (global)
 	return x_offset + (cursor_x*COLORTABLE_CELLSIZE);
 }
 
-int RainbowPalette::getCoorYCursor() {
+int RainbowPalette::getScreenY() { //mendapatkan posisi kursor pada pixel di layar (global)
 	return y_offset + (cursor_y*COLORTABLE_CELLSIZE);
 }
 

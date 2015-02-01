@@ -24,11 +24,11 @@ int main() {
 		system("clear");
 		rainbowPalette.drawPalette(&canvas);
 		rainbowPalette.drawCursor(&canvas);
-		canvas.putColorInfo(rainbowPalette.getCoorXCursor(), rainbowPalette.getCoorYCursor(), msgPalette.c_str());
+		canvas.putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		
-		gradientPalette.drawColorGradient(canvas.getColor(rainbowPalette.getCoorXCursor(),rainbowPalette.getCoorYCursor()), &canvas);
+		gradientPalette.drawColorGradient(canvas.getColor(rainbowPalette.getScreenX(),rainbowPalette.getScreenY()), &canvas);
 		gradientPalette.drawCursor(&canvas);
-		canvas.putColorInfo(gradientPalette.getCoorXCursor(), gradientPalette.getCoorYCursor(), msgGradient.c_str());
+		canvas.putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
 		
 		c = graphicsIO.getch();
 		rainbowPalette.moveCursor(c);
