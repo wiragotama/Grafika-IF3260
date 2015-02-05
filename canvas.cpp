@@ -107,6 +107,12 @@ uint32_t Canvas::getColor(int screen_x, int screen_y) { //mendapatkan warna yang
 	return *((uint32_t*)(fbp + getCursorLocation(screen_x, screen_y)));
 }
 
+void Canvas::clearScreen() {
+	long location=screensize;
+	while (location--)
+		*((uint32_t*)(fbp + location)) = pixel_color(0, 0, 0);
+}
+
 /* getter */
 struct fb_fix_screeninfo Canvas::get_finfo() {
 	return finfo;

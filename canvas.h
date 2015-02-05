@@ -16,6 +16,8 @@ class Canvas {
 		long getCursorLocation(int screen_x, int screen_y); //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada koordinat screen_x,screen_y di layar
 		uint32_t getColor(int screen_x, int screen_y); //mendapatkan warna yang sedang ditunjuk kursor pada koordinat screen_x,screen_y di layar
 		
+		void clearScreen();
+		
 		/* getter */
 		struct fb_fix_screeninfo get_finfo();
 		struct fb_var_screeninfo get_vinfo();
