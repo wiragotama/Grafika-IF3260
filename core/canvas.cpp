@@ -86,7 +86,10 @@ uint32_t Canvas::getRainbowColor(double position) {
 
 void Canvas::putPixelRGB(int screen_x, int screen_y, uint8_t r, uint8_t g, uint8_t b) {
 	long location = getCursorLocation(screen_x,screen_y);
-	*((uint32_t*)(fbp + location)) = pixel_color(r, g, b);
+	if(location >= getScreensize())
+		printf("Cetak keluar dari screen\n");
+	else
+		*((uint32_t*)(fbp + location)) = pixel_color(r, g, b);
 }
 
 void Canvas::putPixelColor(int screen_x, int screen_y, uint32_t color) { //letakkan warna pada koordinat screen_x,screen_y di layar
@@ -108,9 +111,9 @@ uint32_t Canvas::getColor(int screen_x, int screen_y) { //mendapatkan warna yang
 }
 
 void Canvas::clearScreen() {
-	long location=screensize;
-	while (location--)
-		*((uint32_t*)(fbp + location)) = pixel_color(0, 0, 0);
+	for(int i=0; i<get_vinfo().yres; i++)
+		for(int j=0; j<get_vinfo().xres; j++)
+			putPixelRGB(j,i,0,0,0);
 }
 
 /* getter */
