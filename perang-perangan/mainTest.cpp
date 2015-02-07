@@ -23,7 +23,7 @@ int main() {
 	
 	clock_t lastClock = clock();
 	double delta = 0;
-	double timePerFrame = 1.0/60;
+	double timePerFrame = 1.0/24;
 	while(true){
 		clock_t nowClock = clock();
 		delta += diffTimeMs(nowClock, lastClock);
@@ -33,6 +33,7 @@ int main() {
 			for(int i=0; i<animations.size(); i++){
 				animations[i]->update(timePerFrame);
 			}
+			canvas.clearScreen();
 			//Render
 			for(int i=0; i<animations.size(); i++){
 				animations[i]->draw();
