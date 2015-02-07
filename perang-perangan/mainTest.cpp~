@@ -1,7 +1,7 @@
-#include "../core/header.h"
-#include "../core/graphicsio.h"
-#include "../core/canvas.h"
-#include "../core/line.h"
+#include "../header.h"
+#include "../graphicsio.h"
+#include "../canvas.h"
+#include "../line.h"
 
 int main() {
 	
