@@ -60,3 +60,8 @@ void Point::moveUp() {
 void Point::moveDown() {
 	y++;
 }
+
+void Point::moveRightDown(int dx, int dy) {
+	x += dx;
+	y += dy;
+}

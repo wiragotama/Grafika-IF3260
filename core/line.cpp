@@ -57,14 +57,14 @@ void Line::drawLine(Canvas *canvas, int patternType) {
 void Line::drawStraightLine(Canvas *canvas) {
 	int x1 = point[1].getAbsis();
 	int x0 = point[0].getAbsis();
-	
+
 	int y1 = point[1].getOrdinat();
 	int y0 = point[0].getOrdinat();
-	
+
 	int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-	int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1; 
+	int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1;
 	int err = dx+dy, e2; /* error value e_xy */
- 
+
 	for(;;) {  /* loop */
 		canvas->putPixelRGB(x0, y0, 255, 100, 100);
 		if (x0==x1 && y0==y1) break;
@@ -73,7 +73,7 @@ void Line::drawStraightLine(Canvas *canvas) {
 		if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
 	}
 }
-	
+
 void Line::moveRight() {
 	point[0].moveRight();
 	point[1].moveRight();
@@ -92,4 +92,9 @@ void Line::moveUp() {
 void Line::moveDown() {
 	point[0].moveDown();
 	point[1].moveDown();
+}
+
+void Line::moveRightDown(int dx, int dy) {
+	point[0].moveRightDown(dx, dy);
+	point[1].moveRightDown(dx, dy);
 }
