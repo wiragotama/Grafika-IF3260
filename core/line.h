@@ -27,6 +27,7 @@ class Line {
 
 		void drawLine(Canvas *canvas, int patternType);
 		void drawStraightLine(Canvas *canvas);
+		void eraseStraightLine(Canvas *canvas);
 		/* Move on screen */
 		void moveRight(int d);
 		void moveLeft(int d);

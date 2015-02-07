@@ -74,6 +74,26 @@ void Line::drawStraightLine(Canvas *canvas) {
 	}
 }
 
+void Line::eraseStraightLine(Canvas *canvas) {
+	int x1 = point[1].getAbsis();
+	int x0 = point[0].getAbsis();
+
+	int y1 = point[1].getOrdinat();
+	int y0 = point[0].getOrdinat();
+
+	int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
+	int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1;
+	int err = dx+dy, e2; /* error value e_xy */
+
+	for(;;) {  /* loop */
+		canvas->putPixelRGB(x0, y0, 0, 0, 0);
+		if (x0==x1 && y0==y1) break;
+			e2 = 2*err;
+		if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
+		if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
+	}
+}
+
 void Line::moveRight(int d) {
 	point[0].moveRight(d);
 	point[1].moveRight(d);

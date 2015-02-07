@@ -62,13 +62,21 @@ void Kapal::draw() {
 		it->drawStraightLine(p_canvas);
 }
 
+// Override
+void Kapal::setTopLeftPosition(Point p) {
+	Point prev = getTopLeftPosition();
+	int dx = p.getAbsis()-prev.getAbsis();
+	int dy = p.getOrdinat()-prev.getOrdinat();
+	Animation::setTopLeftPosition(p);
+	for (vector<Line>::iterator it = lines.begin(); it != lines.end(); it++) {
+		it->eraseStraightLine(p_canvas);
+		it->moveRightDown(dx, dy);
+	}
+}
+
 void Kapal::update(double timeElapsed) {
 	double distance = speed_x*timeElapsed;
 	Point now = getTopLeftPosition();
 	now.moveRight((int) distance);
 	setTopLeftPosition(now);
-	
-	for(int i=0; i<lines.size(); i++){
-		lines[i].moveRight((int)distance);
-	}
 }

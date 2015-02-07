@@ -11,11 +11,12 @@ class Kapal : public Animation {
         Kapal(Canvas* p_canvas);
         virtual void draw();
         virtual void update(double timeElapsed);
+        virtual void setTopLeftPosition(Point p);
 
     private:
         std::vector<Line> lines;
         Canvas* p_canvas;
-        static const double speed_x = 60;
+        static const double speed_x = .1;
 };
 
 #endif

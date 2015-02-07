@@ -19,21 +19,23 @@ int main() {
 	char c;
 
 	vector<Animation*> animations;
-	animations.push_back(new Kapal(&canvas));
-	
+	Kapal* the_kapal = new Kapal(&canvas);
+	the_kapal->setTopLeftPosition(Point(0, 500));
+	animations.push_back(the_kapal);
+
 	clock_t lastClock = clock();
 	double delta = 0;
-	double timePerFrame = 1.0/24;
-	while(true){
+	double timePerFrame = 1000.0/60;
+	while(true) {
 		clock_t nowClock = clock();
 		delta += diffTimeMs(nowClock, lastClock);
+		lastClock = nowClock;
 		if(delta >= timePerFrame){
 			delta -= timePerFrame;
 			//Update
 			for(int i=0; i<animations.size(); i++){
 				animations[i]->update(timePerFrame);
 			}
-			canvas.clearScreen();
 			//Render
 			for(int i=0; i<animations.size(); i++){
 				animations[i]->draw();

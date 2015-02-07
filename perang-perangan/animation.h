@@ -9,7 +9,7 @@ class Animation {
 		virtual void draw() = 0;
 		virtual void update(double timeElapsed) = 0;
 		void setTopLeftPosition(int x, int y);
-		void setTopLeftPosition(Point p);
+		virtual void setTopLeftPosition(Point p);
 		void setWidth(int width);
 		void setHeight(int height);
 		Point getTopLeftPosition() const;
