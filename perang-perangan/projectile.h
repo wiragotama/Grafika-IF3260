@@ -5,9 +5,9 @@
 #include "../core/canvas.h"
 #include "../core/line.h"
 
-#define projectileR 255
+#define projectileR 0
 #define projectileG 0
-#define projectileB 0
+#define projectileB 255
 
 class Projectile : public Animation {
 	public :

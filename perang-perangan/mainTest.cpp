@@ -36,7 +36,8 @@ int main() {
 	clock_t lastFireKapal = clock();
 	clock_t lastFirePesawat = clock();
 	
-	while(true) {
+	bool stop = false;
+	while(!stop) {
 		clock_t nowClock = clock();
 		delta += diffTimeMs(nowClock, lastClock);
 		lastClock = nowClock;
@@ -48,7 +49,7 @@ int main() {
 				while (idx!=animations.size()-1) {
 					if (animations[idx]->getFlag() == true) {
 						animations.erase(animations.begin()+idx);
-						printf("hapus projectile\n");
+						//printf("hapus projectile\n");
 					}
 					else idx++;
 				}
@@ -57,27 +58,33 @@ int main() {
 			for(int i=0; i<animations.size(); i++){
 				if (animations[i]!=NULL)
 					animations[i]->update(timePerFrame);
-					animations[i]->explode();
 			}
 			//Render
 			for(int i=0; i<animations.size(); i++) {
 				if (animations[i]!=NULL)
 					animations[i]->draw();
-					animations[i]->explode();
+					if (animations.size()>=2 && i<2) {
+						for (int j=2; j<animations.size() && !stop; j++) {
+							if (animations[i]->isCollide(*animations[j])) {
+								animations[i]->explode();
+								stop = true;
+							}
+						}
+					}
 			}
 		}
-		/*if (lastClock-lastFireKapal > 1600000) {
+		if (lastClock-lastFireKapal > 7000000) {
 			Projectile* p = new Projectile(&canvas, 1);
 			p->setTopLeftPosition(the_kapal->fire());
 			animations.push_back(p);
 			lastFireKapal = nowClock;
 		}
-		if (lastClock-lastFirePesawat > 1800000) {
+		if (lastClock-lastFirePesawat > 2000000) {
 			Projectile* p = new Projectile(&canvas, 2);
 			p->setTopLeftPosition(the_plane->fire());
 			animations.push_back(p);
 			lastFirePesawat = nowClock;
-		}*/
+		}
 	}
 	/*Kapal kapal(&canvas);
 	do {

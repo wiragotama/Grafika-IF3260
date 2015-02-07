@@ -79,7 +79,7 @@ Kapal::Kapal(Canvas* p_canvas) {
 	lines[20].setPointOne(Point(0,25));
 	lines[20].setPointTwo(Point(90,80));
 	
-	Point P(98,21);
+	Point P(98,10);
 	gun = P;
 }
 
@@ -121,7 +121,7 @@ void Kapal::update(double timeElapsed) {
 
 Point Kapal::fire() {
 	Point now = getTopLeftPosition();
-	return Point(now.getAbsis()+gun.getAbsis(), now.getOrdinat()+gun.getOrdinat()-10);
+	return Point(now.getAbsis()+gun.getAbsis(), now.getOrdinat()+gun.getOrdinat()-30); //10 adalah ukuran projectile
 }
 
 void Kapal::explode() {

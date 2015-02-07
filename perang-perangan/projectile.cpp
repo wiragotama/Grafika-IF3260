@@ -36,7 +36,7 @@ void Projectile::update(double timeElapsed) {
 		else now.moveUp((int) distance);
 	}
 	else { //down
-		if (now.getOrdinat() == p_canvas->get_vinfo().yres-getHeight()) {
+		if (now.getOrdinat() == p_canvas->get_vinfo().yres-getHeight()-1) {
 			//matikan objek?
 			flag = true;
 			//delete this;

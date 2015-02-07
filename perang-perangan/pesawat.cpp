@@ -10,7 +10,7 @@ Pesawat::Pesawat(Canvas* p_canvas) {
 	Point P(22,80);
 	gun = P;
 	// setup the lines
-	for (int i = 0; i < 16; ++i) {
+	for (int i = 0; i < 10; ++i) {
 		lines.push_back(Line(Point(0, 0), Point(0, 0)));
 	}
 
@@ -100,7 +100,7 @@ void Pesawat::update(double timeElapsed) {
 
 Point Pesawat::fire() {
 	Point now = getTopLeftPosition();
-	return Point(now.getAbsis()+gun.getAbsis(), gun.getOrdinat()-10);
+	return Point(now.getAbsis()+gun.getAbsis(), gun.getOrdinat()+11); //10 adalah ukuran projectile
 }
 
 void Pesawat::explode(){
