@@ -14,6 +14,14 @@ void Animation::setHeight(int height) {
 	this->height = height;
 }
 
+int Animation::getWidth() {
+	return width;
+}
+
+int Animation::getHeight() {
+	return height;
+}
+
 bool Animation::isCollide(const Animation& other) {
 	Point tl_a = getTopLeftPosition(), br_a = getBottomRight();
 	Point tl_b = other.getTopLeftPosition(), br_b = other.getBottomRight();

@@ -3,6 +3,9 @@
 Kapal::Kapal(Canvas* p_canvas) {
 	this->p_canvas = p_canvas;
 
+	setWidth(100);
+	setHeight(80);
+
 	// setup the lines
 	for (int i = 0; i < 16; ++i) {
 		lines.push_back(Line(Point(0, 0), Point(0, 0)));
@@ -55,6 +58,9 @@ Kapal::Kapal(Canvas* p_canvas) {
 
 	lines[15].setPointOne(Point(91,30));
 	lines[15].setPointTwo(Point(98,30));
+
+	Point P(98,21);
+	gun = P;
 }
 
 void Kapal::draw() {
@@ -72,6 +78,8 @@ void Kapal::setTopLeftPosition(Point p) {
 		it->eraseStraightLine(p_canvas);
 		it->moveRightDown(dx, dy);
 	}
+	gun.moveRight(dx);
+	gun.moveDown(dy);
 }
 
 void Kapal::update(double timeElapsed) {
@@ -79,4 +87,12 @@ void Kapal::update(double timeElapsed) {
 	Point now = getTopLeftPosition();
 	now.moveRight((int) distance);
 	setTopLeftPosition(now);
+}
+
+void Kapal::fire() {
+	int x_final = gun.getAbsis();
+	int y_final = 0;
+	Line test(Point(x_final,y_final), gun);
+
+	test.drawStraightLine(p_canvas);
 }

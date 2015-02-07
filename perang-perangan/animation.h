@@ -12,6 +12,8 @@ class Animation {
 		virtual void setTopLeftPosition(Point p);
 		void setWidth(int width);
 		void setHeight(int height);
+		int getWidth();
+		int getHeight();
 		Point getTopLeftPosition() const;
 		Point getBottomRight() const;
 		bool isCollide(const Animation& other);

@@ -3,6 +3,9 @@
 Pesawat::Pesawat(Canvas* p_canvas) {
 	this->p_canvas = p_canvas;
 
+	setWidth(137);
+	setHeight(80);
+
 	// setup the lines
 	for (int i = 0; i < 16; ++i) {
 		lines.push_back(Line(Point(0, 0), Point(0, 0)));
@@ -59,6 +62,6 @@ void Pesawat::setTopLeftPosition(Point p) {
 void Pesawat::update(double timeElapsed) {
 	double distance = speed_x*timeElapsed;
 	Point now = getTopLeftPosition();
-	now.moveRight((int) distance);
+	now.moveLeft((int) distance);
 	setTopLeftPosition(now);
 }
