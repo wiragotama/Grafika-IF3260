@@ -1,3 +1,6 @@
+#ifndef ANIMATION_H
+#define ANIMATION_H
+
 #include "../core/point.h"
 #include <ctime>
 
@@ -16,3 +19,5 @@ class Animation {
 		int width, height;
 		Point topLeftPosition;
 };
+
+#endif
