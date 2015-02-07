@@ -5,7 +5,8 @@ Kapal::Kapal(Canvas* p_canvas) {
 
 	setWidth(100);
 	setHeight(80);
-
+	direction = 1;
+	
 	// setup the lines
 	for (int i = 0; i < 16; ++i) {
 		lines.push_back(Line(Point(0, 0), Point(0, 0)));
@@ -58,14 +59,33 @@ Kapal::Kapal(Canvas* p_canvas) {
 
 	lines[15].setPointOne(Point(91,30));
 	lines[15].setPointTwo(Point(98,30));
-
+	
+	//utk explode
+	for (int i=0; i<5; i++) {
+		lines.push_back(Line(Point(0,0), Point(0,0)));
+	}
+	lines[16].setPointOne(Point(45,0));
+	lines[16].setPointTwo(Point(0,80));
+	
+	lines[17].setPointOne(Point(45,0));
+	lines[17].setPointTwo(Point(90,80));
+	
+	lines[18].setPointOne(Point(90,25));
+	lines[18].setPointTwo(Point(0,80));
+	
+	lines[19].setPointOne(Point(90,25));
+	lines[19].setPointTwo(Point(0,25));
+	
+	lines[20].setPointOne(Point(0,25));
+	lines[20].setPointTwo(Point(90,80));
+	
 	Point P(98,21);
 	gun = P;
 }
 
 void Kapal::draw() {
-	for (std::vector<Line>::iterator it = lines.begin(); it != lines.end(); it++)
-		it->drawStraightLine(p_canvas);
+	for (std::vector<Line>::iterator it = lines.begin(); it != lines.end()-5; it++)
+		it->drawStraightLine(p_canvas, p_canvas->pixel_color(colorRK,colorGK,colorBK));
 }
 
 // Override
@@ -78,21 +98,35 @@ void Kapal::setTopLeftPosition(Point p) {
 		it->eraseStraightLine(p_canvas);
 		it->moveRightDown(dx, dy);
 	}
-	gun.moveRight(dx);
-	gun.moveDown(dy);
 }
 
 void Kapal::update(double timeElapsed) {
 	double distance = speed_x*timeElapsed;
 	Point now = getTopLeftPosition();
-	now.moveRight((int) distance);
+	
+	if (now.getAbsis()==0) {
+		direction = 1;
+	}
+	else if (now.getAbsis()==p_canvas->get_vinfo().xres-getWidth()) {
+		direction = 2;
+	}
+	
+	if (direction==1) 
+		now.moveRight((int) distance);
+	else if (direction==2) 
+		now.moveLeft((int) distance);
+		
 	setTopLeftPosition(now);
 }
 
-void Kapal::fire() {
-	int x_final = gun.getAbsis();
-	int y_final = 0;
-	Line test(Point(x_final,y_final), gun);
-
-	test.drawStraightLine(p_canvas);
+Point Kapal::fire() {
+	Point now = getTopLeftPosition();
+	return Point(now.getAbsis()+gun.getAbsis(), now.getOrdinat()+gun.getOrdinat()-10);
 }
+
+void Kapal::explode() {
+	for (std::vector<Line>::iterator it = lines.begin()+16; it != lines.end(); it++)
+		it->drawStraightLine(p_canvas, p_canvas->pixel_color(0,0,255));
+}
+
+bool Kapal::getFlag() {}

@@ -2,6 +2,7 @@
 #define ANIMATION_H
 
 #include "../core/point.h"
+#include "../core/header.h"
 #include <ctime>
 
 class Animation {
@@ -17,6 +18,9 @@ class Animation {
 		Point getTopLeftPosition() const;
 		Point getBottomRight() const;
 		bool isCollide(const Animation& other);
+		
+		virtual void explode() = 0;
+		virtual bool getFlag() = 0; //khusus utk projectile, flag=true klo nyampe di ujung layar
 
 	private:
 		int width, height;

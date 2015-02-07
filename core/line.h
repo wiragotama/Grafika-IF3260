@@ -3,7 +3,9 @@
 
 #include "point.h"
 #include "canvas.h"
+#include "../core/header.h"
 #include <vector>
+#include <cmath>
 
 #define STRAIGHT_LINE 0
 #define DASHED_LINE 1
@@ -25,9 +27,11 @@ class Line {
 		void setPointOne(Point P);
 		void setPointTwo(Point P);
 
-		void drawLine(Canvas *canvas, int patternType);
-		void drawStraightLine(Canvas *canvas);
+		void drawThickLine(Canvas *canvas, float thickness, uint32_t color);
+		void drawStraightLine(Canvas *canvas, uint32_t color);
 		void eraseStraightLine(Canvas *canvas);
+		void eraseThickLine(Canvas *canvas, float thickness);
+		
 		/* Move on screen */
 		void moveRight(int d);
 		void moveLeft(int d);
