@@ -32,3 +32,7 @@ Point Animation::getBottomRight() const {
 	Point tl = getTopLeftPosition();
 	return Point(tl.getAbsis()+width, tl.getOrdinat()+height);
 }
+
+void Animation::setTopLeftPosition(Point p){
+	topLeftPosition = p;
+}

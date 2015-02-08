@@ -45,20 +45,20 @@ void Point::setOrdinat(int y) {
 	this->y = y;
 }
 
-void Point::moveRight() {
-	x++;
+void Point::moveRight(int d) {
+	x+=d;
 }
 
-void Point::moveLeft() {
-	x--;
+void Point::moveLeft(int d) {
+	x-=d;
 }
 
-void Point::moveUp() {
-	y--;
+void Point::moveUp(int d) {
+	y-=d;
 }
 
-void Point::moveDown() {
-	y++;
+void Point::moveDown(int d) {
+	y+=d;
 }
 
 void Point::moveRightDown(int dx, int dy) {

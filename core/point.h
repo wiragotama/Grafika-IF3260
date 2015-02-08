@@ -15,10 +15,10 @@ class Point {
 		void setAbsis(int x);
 		void setOrdinat(int y);
 		/* Move on screen */
-		void moveRight();
-		void moveLeft();
-		void moveUp();
-		void moveDown();
+		void moveRight(int d);
+		void moveLeft(int d);
+		void moveUp(int d);
+		void moveDown(int d);
 		void moveRightDown(int dx, int dy);
 
 	private :

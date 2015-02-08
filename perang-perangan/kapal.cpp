@@ -62,6 +62,13 @@ void Kapal::draw() {
 		it->drawStraightLine(p_canvas);
 }
 
-void Kapal::update(time_t timeElapsed) {
-	topLeft += kecepatan*timeElapsed
+void Kapal::update(double timeElapsed) {
+	double distance = speed_x*timeElapsed;
+	Point now = getTopLeftPosition();
+	now.moveRight((int) distance);
+	setTopLeftPosition(now);
+	
+	for(int i=0; i<lines.size(); i++){
+		lines[i].moveRight((int)distance);
+	}
 }

@@ -74,24 +74,24 @@ void Line::drawStraightLine(Canvas *canvas) {
 	}
 }
 
-void Line::moveRight() {
-	point[0].moveRight();
-	point[1].moveRight();
+void Line::moveRight(int d) {
+	point[0].moveRight(d);
+	point[1].moveRight(d);
 }
 
-void Line::moveLeft() {
-	point[0].moveLeft();
-	point[1].moveLeft();
+void Line::moveLeft(int d) {
+	point[0].moveLeft(d);
+	point[1].moveLeft(d);
 }
 
-void Line::moveUp() {
-	point[0].moveUp();
-	point[1].moveUp();
+void Line::moveUp(int d) {
+	point[0].moveUp(d);
+	point[1].moveUp(d);
 }
 
-void Line::moveDown() {
-	point[0].moveDown();
-	point[1].moveDown();
+void Line::moveDown(int d) {
+	point[0].moveDown(d);
+	point[1].moveDown(d);
 }
 
 void Line::moveRightDown(int dx, int dy) {
