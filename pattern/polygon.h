@@ -34,6 +34,7 @@ class Polygon {
 		vector<Point> points;
 		Pattern pattern;
 		Point firePoint;
+		Point originFirePoint;
 		Point topLeftPosition;
 		Canvas *canvas;
 };

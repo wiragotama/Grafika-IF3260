@@ -21,14 +21,14 @@ void Polygon::draw() {
 	
 	//flood fill
 	floodFill(firePoint.getAbsis(), firePoint.getOrdinat());
-	canvas->putPixelColor(firePoint.getAbsis()+topLeftPosition.getAbsis(), firePoint.getOrdinat()+topLeftPosition.getOrdinat(), canvas->pixel_color(255,0,0));
 	canvas->flush();
 }
 
 void Polygon::floodFill(int x, int y) {
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
+	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
 	if ((x>=0 && x<canvas->get_vinfo().xres) && (y>=0 && y<canvas->get_vinfo().yres) && (canvas->getColor(location) >>24!=0xff)) {
-		canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x,y));
+		canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
 		floodFill(x-1, y);
 		floodFill(x+1, y);
 		floodFill(x, y-1);
@@ -59,6 +59,7 @@ void Polygon::loadPolygon(const char* filename) {
 	
 	fscanf(matrix_file,"%d %d",&x, &y);
 	firePoint = Point(x,y);
+	originFirePoint = firePoint;
 }
 
 void Polygon::loadPattern(const char *filename) {
@@ -68,10 +69,6 @@ void Polygon::loadPattern(const char *filename) {
 uint32_t Polygon::getColor(int x, int y) {
 	int i = x % pattern.getWidth();
 	int j = y % pattern.getHeight();
-	/*printf("%d\n", canvas->pixel_color(255,0,0));
-	if (pattern.getColor(j, i)==canvas->pixel_color(255,0,0)) {
-		system("pause");
-	}*/
 	return pattern.getColor(j, i);
 }
 

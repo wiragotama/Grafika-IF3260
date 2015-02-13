@@ -11,7 +11,9 @@ int main() {
 	
 	polygon.loadPolygon(polygonFile.c_str());
 	polygon.loadPattern(patternFile.c_str());
-	printf("load ok\n");
-	polygon.draw();
+	while(true) {
+		polygon.draw();
+		polygon.move(1,0);
+	}
 	return 0;
 }
