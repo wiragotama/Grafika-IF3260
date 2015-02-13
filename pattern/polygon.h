@@ -25,6 +25,8 @@ class Polygon {
 		Point getPoint(int idx);
 		Point getFirePoint();
 		Point getTopLeftPosition();
+		Point getMostRightPoint();
+		Point getMostLeftPoint();
 		
 	private :
 		uint32_t getColor(int x, int y);

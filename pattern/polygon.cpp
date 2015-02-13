@@ -27,7 +27,11 @@ void Polygon::draw() {
 void Polygon::floodFill(int x, int y) {
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
 	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
-	if ((x>=0 && x<canvas->get_vinfo().xres) && (y>=0 && y<canvas->get_vinfo().yres) && (canvas->getColor(location) >>24!=0xff)) {
+	
+	int screen_x = x + topLeftPosition.getAbsis();
+	int screen_y = y + topLeftPosition.getOrdinat();
+	
+	if ((screen_x>=0 && screen_x<canvas->get_vinfo().xres) && (screen_y>=0 && screen_y<canvas->get_vinfo().yres) && (canvas->getColor(location) >>24!=0xff)) {
 		canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
 		floodFill(x-1, y);
 		floodFill(x+1, y);
@@ -67,6 +71,8 @@ void Polygon::loadPattern(const char *filename) {
 }
 
 uint32_t Polygon::getColor(int x, int y) {
+	while (x<0) x+=pattern.getWidth();
+	while (y<0) y+=pattern.getHeight();
 	int i = x % pattern.getWidth();
 	int j = y % pattern.getHeight();
 	return pattern.getColor(j, i);
@@ -96,4 +102,28 @@ Point Polygon::getFirePoint() {
 
 Point Polygon::getTopLeftPosition() {
 	return topLeftPosition;
+}
+
+Point Polygon::getMostRightPoint() {
+	int x = 0;
+	int idx = 0;
+	for (int it=0; it<points.size(); ++it) {
+		if (points[it].getAbsis()>=x) {
+			x = points[it].getAbsis();
+			idx = it;
+		}
+	}
+	return points[idx];
+}
+
+Point Polygon::getMostLeftPoint() {
+	int x = 10000;
+	int idx = 0;
+	for (int it=0; it<points.size(); ++it) {
+		if (points[it].getAbsis()<=x) {
+			x = points[it].getAbsis();
+			idx = it;
+		}
+	}
+	return points[idx];
 }

@@ -7,13 +7,25 @@ int main() {
 	
 	Polygon polygon(&canvas, topLeftPosition);
 	string polygonFile = "polygon.info"; //nama file jgn sampe salah ya... nanti kena segfault
-	string patternFile = "pattern.info";
+	string patternFile = "ikan.info";
 	
 	polygon.loadPolygon(polygonFile.c_str());
+	//printf("load polygon ok");
 	polygon.loadPattern(patternFile.c_str());
+	//printf("load burung ok");
+	bool direction = true; //true = right, false = left
 	while(true) {
+		if (polygon.getMostLeftPoint().getAbsis()+polygon.getTopLeftPosition().getAbsis()<=2) {
+			direction = true;
+		}
+		else if (polygon.getMostRightPoint().getAbsis()+polygon.getTopLeftPosition().getAbsis()>=canvas.get_vinfo().xres) {
+			direction = false;
+		}
 		polygon.draw();
-		polygon.move(1,0);
+		if (direction)
+			polygon.move(1,0);
+		else 
+			polygon.move(-1,0);
 	}
 	return 0;
 }
