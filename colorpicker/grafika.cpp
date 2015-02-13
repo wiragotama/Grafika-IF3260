@@ -25,10 +25,13 @@ int main() {
 		rainbowPalette.drawPalette(&canvas);
 		rainbowPalette.drawCursor(&canvas);
 		
+		canvas.flush();
+		rainbowPalette.drawPalette(&canvas);
+		rainbowPalette.drawCursor(&canvas);
 		gradientPalette.drawColorGradient(canvas.getColor(rainbowPalette.getScreenX(),rainbowPalette.getScreenY()), &canvas);
 		gradientPalette.drawCursor(&canvas);
-		
 		canvas.flush();
+		
 		canvas.putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		canvas.putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
 		
