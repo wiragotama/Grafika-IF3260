@@ -72,6 +72,7 @@ int main() {
 						}
 					}
 			}
+			canvas.flush();
 		}
 		if (lastClock-lastFireKapal > 7000000) {
 			Projectile* p = new Projectile(&canvas, 1);

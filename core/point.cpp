@@ -61,7 +61,8 @@ void Point::moveDown(int d) {
 	y+=d;
 }
 
-void Point::moveRightDown(int dx, int dy) {
-	x += dx;
-	y += dy;
+void Point::move(int dx, int dy) {
+	x+=dx;
+	y+=dy;
 }
+

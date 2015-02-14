@@ -1,18 +1,4 @@
 #include "line.h"
-
-//vector initiation
-int dash[2] = {4,2};
-vector<int> ve(1,1);
-vector<int> dl(dash, dash+sizeof(dash)/sizeof(dash[0]));
-
-//patternList member initialization
-Pattern straight_line = { .body = ve, .thickness = ve};
-Pattern dashed_line = { .body = dl, .thickness = ve};
-
-//static const member initialization
-Pattern pat[] = {straight_line, dashed_line};
-const vector<Pattern> Line::patternList(pat, pat+sizeof(pat) / sizeof(pat[0]));
-
 /*************************/
 /* Method implementation */
 /*************************/
@@ -39,7 +25,7 @@ void Line::setPointTwo(Point P) {
 	this->point[1] = P;
 }
 
-void Line::drawThickLine(Canvas *canvas, float thickness, uint32_t color) {
+void Line::draw(Canvas *canvas, int thickness, uint32_t color) {
 	int x1 = point[1].getAbsis();
 	int x0 = point[0].getAbsis();
 
@@ -54,69 +40,6 @@ void Line::drawThickLine(Canvas *canvas, float thickness, uint32_t color) {
 		for(int i=y0-thickness+1; i<=y0+thickness-1; i++)
 			for(int j=x0-thickness+1; j<=x0+thickness-1; j++)
 				canvas->putPixelColor(j, i, color);
-		
-		if (x0==x1 && y0==y1) break;
-			e2 = 2*err;
-		if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
-		if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
-	}
-}
-
-void Line::drawStraightLine(Canvas *canvas, uint32_t color) {
-	int x1 = point[1].getAbsis();
-	int x0 = point[0].getAbsis();
-
-	int y1 = point[1].getOrdinat();
-	int y0 = point[0].getOrdinat();
-
-	int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-	int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1;
-	int err = dx+dy, e2; /* error value e_xy */
-
-	for(;;) {  /* loop */
-		canvas->putPixelColor(x0, y0, color);
-		if (x0==x1 && y0==y1) break;
-			e2 = 2*err;
-		if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
-		if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
-	}
-}
-
-void Line::eraseStraightLine(Canvas *canvas) {
-	int x1 = point[1].getAbsis();
-	int x0 = point[0].getAbsis();
-
-	int y1 = point[1].getOrdinat();
-	int y0 = point[0].getOrdinat();
-
-	int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-	int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1;
-	int err = dx+dy, e2; /* error value e_xy */
-
-	for(;;) {  /* loop */
-		canvas->putPixelRGB(x0, y0, 0, 0, 0);
-		if (x0==x1 && y0==y1) break;
-			e2 = 2*err;
-		if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
-		if (e2 <= dx) { err += dx; y0 += sy; } /* e_xy+e_y < 0 */
-	}
-}
-
-void Line::eraseThickLine(Canvas *canvas, float thickness) {
-	int x1 = point[1].getAbsis();
-	int x0 = point[0].getAbsis();
-
-	int y1 = point[1].getOrdinat();
-	int y0 = point[0].getOrdinat();
-
-	int dx =  abs(x1-x0), sx = x0<x1 ? 1 : -1;
-	int dy = -abs(y1-y0), sy = y0<y1 ? 1 : -1;
-	int err = dx+dy, e2; /* error value e_xy */
-
-	for(;;) {  /* loop */
-		for(int i=y0-thickness+1; i<=y0+thickness-1; i++)
-			for(int j=x0-thickness+1; j<=x0+thickness-1; j++)
-				canvas->putPixelRGB(j, i, 0, 0, 0);
 		
 		if (x0==x1 && y0==y1) break;
 			e2 = 2*err;
@@ -145,7 +68,7 @@ void Line::moveDown(int d) {
 	point[1].moveDown(d);
 }
 
-void Line::moveRightDown(int dx, int dy) {
-	point[0].moveRightDown(dx, dy);
-	point[1].moveRightDown(dx, dy);
+void Line::move(int dx, int dy) {
+	point[0].move(dx, dy);
+	point[1].move(dx, dy);
 }

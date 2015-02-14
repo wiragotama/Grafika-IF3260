@@ -19,7 +19,7 @@ class Point {
 		void moveLeft(int d);
 		void moveUp(int d);
 		void moveDown(int d);
-		void moveRightDown(int dx, int dy);
+		void move(int dx, int dy);
 
 	private :
 		int x;

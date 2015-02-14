@@ -20,7 +20,7 @@ void GradientPalette::drawColorGradient(uint32_t color, Canvas *canvas) {
 			r = (y * (255-x) + rr * x * y / 255)/255;
 			g = (y * (255-x) + gg * x * y / 255)/255;
 			b = (y * (255-x) + bb * x * y / 255)/255;
-			canvas->putPixelRGB(x_offset+x, y_offset+y, r, g, b);
+			canvas->putPixelColor(x_offset+x, y_offset+y, canvas->pixel_color(r,g,b));
 		}
 	}
 }
@@ -32,7 +32,7 @@ void GradientPalette::drawCursor(Canvas *canvas) {
 	for (y = coor_y-MOUSE_RADIUS; y <= coor_y+MOUSE_RADIUS; y++) {
 		for (x = coor_x-MOUSE_RADIUS; x <= coor_x+MOUSE_RADIUS; x++) {
 			if ((y==coor_y || x==coor_x) && !(y==coor_y && x==coor_x)) {
-				canvas->putPixelRGB(x,y,255,255,255);
+				canvas->putPixelColor(x, y, canvas->pixel_color(255,255,255));
 			}
 		}
 	}

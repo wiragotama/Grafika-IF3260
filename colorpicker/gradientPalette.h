@@ -1,8 +1,8 @@
 #ifndef GRADIENT_H
 #define GRADIENT_H
 
-#include "header.h"
-#include "canvas.h"
+#include "../core/header.h"
+#include "../core/canvas.h"
 
 #define GRADIENTPALETTE_WIDTH 256
 #define GRADIENTPALETTE_HEIGHT 256

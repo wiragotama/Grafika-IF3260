@@ -85,7 +85,7 @@ Kapal::Kapal(Canvas* p_canvas) {
 
 void Kapal::draw() {
 	for (std::vector<Line>::iterator it = lines.begin(); it != lines.end()-5; it++)
-		it->drawStraightLine(p_canvas, p_canvas->pixel_color(colorRK,colorGK,colorBK));
+		it->draw(p_canvas, 1, p_canvas->pixel_color(colorRK,colorGK,colorBK));
 }
 
 // Override
@@ -95,8 +95,8 @@ void Kapal::setTopLeftPosition(Point p) {
 	int dy = p.getOrdinat()-prev.getOrdinat();
 	Animation::setTopLeftPosition(p);
 	for (vector<Line>::iterator it = lines.begin(); it != lines.end(); it++) {
-		it->eraseStraightLine(p_canvas);
-		it->moveRightDown(dx, dy);
+		it->moveRight(dx);
+		it->moveDown(dy);
 	}
 }
 
@@ -126,7 +126,7 @@ Point Kapal::fire() {
 
 void Kapal::explode() {
 	for (std::vector<Line>::iterator it = lines.begin()+16; it != lines.end(); it++)
-		it->drawStraightLine(p_canvas, p_canvas->pixel_color(0,0,255));
+		it->draw(p_canvas, 1, p_canvas->pixel_color(0,0,255));
 }
 
 bool Kapal::getFlag() {}

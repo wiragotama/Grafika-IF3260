@@ -1,8 +1,8 @@
 #ifndef RAINBOW_H
 #define RAINBOW_H
 
-#include "header.h"
-#include "canvas.h"
+#include "../core/header.h"
+#include "../core/canvas.h"
 #define COLORTABLE_WIDTH 35
 #define COLORTABLE_HEIGHT 256
 #define COLORTABLE_CELLSIZE 1
@@ -27,8 +27,8 @@ class RainbowPalette {
 		int getYOffset();
 		int getCursorX(); //mendapatkan posisi kursor pada rainbow palette (lokal)
 		int getCursorY(); //mendapatkan posisi kursor pada rainbow palette (lokal)
-		int getCoorXCursor(); //mendapatkan posisi kursor pada pixel di layar (global)
-		int getCoorYCursor(); //mendapatkan posisi kursor pada pixel di layar (global)
+		int getScreenX(); //mendapatkan posisi kursor pada pixel di layar (global)
+		int getScreenY(); //mendapatkan posisi kursor pada pixel di layar (global)
 		uint32_t getColorTable(int pos_width, int pos_height);
 		
 	private :

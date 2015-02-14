@@ -1,6 +1,6 @@
-#include "header.h"
-#include "graphicsio.h"
-#include "canvas.h"
+#include "../core/header.h"
+#include "../core/graphicsio.h"
+#include "../core/canvas.h"
 #include "rainbowPalette.h"
 #include "gradientPalette.h"
 
@@ -24,15 +24,21 @@ int main() {
 		system("clear");
 		rainbowPalette.drawPalette(&canvas);
 		rainbowPalette.drawCursor(&canvas);
-		canvas.putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		
+		canvas.flush();
+		rainbowPalette.drawPalette(&canvas);
+		rainbowPalette.drawCursor(&canvas);
 		gradientPalette.drawColorGradient(canvas.getColor(rainbowPalette.getScreenX(),rainbowPalette.getScreenY()), &canvas);
 		gradientPalette.drawCursor(&canvas);
+		canvas.flush();
+		
+		canvas.putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		canvas.putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
 		
 		c = graphicsIO.getch();
 		rainbowPalette.moveCursor(c);
 		gradientPalette.moveCursor(c);
+		
 	} while (c!='\n');
 	return 0;
 }

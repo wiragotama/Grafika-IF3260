@@ -20,7 +20,7 @@ void Projectile::draw() {
 		Point dua= getTopLeftPosition();
 		dua.setOrdinat(dua.getOrdinat()+10);
 		line.setPointTwo(dua);
-		line.drawThickLine(p_canvas, thickness, p_canvas->pixel_color(projectileR,projectileG,projectileB));
+		line.draw(p_canvas, thickness, p_canvas->pixel_color(projectileR,projectileG,projectileB));
 	}
 }
 
@@ -50,15 +50,14 @@ void Projectile::update(double timeElapsed) {
 	if (direction==1) temp = 1.0 + 1.0/60.0 * now.getOrdinat() * 5.0;
 	else if (direction==2) temp = 1.0 + (3840.0/now.getOrdinat()) / 3.0;
 	if (temp > 10)
-		thickness = 10.0;
+		thickness = 10;
 	else 
-		thickness = temp;
+		thickness = (int)temp;
 		
 }
 
 void Projectile::setTopLeftPosition(Point p) {
 	Animation::setTopLeftPosition(p);
-	line.eraseThickLine(p_canvas, thickness);
 }
 
 void Projectile::explode() {}

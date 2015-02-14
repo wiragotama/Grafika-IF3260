@@ -66,7 +66,7 @@ Pesawat::Pesawat(Canvas* p_canvas) {
 
 void Pesawat::draw() {
 	for (std::vector<Line>::iterator it = lines.begin(); it != lines.end()-5; it++)
-		it->drawStraightLine(p_canvas, p_canvas->pixel_color(colorRP,colorGP,colorBP));
+		it->draw(p_canvas, 1, p_canvas->pixel_color(colorRP,colorGP,colorBP));
 }
 
 // Override
@@ -76,8 +76,8 @@ void Pesawat::setTopLeftPosition(Point p) {
 	int dy = p.getOrdinat()-prev.getOrdinat();
 	Animation::setTopLeftPosition(p);
 	for (vector<Line>::iterator it = lines.begin(); it != lines.end(); it++) {
-		it->eraseStraightLine(p_canvas);
-		it->moveRightDown(dx, dy);
+		it->moveRight(dx);
+		it->moveDown(dy);
 	}
 }
 
@@ -105,7 +105,7 @@ Point Pesawat::fire() {
 
 void Pesawat::explode(){
 	for (std::vector<Line>::iterator it = lines.begin()+10; it != lines.end(); it++)
-		it->drawStraightLine(p_canvas, p_canvas->pixel_color(255,0,0));
+		it->draw(p_canvas, 1, p_canvas->pixel_color(255,0,0));
 }
 
 bool Pesawat::getFlag() {}

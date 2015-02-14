@@ -22,7 +22,7 @@ class Projectile : public Animation {
         
 	private :
 		Line line;
-		float thickness;
+		int thickness;
         Canvas* p_canvas;
         int direction; //1 up, 2 down
         static const double speed_x = .1;

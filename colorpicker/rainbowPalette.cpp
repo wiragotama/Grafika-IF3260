@@ -28,7 +28,7 @@ void RainbowPalette::drawCursor(Canvas *canvas) {
 	for (y = coor_y-MOUSE_RADIUS; y <= coor_y+MOUSE_RADIUS; y++) {
 		for (x = coor_x-MOUSE_RADIUS; x <= coor_x+MOUSE_RADIUS; x++) {
 			if ((y==coor_y || x==coor_x) && !(y==coor_y && x==coor_x)) {
-				canvas->putPixelRGB(x, y, 255, 255, 255);
+				canvas->putPixelColor(x, y, canvas->pixel_color(255,255,255));
 			}
 		}
 	}
