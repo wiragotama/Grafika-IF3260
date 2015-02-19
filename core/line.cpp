@@ -59,7 +59,10 @@ void Line::drawCurve(Canvas *canvas, int thickness, uint32_t color) {
 	y2 = point[1].getOrdinat();
 	
 	x1 = (x0+x2)/2;
+	x1 = (x0+x1)/2;
 	y1 = (y0+y2)/2;
+	y1 = (y1+y2)/2;
+	
 	
 	int sx = x2-x1, sy = y2-y1;
 	long xx = x0-x1, yy = y0-y1, xy;         /* relative values for checks */
