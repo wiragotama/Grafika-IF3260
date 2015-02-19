@@ -6,6 +6,7 @@
 #include "../core/header.h"
 #include <vector>
 #include <cmath>
+#include <cassert>
 
 #define STRAIGHT_LINE 0
 #define DASHED_LINE 1
@@ -22,6 +23,7 @@ class Line {
 		void setPointTwo(Point P);
 
 		void draw(Canvas *canvas, int thickness, uint32_t color);
+		void drawCurve(Canvas *canvas, int thickness, uint32_t color);
 		
 		/* Move on screen */
 		void moveRight(int d);
