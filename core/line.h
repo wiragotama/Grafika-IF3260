@@ -24,7 +24,7 @@ class Line {
 
 		void draw(Canvas *canvas, int thickness, uint32_t color);
 		void drawCurve(Canvas *canvas, int thickness, uint32_t color);
-		
+
 		/* Move on screen */
 		void moveRight(int d);
 		void moveLeft(int d);

@@ -5,18 +5,22 @@
 #include "../core/canvas.h"
 #include "../core/point.h"
 #include "../core/line.h"
+#include "../core/circle.h"
 
 class TerjunPayung {
 	public:
-		TerjunPayung(Canvas *canvas, vector<Point> points, Point topLeftPosition);
+		TerjunPayung (Canvas *canvas, Point topLeftPosition);
 		~TerjunPayung();
 
-		void move(int dx, int dy);
+		void moveDown(int);
 		void draw();
 
 	private:
-		vector<Point> points;
+		vector<Line> lines;
 		Canvas *canvas;
+		Circle head;
+		Circle parachute;
 		Point topLeftPosition;
 };
+
 #endif

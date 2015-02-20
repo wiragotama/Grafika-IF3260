@@ -11,4 +11,4 @@ poly:
 	g++ core/canvas.cpp core/graphicsio.cpp core/line.cpp core/point.cpp pattern/polygon.cpp pattern/pattern.cpp pattern/driver.cpp -o bin/poly
 
 transformation:
-	g++ core/canvas.cpp core/line.cpp core/point.cpp transformasi/TerjunPayung.cpp transformasi/driver.cpp -o bin/transformasi
+	g++ core/canvas.cpp core/circle.cpp core/line.cpp core/point.cpp transformasi/TerjunPayung.cpp transformasi/driver.cpp -o bin/transformasi
