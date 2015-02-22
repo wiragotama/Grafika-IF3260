@@ -2,6 +2,7 @@
 #include "drawable.h"
 #include "../perang-perangan/animation.h"
 #include "../perang-perangan/projectile.h"
+#include "TerjunPayung.h"
 
 bool cekTabrakan(Projectile *p, Helikopter *h);
 
@@ -49,11 +50,15 @@ int main() {
 		usleep(5000);
 	}
 	//ceritanya bagian ini dah kena peluru
+	Point x(300,10);
+	TerjunPayung terjunPayung(&canvas, x);
+	
 	helikopter.brokeBody();
 	bool stopMoveDown = false;
 	while (true) {
 		helikopter.draw(canvas.pixel_color(255,0,0));
 		kapal.draw(canvas.pixel_color(0,255,0));
+		terjunPayung.draw();
 		canvas.flush();
 		if (!stopMoveDown)
 			helikopter.move(0,1);
@@ -61,6 +66,7 @@ int main() {
 			helikopter.bounceTire();
 			bool stopMoveDown = true;
 		}
+		terjunPayung.moveDown(1);
 		usleep(5000);
 	}
 	return 0;
