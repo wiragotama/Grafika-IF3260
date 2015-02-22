@@ -7,8 +7,8 @@ class Drawable {
 	public:
 		virtual void draw() = 0;
 		
-		virtual Point getPosition() const = 0;
-		virtual void setPosition() = 0;
+		virtual Point getTopLeftPosition() const = 0;
+		virtual void setTopLeftPosition() = 0;
 		virtual void move(int dx, int dy) = 0;
 		
 		virtual int getWidth() const = 0;
