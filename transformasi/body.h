@@ -14,16 +14,19 @@
 
 class Body {
 	public:
-		Body(Canvas *p_canvas);
+		Body(Canvas *p_canvas, Point topLeftPosition);
 		~Body();
 		
 		void draw();
 		void move(int dx, int dy);
 		void broke();
+		void setTopLeftPosition(Point topLeftPosition);
+		Point getTopLeftPosition();
 		
 	private :
 		vector<Polygon> polygons;
 		bool broken;
+		Point topLeftPosition;
 };
 
 #endif
