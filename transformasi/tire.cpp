@@ -34,7 +34,6 @@ void Tire::bounce() {
 
 void Tire::draw(Canvas *canvas, uint32_t color) {
 	Circle::drawFull(canvas, color);
-	bounce();
 }
 
 int Tire::getBounceHeight() {
