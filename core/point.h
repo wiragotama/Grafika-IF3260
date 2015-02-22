@@ -14,12 +14,14 @@ class Point {
 		int getOrdinat();
 		void setAbsis(int x);
 		void setOrdinat(int y);
+        void printInfo();
 		/* Move on screen */
 		void moveRight(int d);
 		void moveLeft(int d);
 		void moveUp(int d);
 		void moveDown(int d);
 		void move(int dx, int dy);
+        void rotate(double angle, int rx, int ry);
 
 	private :
 		int x;

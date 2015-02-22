@@ -21,3 +21,6 @@ body :
 
 utama :
 	g++ core/canvas.cpp core/point.cpp perang-perangan/projectile.cpp perang-perangan/animation.cpp transformasi/TerjunPayung.cpp core/circle.cpp transformasi/tire.cpp transformasi/body.cpp pattern/polygon.cpp core/line.cpp pattern/pattern.cpp transformasi/helikopter.cpp transformasi/driverUtama.cpp -g -o bin/Hancur
+
+kincir:
+	g++ core/canvas.cpp core/point.cpp transformasi/kincir.cpp pattern/polygon.cpp core/line.cpp pattern/pattern.cpp transformasi/driverKincir.cpp -g -o bin/kincir

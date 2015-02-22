@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
+#include <cmath>
 using namespace std;
 
 Point::Point() {
@@ -28,6 +29,17 @@ Point& Point::operator=(const Point& p) {
 }
 
 Point::~Point() {
+}
+
+void Point::printInfo() {
+    printf("(%d, %d)", getAbsis(), getOrdinat());
+}
+
+void Point::rotate(double angle, int rx, int ry) {
+    int x1 = cos(angle)*(x-rx)-sin(angle)*(y-ry)+rx,
+        y1 = sin(angle)*(x-rx)+cos(angle)*(y-ry)+ry;
+    x = x1;
+    y = y1;
 }
 
 int Point::getAbsis() {

@@ -11,12 +11,15 @@
 class Polygon {
 	public :
 		Polygon(Canvas *canvas, Point topLeftPosition);
+        Polygon(Canvas *canvas, Point topLeftPosition, vector<Point> nodes, Point firePoint);
 		~Polygon();
 
 		void draw(uint32_t color);
 		void move(int dx, int dy);
 		void loadPolygon(const char* filename);
 		void loadPattern(const char *filename);
+        Polygon rotate(double angle, int rx, int ry);
+        void printInfo();
 
 		/* Setter & Getter */
 		void setPoint(int idx, Point P);
