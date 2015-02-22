@@ -34,12 +34,12 @@ void Body::broke() {
 	broken = true;
 	string ply1 = "bodyLeft.info";
 	string ply2 = "bodyRight.info";
+	polygons[0].erasePoints();
+	polygons[1].erasePoints();
+	
 	polygons[0].loadPolygon(ply1.c_str());
 	
-	Point tmp = polygons[0].getTopLeftPosition();
-	tmp.move(90,0);
-	polygons[1].setTopLeftPosition(tmp.getAbsis(), tmp.getOrdinat());
-	
+	polygons[1].setTopLeftPosition(polygons[0].getTopLeftPosition().getAbsis()+120, polygons[0].getTopLeftPosition().getOrdinat());
 	polygons[1].loadPolygon(ply2.c_str());
 }
 

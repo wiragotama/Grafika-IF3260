@@ -7,6 +7,7 @@ int main() {
 	//while (true) {
 		body.broke();
 		body.draw();
+		canvas.flush();
 		//sleep(1);
 		//body.move(20);
 	//}

@@ -26,6 +26,7 @@ int main() {
 			polygon.move(1,0);
 		else 
 			polygon.move(-1,0);
+		canvas.flush();
 	}
 	return 0;
 }

@@ -6,6 +6,13 @@ Polygon::Polygon(Canvas *canvas, Point topLeftPosition) {
 }
 
 Polygon::~Polygon() {
+	while (points.size()>0)
+		points.erase(points.begin());
+}
+
+void Polygon::erasePoints() {
+	while (points.size()>0)
+		points.erase(points.begin());
 }
 
 void Polygon::draw() {
@@ -22,7 +29,6 @@ void Polygon::draw() {
 	//flood fill
 	if (pattern.getMatrix()!=NULL)
 		floodFill(firePoint.getAbsis(), firePoint.getOrdinat());
-	canvas->flush();
 }
 
 void Polygon::floodFill(int x, int y) {
