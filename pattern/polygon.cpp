@@ -127,3 +127,27 @@ Point Polygon::getMostLeftPoint() {
 	}
 	return points[idx];
 }
+
+Point Polygon::getMostBottomPoint() {
+	int x = 0;
+	int idx = 0;
+	for (int it=0; it<points.size(); ++it) {
+		if (points[it].getOrdinat()>=x) {
+			x = points[it].getOrdinat();
+			idx = it;
+		}
+	}
+	return points[idx];
+}
+
+Point Polygon::getMostUpperPoint() {
+	int x = 10000;
+	int idx = 0;
+	for (int it=0; it<points.size(); ++it) {
+		if (points[it].getOrdinat()<=x) {
+			x = points[it].getOrdinat();
+			idx = it;
+		}
+	}
+	return points[idx];
+}
