@@ -56,6 +56,12 @@ void Projectile::update(double timeElapsed) {
 		
 }
 
+void Projectile::move(int dx, int dy) {
+	Point now = getTopLeftPosition();
+	now.move(dx, dy);
+	setTopLeftPosition(now);
+}
+
 void Projectile::setTopLeftPosition(Point p) {
 	Animation::setTopLeftPosition(p);
 }
@@ -64,4 +70,8 @@ void Projectile::explode() {}
 
 bool Projectile::getFlag() {
 	return flag;
+}
+
+Point Projectile::TLPos() {
+	return getTopLeftPosition();
 }

@@ -21,7 +21,7 @@ int main() {
 		else if (polygon.getMostRightPoint().getAbsis()+polygon.getTopLeftPosition().getAbsis()>=canvas.get_vinfo().xres) {
 			direction = false;
 		}
-		polygon.draw();
+		polygon.draw(canvas.pixel_color(255,0,0));
 		if (direction)
 			polygon.move(1,0);
 		else 
