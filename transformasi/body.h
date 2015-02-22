@@ -22,7 +22,7 @@ class Body {
         void move(int dx, int dy); //
         void setTopLeftPosition(Point p);
         Point getTopLeftPosition();
-		void broke(); //
+		void broke(const char* filename1, const char* filename2, const char* pattern); //
 		
 	private:
 		Polygon polygons[2]; //klo pecah jadi 2, klo masih utuh hanya pake 1		
