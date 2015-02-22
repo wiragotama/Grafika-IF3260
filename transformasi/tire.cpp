@@ -2,7 +2,7 @@
 
 Tire::Tire(Point midPoint, int radius) : Circle(midPoint, radius) {
 	startBounce = false;
-	bounceHeight = 20;
+	bounceHeight = 300;
 	bounceUp = true;
 }
 
@@ -21,18 +21,20 @@ void Tire::bounce() {
 		}
 		else { 
 			bounceUp = false;
-			bounceHeight -= 5;
+			bounceHeight += 10;
 		}
 	}
 	else {
 		if (getBottomPosition().getOrdinat() <= 400) {
 			Circle::move(1,2);
 		}
+		else bounceUp = true;
 	}
 }
 
 void Tire::draw(Canvas *canvas, uint32_t color) {
 	Circle::drawFull(canvas, color);
+	bounce();
 }
 
 int Tire::getBounceHeight() {
