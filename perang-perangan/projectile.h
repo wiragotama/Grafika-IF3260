@@ -19,6 +19,8 @@ class Projectile : public Animation {
         
         virtual void explode();
         virtual bool getFlag();
+        void move(int dx, int dy);
+        Point TLPos();
         
 	private :
 		Line line;

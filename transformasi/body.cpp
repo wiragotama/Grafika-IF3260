@@ -3,10 +3,8 @@
 Body::Body(Canvas *p_canvas, Point topLeftPosition) {
 	broken = false;
 	
-	Point topLeftPosition2(250,50);
-	
 	Polygon P1(p_canvas, topLeftPosition);
-	Polygon P2(p_canvas, topLeftPosition2);
+	Polygon P2(p_canvas, topLeftPosition);
 	
 	polygons.push_back(P1);
 	polygons.push_back(P2);
@@ -18,16 +16,17 @@ Body::Body(Canvas *p_canvas, Point topLeftPosition) {
 Body::~Body() {
 }
 		
-void Body::draw() {
-	polygons[0].draw();
+void Body::draw(uint32_t color) {
+	polygons[0].draw(color);
 	if (broken) {
-		polygons[1].draw();
+		polygons[1].draw(color);
 	}
 }
 
-void Body::move(int dx, int dy) {
+void Body::move(int dx, int dy)  {
 	polygons[0].move(dx, dy);
-	polygons[1].move(dx, dy);
+	if (broken)
+		polygons[1].move(dx, dy);
 }
 
 void Body::broke() {
@@ -49,4 +48,15 @@ void Body::setTopLeftPosition(Point topLeftPosition) {
 
 Point Body::getTopLeftPosition() {
 	return topLeftPosition;
+}
+
+int Body::getWidth() {
+	if (broken)
+		return polygons[1].getMostRightPoint().getAbsis() - polygons[0].getMostLeftPoint().getAbsis();
+	else
+		return polygons[0].getMostRightPoint().getAbsis() - polygons[0].getMostLeftPoint().getAbsis();
+}
+
+int Body::getHeight() {
+	return polygons[0].getMostBottomPoint().getOrdinat() - polygons[0].getMostUpperPoint().getOrdinat();
 }

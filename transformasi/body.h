@@ -17,11 +17,14 @@ class Body {
 		Body(Canvas *p_canvas, Point topLeftPosition);
 		~Body();
 		
-		void draw();
+		void draw(uint32_t);
 		void move(int dx, int dy);
 		void broke();
 		void setTopLeftPosition(Point topLeftPosition);
 		Point getTopLeftPosition();
+		
+		int getWidth();
+		int getHeight();
 		
 	private :
 		vector<Polygon> polygons;

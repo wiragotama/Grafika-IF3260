@@ -44,5 +44,4 @@ void TerjunPayung::draw() {
 	head_cpy.drawFull(canvas, canvas->pixel_color(255,0,0));
 	parachute_cpy.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
 	parachute_cpy.drawSemiTop(canvas, canvas->pixel_color(255,0,0));
-	canvas->flush();
 }

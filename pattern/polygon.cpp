@@ -15,16 +15,16 @@ void Polygon::erasePoints() {
 		points.erase(points.begin());
 }
 
-void Polygon::draw() {
+void Polygon::draw(uint32_t color) {
 	
 	for (int i=1; i<points.size(); i++) {
 		Line line(points[i], points[i-1]);
 		line.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
-		line.draw(canvas, 1.0, canvas->pixel_color(255,0,0));
+		line.draw(canvas, 1.0, color);
 	}
 	Line line(points[points.size()-1], points[0]);
 	line.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
-	line.draw(canvas, 1.0, canvas->pixel_color(255,0,0));
+	line.draw(canvas, 1.0, color);
 	
 	//flood fill
 	if (pattern.getMatrix()!=NULL)
@@ -48,11 +48,11 @@ void Polygon::floodFill(int x, int y) {
 }
 
 void Polygon::move(int dx, int dy) {
-	for (int i=0; i<points.size(); i++)
+	for (int i=0; i<points.size(); i++) {
 		points[i].move(dx, dy);
+	}
 	
 	firePoint.move(dx, dy);
-	topLeftPosition.move(dx, dy);
 }
 
 void Polygon::loadPolygon(const char* filename) {

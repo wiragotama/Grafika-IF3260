@@ -13,7 +13,7 @@ class Polygon {
 		Polygon(Canvas *canvas, Point topLeftPosition);
 		~Polygon();
 
-		void draw();
+		void draw(uint32_t color);
 		void move(int dx, int dy);
 		void loadPolygon(const char* filename);
 		void loadPattern(const char *filename);

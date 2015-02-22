@@ -15,6 +15,15 @@ class Tire : public Circle {
 		int getBounceHeight();
 		Point getBottomPosition();
 		
+		int getHeight();
+		int getWidth();
+		void setMidPoint(Point midPoint);
+		Point getMidPoint();
+		void setRadius(int radius);
+		int getRadius();
+		
+		void move(int dx, int dy);
+		
 	private :
 		bool startBounce;
 		int bounceHeight;

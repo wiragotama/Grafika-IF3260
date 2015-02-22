@@ -6,7 +6,7 @@ int main() {
 	Body body(&canvas, topLeftPosition);
 	//while (true) {
 		body.broke();
-		body.draw();
+		body.draw(canvas.pixel_color(255,0,0));
 		canvas.flush();
 		//sleep(1);
 		//body.move(20);
