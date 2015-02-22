@@ -9,6 +9,7 @@
 #include "../core/canvas.h"
 #include "../core/header.h"
 #include "../pattern/polygon.h"
+#include "../transformasi/kincir.h"
 
 class Helikopter : public Drawable {
 	public :
@@ -30,12 +31,13 @@ class Helikopter : public Drawable {
 		
 		void draw(uint32_t color);
 		bool atBottomOfScreen();
+		void kincirDestroy();
 		
 	private :
 		Body body;
 		Tire tire;
 		Canvas *canvas;
-		//baling2
+		Kincir kincir;
 		Point topLeftPosition;
 };
 

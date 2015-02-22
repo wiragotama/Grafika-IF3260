@@ -23,11 +23,12 @@ int main() {
 	
 	Projectile p(&canvas, 2);
 	p.setTopLeftPosition(Point(91,380));
+	int c = 0;
 	
 	while(!kenaPeluru) {
 		helikopter.draw(canvas.pixel_color(255,0,0));
 		kapal.draw(canvas.pixel_color(0,255,0));	
-		p.draw();
+		if (c>1050) p.draw();
 		
 		canvas.flush();
 		if (direction) {
@@ -43,21 +44,24 @@ int main() {
 		else if (helikopter.getTopLeftPosition().getAbsis()+helikopter.getWidth() >= canvas.get_vinfo().xres) {
 			direction = true;
 		}
-		p.move(1, -1);
+		if (c>1050) p.move(1, -1);
 		if (cekTabrakan(&p, &helikopter)) {
 			kenaPeluru = true;
 		}
 		usleep(5000);
+		c++;
 	}
 	//ceritanya bagian ini dah kena peluru
-	Point x(300,10);
+	Point x(320,-50);
 	TerjunPayung terjunPayung(&canvas, x);
 	
 	helikopter.brokeBody();
 	bool stopMoveDown = false;
+	c = 0;
 	while (true) {
 		helikopter.draw(canvas.pixel_color(255,0,0));
 		kapal.draw(canvas.pixel_color(0,255,0));
+		if (c%150==0) helikopter.kincirDestroy();
 		terjunPayung.draw();
 		canvas.flush();
 		if (!stopMoveDown)
@@ -68,6 +72,7 @@ int main() {
 		}
 		terjunPayung.moveDown(1);
 		usleep(5000);
+		c++;
 	}
 	return 0;
 }

@@ -36,12 +36,12 @@ void TerjunPayung::draw() {
 	vector <Line> lines_cpy = lines;
 	for (vector<Line>::iterator it = lines_cpy.begin(); it != lines_cpy.end(); it++) {
 		it->move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
-		it->draw(canvas, 1, canvas->pixel_color(255,0,0));
+		it->draw(canvas, 1, canvas->pixel_color(255,255,0));
 	}
 
 	Circle head_cpy = head, parachute_cpy = parachute;
 	head_cpy.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
-	head_cpy.drawFull(canvas, canvas->pixel_color(255,0,0));
+	head_cpy.drawFull(canvas, canvas->pixel_color(255,255,0));
 	parachute_cpy.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
-	parachute_cpy.drawSemiTop(canvas, canvas->pixel_color(255,0,0));
+	parachute_cpy.drawSemiTop(canvas, canvas->pixel_color(255,255,0));
 }
