@@ -13,18 +13,21 @@
 #define colorGP 255
 #define colorBP 0
 
-class Body  : public drawable {
+class Body {
 	public:
 		Body (Canvas *p_canvas);
 		~Body();
 
 		void draw();
         void move(int dx, int dy); //
-        void setPosition(Point p);
+        void setTopLeftPosition(Point p);
+        Point getTopLeftPosition();
 		void broke(); //
 		
 	private:
 		Polygon polygons[2]; //klo pecah jadi 2, klo masih utuh hanya pake 1		
+		bool broken;
+		Point topLeftPosition;
 };
 
 #endif
