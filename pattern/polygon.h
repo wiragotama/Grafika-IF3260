@@ -27,6 +27,9 @@ class Polygon {
 		Point getTopLeftPosition();
 		Point getMostRightPoint();
 		Point getMostLeftPoint();
+		Point getMostBottomPoint();
+		Point getMostUpperPoint();
+		void erasePoints();
 		
 	private :
 		uint32_t getColor(int x, int y);

@@ -6,6 +6,13 @@ Polygon::Polygon(Canvas *canvas, Point topLeftPosition) {
 }
 
 Polygon::~Polygon() {
+	while (points.size()>0)
+		points.erase(points.begin());
+}
+
+void Polygon::erasePoints() {
+	while (points.size()>0)
+		points.erase(points.begin());
 }
 
 void Polygon::draw() {
@@ -20,8 +27,8 @@ void Polygon::draw() {
 	line.draw(canvas, 1.0, canvas->pixel_color(255,0,0));
 	
 	//flood fill
-	floodFill(firePoint.getAbsis(), firePoint.getOrdinat());
-	canvas->flush();
+	if (pattern.getMatrix()!=NULL)
+		floodFill(firePoint.getAbsis(), firePoint.getOrdinat());
 }
 
 void Polygon::floodFill(int x, int y) {
@@ -122,6 +129,30 @@ Point Polygon::getMostLeftPoint() {
 	for (int it=0; it<points.size(); ++it) {
 		if (points[it].getAbsis()<=x) {
 			x = points[it].getAbsis();
+			idx = it;
+		}
+	}
+	return points[idx];
+}
+
+Point Polygon::getMostBottomPoint() {
+	int x = 0;
+	int idx = 0;
+	for (int it=0; it<points.size(); ++it) {
+		if (points[it].getOrdinat()>=x) {
+			x = points[it].getOrdinat();
+			idx = it;
+		}
+	}
+	return points[idx];
+}
+
+Point Polygon::getMostUpperPoint() {
+	int x = 10000;
+	int idx = 0;
+	for (int it=0; it<points.size(); ++it) {
+		if (points[it].getOrdinat()<=x) {
+			x = points[it].getOrdinat();
 			idx = it;
 		}
 	}

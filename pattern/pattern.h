@@ -13,6 +13,7 @@ class Pattern {
 		int getColor(int row, int column);
 		int getWidth();
 		int getHeight();
+		uint32_t** getMatrix();
 		
 	private :
 		uint32_t **matrix;
