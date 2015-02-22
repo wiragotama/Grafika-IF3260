@@ -16,8 +16,10 @@ class Kincir {
     const Kincir& operator= (const Kincir&);
     ~Kincir();
 
+    void destroy();
     void draw();
     void rotate(double radians);
+    void move(int dx, int dy);
 
     private:
     void init(Canvas *p_canvas);

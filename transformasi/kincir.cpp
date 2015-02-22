@@ -13,12 +13,27 @@ Kincir::Kincir(const Kincir& lonte) {}
 const Kincir& Kincir::operator= (const Kincir& lonte) {}
 Kincir::~Kincir() {}
 
+void Kincir::destroy() {
+    if (orig.size() > 1)
+        orig.erase(orig.begin()+1);
+    if (transformed.size() > 1)
+        transformed.erase(transformed.begin() + 1);
+}
+
+void Kincir::move(int dx, int dy) {
+    for (int i = 0; i < orig.size(); ++i) {
+        orig[i].move(dx, dy);
+        transformed[i].move(dx, dy);
+    }
+    center.move(dx, dy);
+}
+
 void Kincir::rotate(double radians) {
     angle += radians;
     if (angle > 2 * PI) {
         angle -= 2 * PI;
     }
-    for (int i = 0; i < 4; ++i) {
+    for (int i = 0; i < orig.size(); ++i) {
         Point rot = orig[i].getPoint(0);
         transformed[i] = orig[i].rotate(angle, rot.getAbsis(), rot.getOrdinat());
     }
@@ -30,8 +45,6 @@ void Kincir::draw() {
 }
 
 void Kincir::init(Canvas *p_canvas) {
-    printf("Kincir::init\n");
-
     Point topLeft1(center.getAbsis(), center.getOrdinat()-50);
     Polygon baling1(p_canvas, topLeft1);
     baling1.loadPolygon("kincir1.info");
