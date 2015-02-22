@@ -15,3 +15,6 @@ transformation:
 
 tire :
 	g++ core/canvas.cpp core/circle.cpp core/point.cpp transformasi/tire.cpp transformasi/driverTire.cpp -o bin/tireTest
+	
+body :
+	g++ core/canvas.cpp core/point.cpp transformasi/body.cpp pattern/polygon.cpp core/line.cpp pattern/pattern.cpp transformasi/driverBody.cpp -g -o bin/bodyTest

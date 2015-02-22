@@ -1,35 +1,35 @@
 #include "body.h"
 
-Body::Body (Canvas *p_canvas) {
+Body::Body(Canvas *p_canvas) {
 	broken = false;
-	topLeftPosition = Point(0,0);
+	
+	Point topLeftPosition1(100,50);
+	Point topLeftPosition2(250,50);
+	
+	Polygon P1(p_canvas, topLeftPosition1);
+	Polygon P2(p_canvas, topLeftPosition2);
+	
+	polygons.push_back(P1);
+	polygons.push_back(P2);
+	
+	string ply1 = "body.info";
+	polygons[0].loadPolygon(ply1.c_str());
 }
 
 Body::~Body() {
 }
-
+		
 void Body::draw() {
 	polygons[0].draw();
-	if (broken) 
+	if (broken) {
 		polygons[1].draw();
+	}
 }
 
 void Body::move(int dx, int dy) {
-	polygons[0].move(dx,dy);
-	if(broken)
-		polygons[1].move(dx,dy);
+	polygons[0].move(dx, dy);
+	polygons[1].move(dx, dy);
 }
 
-void Body::setTopLeftPosition(Point p) {
-	polygons[0].setTopLeftPosition(p.getAbsis(),p.getOrdinat());
-	if(broken)
-		polygons[1].setTopLeftPosition(p.getAbsis()+250,p.getOrdinat());
-}
-
-void Body::broke(const char* filename1, const char* filename2, const char* pattern) {
-	broken = true;
-	polygons[0].loadPolygon(filename1);
-	polygons[0].loadPattern(pattern);
-	polygons[1].loadPolygon(filename2);
-	polygons[1].loadPattern(pattern);
+void Body::broke() {
 }

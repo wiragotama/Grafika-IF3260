@@ -2,10 +2,12 @@
 Pattern::Pattern() {
 	this->width = 0;
 	this->height = 0;
+	matrix = NULL;
 }
 
 Pattern::~Pattern() {
-	free(matrix);
+	if (matrix!=NULL)
+		free(matrix);
 }
 
 void Pattern::loadFile(const char *filename) {
@@ -43,4 +45,8 @@ int Pattern::getWidth() {
 
 int Pattern::getHeight() {
 	return height;
+}
+
+uint32_t** Pattern::getMatrix() {
+	return matrix;
 }

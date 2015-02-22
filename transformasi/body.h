@@ -6,8 +6,7 @@
 #include "../core/point.h"
 #include "../core/line.h"
 #include "../pattern/polygon.h"
-#include "drawable.h"
-
+#include <vector>
 
 #define colorRP 0
 #define colorGP 255
@@ -15,19 +14,16 @@
 
 class Body {
 	public:
-		Body (Canvas *p_canvas);
+		Body(Canvas *p_canvas);
 		~Body();
-
-		void draw();
-        void move(int dx, int dy); //
-        void setTopLeftPosition(Point p);
-        Point getTopLeftPosition();
-		void broke(const char* filename1, const char* filename2, const char* pattern); //
 		
-	private:
-		Polygon polygons[2]; //klo pecah jadi 2, klo masih utuh hanya pake 1		
+		void draw();
+		void move(int dx, int dy);
+		void broke();
+		
+	private :
+		vector<Polygon> polygons;
 		bool broken;
-		Point topLeftPosition;
 };
 
 #endif

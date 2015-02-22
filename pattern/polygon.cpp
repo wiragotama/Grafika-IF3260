@@ -20,7 +20,8 @@ void Polygon::draw() {
 	line.draw(canvas, 1.0, canvas->pixel_color(255,0,0));
 	
 	//flood fill
-	floodFill(firePoint.getAbsis(), firePoint.getOrdinat());
+	if (pattern.getMatrix()!=NULL)
+		floodFill(firePoint.getAbsis(), firePoint.getOrdinat());
 	canvas->flush();
 }
 

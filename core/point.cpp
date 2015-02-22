@@ -24,6 +24,7 @@ Point::Point(const Point& p) {
 Point& Point::operator=(const Point& p) {
 	setAbsis(p.x);
 	setOrdinat(p.y);
+	return *this;
 }
 
 Point::~Point() {
