@@ -16,7 +16,9 @@ class Circle {
 		void moveDown(const int);
 		void drawFull(Canvas *canvas, uint32_t color);
 		void drawSemiTop(Canvas *canvas, uint32_t color);
-
+		int getRadius();
+		Point getMidPoint();
+		
 	private:
 		Point midPoint;
 		int radius;

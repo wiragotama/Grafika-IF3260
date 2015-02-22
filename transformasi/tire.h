@@ -10,7 +10,9 @@ class Tire : public Circle {
 	public :
 		Tire(Point midPoint, int radius);
 		~Tire();
-		bounce();
+		void bounce();
+		void draw(Canvas *canvas, uint32_t color);
+		int getBounceHeight();
 		Point getBottomPosition();
 		
 	private :

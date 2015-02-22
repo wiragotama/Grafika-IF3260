@@ -81,3 +81,11 @@ void Circle::drawSemiTop(Canvas *canvas, uint32_t color) {
 		}
 	}
 }
+
+int Circle::getRadius() {
+	return radius;
+}
+
+Point Circle::getMidPoint() {
+	return midPoint;
+}
