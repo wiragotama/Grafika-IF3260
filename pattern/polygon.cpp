@@ -143,6 +143,10 @@ uint32_t Polygon::getColor(int x, int y) {
 	return pattern.getColor(j, i);
 }
 
+void Polygon::addPoint(Point P) {
+	points.push_back(P);
+}
+
 /* Setter & Getter */
 void Polygon::setPoint(int idx, Point P) {
 	points[idx] = P;

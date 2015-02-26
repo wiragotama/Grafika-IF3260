@@ -20,7 +20,8 @@ class Polygon {
 		void loadPattern(const char *filename);
         Polygon rotate(double angle, int rx, int ry);
         void printInfo();
-
+		void addPoint(Point P);
+		
 		/* Setter & Getter */
 		void setPoint(int idx, Point P);
 		void setFirePoint(Point P);
