@@ -2,13 +2,13 @@
 
 const int MAXINT = 0x7FFFFFFF;
 
-Polygon::Polygon(Canvas *canvas, Point topLeftPosition) {
-	this->canvas = canvas;
+Polygon::Polygon() {}
+
+Polygon::Polygon(Point topLeftPosition) {
 	this->topLeftPosition = topLeftPosition;
 }
 
-Polygon::Polygon(Canvas *canvas, Point topLeftPosition, vector<Point> nodes, Point firePoint) {
-    this->canvas = canvas;
+Polygon::Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint) {
     this->topLeftPosition = topLeftPosition;
     points = nodes;
     this->firePoint = firePoint;
@@ -65,7 +65,7 @@ Polygon Polygon::rotate(double angle, int rx, int ry) {
     if (min_y < 0)
         transformedFirePoint.setOrdinat(transformedFirePoint.getOrdinat() - min_y);
 
-    return Polygon(canvas, newTopLeft, transformed, transformedFirePoint);
+    return Polygon(newTopLeft, transformed, transformedFirePoint);
 }
 
 void Polygon::erasePoints() {
@@ -73,7 +73,7 @@ void Polygon::erasePoints() {
 		points.erase(points.begin());
 }
 
-void Polygon::draw(uint32_t color) {
+void Polygon::draw(Canvas* canvas, uint32_t color) {
 
 	for (int i=1; i<points.size(); i++) {
 		Line line(points[i], points[i-1]);
@@ -86,10 +86,10 @@ void Polygon::draw(uint32_t color) {
 
 	//flood fill
 	if (pattern.getMatrix()!=NULL)
-		floodFill(firePoint.getAbsis(), firePoint.getOrdinat());
+		floodFill(canvas, firePoint.getAbsis(), firePoint.getOrdinat());
 }
 
-void Polygon::floodFill(int x, int y) {
+void Polygon::floodFill(Canvas* canvas, int x, int y) {
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
 	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
 
@@ -98,10 +98,10 @@ void Polygon::floodFill(int x, int y) {
 
 	if ((screen_x>=0 && screen_x<canvas->get_vinfo().xres) && (screen_y>=0 && screen_y<canvas->get_vinfo().yres) && (canvas->getColor(location) >>24!=0xff)) {
 		canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
-		floodFill(x-1, y);
-		floodFill(x+1, y);
-		floodFill(x, y-1);
-		floodFill(x, y+1);
+		floodFill(canvas, x-1, y);
+		floodFill(canvas, x+1, y);
+		floodFill(canvas, x, y-1);
+		floodFill(canvas, x, y+1);
 	}
 }
 

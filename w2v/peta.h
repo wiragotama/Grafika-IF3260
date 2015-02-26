@@ -11,9 +11,10 @@ class Peta {
 	public:
 		Peta();
 		~Peta();
-		void windowToView(Canvas *canvas);
+		void windowToView(Canvas*);
 		void zoomIn();
 		void zoomOut();
+	private:
 		void loadFile(const char*);
 
 	private:

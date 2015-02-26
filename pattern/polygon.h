@@ -10,11 +10,12 @@
 
 class Polygon {
 	public :
-		Polygon(Canvas *canvas, Point topLeftPosition);
-        Polygon(Canvas *canvas, Point topLeftPosition, vector<Point> nodes, Point firePoint);
+		Polygon();
+		Polygon(Point topLeftPosition);
+        Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint);
 		~Polygon();
 
-		void draw(uint32_t color);
+		void draw(Canvas*, uint32_t color);
 		void move(int dx, int dy);
 		void loadPolygon(const char* filename);
 		void loadPattern(const char *filename);
@@ -37,7 +38,7 @@ class Polygon {
 		
 	private :
 		uint32_t getColor(int x, int y);
-		void floodFill(int screen_x, int screen_y);
+		void floodFill(Canvas*, int screen_x, int screen_y);
 		
 	private :
 		vector<Point> points;
@@ -45,7 +46,6 @@ class Polygon {
 		Point firePoint;
 		Point originFirePoint;
 		Point topLeftPosition;
-		Canvas *canvas;
 };
 
 #endif
