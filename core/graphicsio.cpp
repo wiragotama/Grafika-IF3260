@@ -25,7 +25,7 @@ char GraphicsIO::getch_(int echo) {
 }
 
 char GraphicsIO::getch() {
-	return getch_(1);
+	return getch_(0);
 }
 
 char GraphicsIO::getche() {
