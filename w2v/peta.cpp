@@ -19,17 +19,46 @@ void Peta::windowToView(Canvas *canvas) {
 
 }
 
-void Peta::show_s_view_frame(Canvas *canvas){
+void Peta::showSmallViewFrame(Canvas *canvas){
 	Point p1(500,350);
 	Point p2(600,350);
 	Point p3(600,450);
 	Point p4(500,450);
-	s_view_frame.addPoint(p1);
-	s_view_frame.addPoint(p2);
-	s_view_frame.addPoint(p3);
-	s_view_frame.addPoint(p4);
-	s_view_frame.draw(canvas, canvas->pixel_color(0,255,0));
-}	
+	smallViewFrame.addPoint(p1);
+	smallViewFrame.addPoint(p2);
+	smallViewFrame.addPoint(p3);
+	smallViewFrame.addPoint(p4);
+	smallViewFrame.draw(canvas, canvas->pixel_color(0,255,0));
+}
+
+void Peta::showHighlightedArea(Canvas* canvas) {
+	Point p1(0,0);
+	Point p2(100,0);
+	Point p3(100,100);
+	Point p4(0,100);
+	highlightedArea.addPoint(p1);
+	highlightedArea.addPoint(p2);
+	highlightedArea.addPoint(p3);
+	highlightedArea.addPoint(p4);
+	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
+}
+
+void Peta::moveHighlightedArea(char c,Canvas* canvas) {
+	if(c==97 && highlightedArea.getMostLeftPoint().getAbsis()>0) {//left gradient
+		highlightedArea.move(-1,0);
+	}
+	else if (c==119 && highlightedArea.getMostUpperPoint().getOrdinat()>0) { //up gradient
+		highlightedArea.move(0,-1);
+	}
+	else if (c==100 && highlightedArea.getMostRightPoint().getAbsis()<640) { //right gradient
+		highlightedArea.move(1,0);
+	}
+	else if (c==115 && highlightedArea.getMostBottomPoint().getOrdinat()<480) { //down gradient
+		highlightedArea.move(0,1);
+	}
+	
+	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
+}
 
 void Peta::loadFile(const char *filename) {
 	int count, p1, p2;

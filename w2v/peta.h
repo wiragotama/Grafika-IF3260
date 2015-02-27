@@ -16,7 +16,9 @@ class Peta {
 		void windowToView(Canvas*);
 		void zoomIn();
 		void zoomOut();
-		void show_s_view_frame(Canvas*);
+		void showSmallViewFrame(Canvas*);
+		void showHighlightedArea(Canvas*);
+		void moveHighlightedArea(char,Canvas*);
 		OutCode ComputeOutCode(int,int);
 		void CohenSutherlandLineClipAndDraw(int,int,int,int);
 	private:
@@ -34,7 +36,8 @@ class Peta {
 		Point viewFrame[2];
 		int size_width;
 		int size_height;		
-		Polygon s_view_frame;		
+		Polygon smallViewFrame;	
+		Polygon highlightedArea;
 		int xmin, ymin, xmax, ymax;	
 };
 #endif

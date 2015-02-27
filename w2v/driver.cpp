@@ -10,10 +10,21 @@ int main() {
 	// 	c = graphicsIO.getch();
 	// 	printf("haha %d", c);
 	// } while (c!='\n');
+	char c;
 	Canvas canvas;
 	Peta peta;
-	peta.windowToView(&canvas);
-	peta.show_s_view_frame(&canvas);
-	canvas.flush();
+	GraphicsIO graphicsIO;
+	peta.showHighlightedArea(&canvas);
+	do {
+		system("clear");
+		peta.windowToView(&canvas);
+		peta.showSmallViewFrame(&canvas);
+		canvas.flush();
+		
+		c = graphicsIO.getch();
+		
+		peta.moveHighlightedArea(c,&canvas);
+	}
+	while (c!='\n');
 	return 0;
 }
