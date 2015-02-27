@@ -1,29 +1,29 @@
 #include "body.h"
 
-Body::Body(Point topLeftPosition) {
+Body::Body(Canvas *p_canvas, Point topLeftPosition) {
 	broken = false;
 	
-	Polygon P1(topLeftPosition);
-	Polygon P2(topLeftPosition);
+	Polygon P1(p_canvas, topLeftPosition);
+	Polygon P2(p_canvas, topLeftPosition);
 	
 	polygons.push_back(P1);
 	polygons.push_back(P2);
 	
-	string ply1 = bodyPath;
+	string ply1 = "body.info";
 	polygons[0].loadPolygon(ply1.c_str());
 }
 
 Body::~Body() {
 }
 		
-void Body::draw(Canvas *canvas, uint32_t color) {
-	polygons[0].draw(canvas, color);
+void Body::draw(uint32_t color) {
+	polygons[0].draw(color);
 	if (broken) {
-		polygons[1].draw(canvas, color);
+		polygons[1].draw(color);
 	}
 }
 
-void Body::move(int dx, int dy) {
+void Body::move(int dx, int dy)  {
 	polygons[0].move(dx, dy);
 	if (broken)
 		polygons[1].move(dx, dy);
@@ -31,8 +31,8 @@ void Body::move(int dx, int dy) {
 
 void Body::broke() {
 	broken = true;
-	string ply1 = leftBody;
-	string ply2 = rightBody;
+	string ply1 = "bodyLeft.info";
+	string ply2 = "bodyRight.info";
 	polygons[0].erasePoints();
 	polygons[1].erasePoints();
 	
