@@ -10,8 +10,8 @@ class Point {
 		Point(const Point& p); //copy constructor
 		virtual Point& operator= (const Point& p); //assignment
 		~Point(); //destructor
-		int getAbsis();
-		int getOrdinat();
+		int getAbsis() const;
+		int getOrdinat() const;
 		void setAbsis(int x);
 		void setOrdinat(int y);
         void printInfo();

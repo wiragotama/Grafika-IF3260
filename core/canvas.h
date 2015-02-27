@@ -15,7 +15,8 @@ class Canvas {
 		long getCursorLocation(int screen_x, int screen_y); //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada koordinat screen_x,screen_y di layar
 		uint32_t getColor(int screen_x, int screen_y); //mendapatkan warna yang sedang ditunjuk kursor pada koordinat screen_x,screen_y di layar
 		uint32_t getColor(long location); //mendapatkan warna yang ditunjuk pada location
-		
+		void resetDirtyBit(int screen_x, int screen_y, int screen_x2, int screen_y2);
+
 		void clearScreen();
 		void flush();
 		void putColorInfo(int screen_x, int screen_y, const char* message); //testing only

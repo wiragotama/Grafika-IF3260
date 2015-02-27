@@ -97,11 +97,23 @@ void Canvas::putPixelColor(int screen_x, int screen_y, uint32_t color) { //letak
 }
 
 void Canvas::putBackgroundPixel(int screen_x, int screen_y, uint32_t color) {
-long location = getCursorLocation(screen_x,screen_y);
+	long location = getCursorLocation(screen_x,screen_y);
 	if(location >= getScreensize() || location < 0);
 		//nothing
 	else { 
 		*((uint32_t*)(backbuffer + location)) = color; //dirty bit untuk menandakan sudah pernah menulis di tempat itu
+	}
+}
+
+void Canvas::resetDirtyBit(int screen_x, int screen_y, int screen_x2, int screen_y2) {
+	for (int i=screen_x; i<screen_x2; i++)
+		for (int j=screen_y; j<screen_y2; j++) {
+			long location = getCursorLocation(i,j);
+			if(location >= getScreensize() || location < 0);
+				//nothing
+			else { 
+				*((uint32_t*)(backbuffer + location)) &= 0xFFFFFF;  //dirty bit untuk menandakan sudah pernah menulis di tempat itu
+			}
 	}
 }
 

@@ -24,6 +24,26 @@ Pattern::Pattern(const Pattern& pattern) {
 	}
 }
 
+const Pattern& Pattern::operator=(const Pattern& pattern) {
+	uint32_t** other = pattern.getMatrix();
+	if (other!=NULL) {
+		width = pattern.getWidth();
+		height = pattern.getHeight();
+		
+		matrix = new uint32_t* [height];
+		for (int i = 0; i < height; i++) {
+			matrix[i] = new uint32_t[width];
+			memcpy(matrix[i], other[i], sizeof(uint32_t)*width);
+		}
+		
+	} else {
+		matrix = NULL;
+		width = 0;
+		height = 0;
+	}
+	return *this;
+}
+
 Pattern::~Pattern() {
 	if (matrix!=NULL) {
 		for (int i = 0; i < height; i++)
@@ -59,7 +79,7 @@ void Pattern::setElement(int row, int column, uint32_t color) {
 }
 
 int Pattern::getColor(int row, int column) {
-	return matrix[row][column];
+	return matrix[row%height][column%width];
 }
 
 int Pattern::getWidth() const {

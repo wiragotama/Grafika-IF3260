@@ -8,7 +8,7 @@ Polygon::Polygon(Point topLeftPosition) {
 	this->topLeftPosition = topLeftPosition;
 }
 
-Polygon::Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint) {
+Polygon::Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint, Pattern pattern_t) : pattern(pattern_t) {
     this->topLeftPosition = topLeftPosition;
     points = nodes;
     this->firePoint = firePoint;
@@ -25,6 +25,15 @@ Polygon::Polygon(const Polygon& ply) : pattern(ply.getPattern()) {
 	firePoint = ply.getFirePoint();
 	originFirePoint = ply.getOriginFirePoint();
 	topLeftPosition = ply.getTopLeftPosition();
+}
+
+const Polygon& Polygon::operator=(const Polygon& ply) {
+	points = ply.getPoints();
+	pattern = ply.getPattern();
+	firePoint = ply.getFirePoint();
+	originFirePoint = ply.getOriginFirePoint();
+	topLeftPosition = ply.getTopLeftPosition();
+	return *this;
 }
 
 Point Polygon::getOriginFirePoint() const {
@@ -84,7 +93,7 @@ Polygon Polygon::rotate(double angle, int rx, int ry) {
     if (min_y < 0)
         transformedFirePoint.setOrdinat(transformedFirePoint.getOrdinat() - min_y);
 
-    return Polygon(newTopLeft, transformed, transformedFirePoint);
+    return Polygon(newTopLeft, transformed, transformedFirePoint, pattern);
 }
 
 void Polygon::erasePoints() {
@@ -106,6 +115,12 @@ void Polygon::draw(Canvas* canvas, uint32_t color) {
 	//flood fill
 	if (pattern.getMatrix()!=NULL)
 		floodFill(canvas, firePoint.getAbsis(), firePoint.getOrdinat());
+
+	int x = topLeftPosition.getAbsis();
+	int y = topLeftPosition.getOrdinat();
+	int x1 = x + getWidth();
+	int y1 = y + getHeight();
+	canvas->resetDirtyBit(x, y, x1, y1);
 }
 
 void Polygon::drawBackground(Canvas *canvas, uint32_t color) {
@@ -223,7 +238,7 @@ Point Polygon::getTopLeftPosition() const {
 	return topLeftPosition;
 }
 
-Point Polygon::getMostRightPoint() {
+Point Polygon::getMostRightPoint() const {
 	int x = 0;
 	int idx = 0;
 	for (int it=0; it<points.size(); ++it) {
@@ -235,7 +250,7 @@ Point Polygon::getMostRightPoint() {
 	return points[idx];
 }
 
-Point Polygon::getMostLeftPoint() {
+Point Polygon::getMostLeftPoint() const {
 	int x = 10000;
 	int idx = 0;
 	for (int it=0; it<points.size(); ++it) {
@@ -247,7 +262,7 @@ Point Polygon::getMostLeftPoint() {
 	return points[idx];
 }
 
-Point Polygon::getMostBottomPoint() {
+Point Polygon::getMostBottomPoint() const {
 	int x = 0;
 	int idx = 0;
 	for (int it=0; it<points.size(); ++it) {
@@ -259,7 +274,7 @@ Point Polygon::getMostBottomPoint() {
 	return points[idx];
 }
 
-Point Polygon::getMostUpperPoint() {
+Point Polygon::getMostUpperPoint() const {
 	int x = 10000;
 	int idx = 0;
 	for (int it=0; it<points.size(); ++it) {
@@ -269,4 +284,11 @@ Point Polygon::getMostUpperPoint() {
 		}
 	}
 	return points[idx];
+}
+
+int Polygon::getWidth() const {
+	return getMostRightPoint().getAbsis() - getMostLeftPoint().getAbsis();
+}
+int Polygon::getHeight() const {
+	return getMostBottomPoint().getAbsis() - getMostUpperPoint().getAbsis();
 }

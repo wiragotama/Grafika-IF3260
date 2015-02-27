@@ -42,11 +42,11 @@ void Point::rotate(double angle, int rx, int ry) {
     y = y1;
 }
 
-int Point::getAbsis() {
+int Point::getAbsis() const {
 	return x;
 }
 
-int Point::getOrdinat() {
+int Point::getOrdinat() const {
 	return y;
 }
 

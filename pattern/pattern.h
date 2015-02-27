@@ -7,6 +7,7 @@ class Pattern {
 	public :
 		Pattern();
 		Pattern(const Pattern& pattern);
+		const Pattern& operator=(const Pattern&);
 		~Pattern();
 
 		void loadFile(const char *filename);

@@ -12,8 +12,9 @@ class Polygon {
 	public :
 		Polygon();
 		Polygon(Point topLeftPosition);
-        Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint);
+        Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint, Pattern pattern_t);
         Polygon(const Polygon& ply);
+        const Polygon& operator=(const Polygon&);
 		~Polygon();
 
 		void draw(Canvas*, uint32_t color);
@@ -34,10 +35,14 @@ class Polygon {
 		Point getFirePoint() const;
 		Point getOriginFirePoint() const;
 		Point getTopLeftPosition() const;
-		Point getMostRightPoint();
-		Point getMostLeftPoint();
-		Point getMostBottomPoint();
-		Point getMostUpperPoint();
+		Point getMostRightPoint() const;
+		Point getMostLeftPoint() const;
+		Point getMostBottomPoint() const;
+		Point getMostUpperPoint() const;
+
+		int getWidth() const;
+		int getHeight() const;
+
 		void erasePoints();
 		
 		Pattern getPattern() const;
