@@ -10,7 +10,9 @@ Body::Body(Point topLeftPosition) {
 	polygons.push_back(P2);
 	
 	string ply1 = bodyPath;
+	string ply2 = bodyPattern;
 	polygons[0].loadPolygon(ply1.c_str());
+	polygons[0].loadPattern(ply2.c_str());
 }
 
 Body::~Body() {
@@ -33,13 +35,17 @@ void Body::broke() {
 	broken = true;
 	string ply1 = leftBody;
 	string ply2 = rightBody;
+	string ptr = bodyPattern;
+	
 	polygons[0].erasePoints();
 	polygons[1].erasePoints();
 	
 	polygons[0].loadPolygon(ply1.c_str());
+	polygons[0].loadPattern(ptr.c_str());
 	
 	polygons[1].setTopLeftPosition(polygons[0].getTopLeftPosition().getAbsis()+120, polygons[0].getTopLeftPosition().getOrdinat());
 	polygons[1].loadPolygon(ply2.c_str());
+	polygons[1].loadPattern(ptr.c_str());
 }
 
 void Body::setTopLeftPosition(Point topLeftPosition) {

@@ -7,28 +7,33 @@
 #include "../core/canvas.h"
 #include "../pattern/polygon.h"
 
+#define kincir1Path "kincirInfo/kincir1.info"
+#define kincir2Path "kincirInfo/kincir2.info"
+#define kincir3Path "kincirInfo/kincir3.info"
+#define kincir4Path "kincirInfo/kincir4.info"
+
 class Kincir {
     public:
-    Kincir(Canvas *p_canvas);
-    Kincir(Canvas *p_canvas, Point center);
-    Kincir(Canvas *p_canvas, int x, int y);
-    Kincir(const Kincir&);
-    const Kincir& operator= (const Kincir&);
-    ~Kincir();
+		Kincir();
+		Kincir(Point center);
+		Kincir(int x, int y);
+		Kincir(const Kincir&);
+		const Kincir& operator= (const Kincir&);
+		~Kincir();
 
-    void destroy();
-    void draw();
-    void rotate(double radians);
-    void move(int dx, int dy);
+		void destroy();
+		void draw(Canvas *p_canvas, uint32_t color);
+		void rotate(double radians);
+		void move(int dx, int dy);
 
     private:
-    void init(Canvas *p_canvas);
+		void init();
 
-    vector<Polygon> orig, transformed;
-    Point center;
-    double angle;
+		vector<Polygon> orig, transformed;
+		Point center;
+		double angle;
 
-    static const double PI;
+		static const double PI;
 };
 
 #endif

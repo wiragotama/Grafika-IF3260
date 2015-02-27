@@ -5,10 +5,10 @@ double thirtyDegree = 0.5235987756;
 
 int main() {
 	Canvas canvas;
-    Kincir lonte(&canvas);
+    Kincir lonte;
     int i = 0;
 	while (i < 3) {
-        lonte.draw();
+        lonte.draw(&canvas, canvas.pixel_color(255,100,102));
         lonte.rotate(thirtyDegree);
         lonte.move(0, -25);
         canvas.flush();
@@ -17,7 +17,7 @@ int main() {
 	}
 
     while (true) {
-        lonte.draw();
+        lonte.draw(&canvas, canvas.pixel_color(255,100,102));
         lonte.rotate(thirtyDegree);
         lonte.move(0, -25);
         canvas.flush();

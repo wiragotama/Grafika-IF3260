@@ -15,6 +15,7 @@
 #define bodyPath "helikopterBody/body.info"
 #define leftBody "helikopterBody/bodyLeft.info"
 #define rightBody "helikopterBody/bodyRight.info"
+#define bodyPattern "helikopterBody/bodyPattern.info"
 
 class Body {
 	public:
