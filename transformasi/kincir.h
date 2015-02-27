@@ -11,11 +11,12 @@
 #define kincir2Path "kincirInfo/kincir2.info"
 #define kincir3Path "kincirInfo/kincir3.info"
 #define kincir4Path "kincirInfo/kincir4.info"
+#define kincirPattern "kincirInfo/kincirPattern.info"
 
 class Kincir {
     public:
 		Kincir();
-		Kincir(Point center);
+		Kincir(Point centerPoint);
 		Kincir(int x, int y);
 		Kincir(const Kincir&);
 		const Kincir& operator= (const Kincir&);

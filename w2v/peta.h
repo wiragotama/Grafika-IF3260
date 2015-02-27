@@ -18,6 +18,7 @@ class Peta {
 		void zoomOut();
 		OutCode ComputeOutCode(int x,int y);
 		void CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas*);
+		void show_s_view_frame(Canvas*);
 	private:
 		void loadFile(const char*);
 
@@ -32,8 +33,8 @@ class Peta {
 		vector<Polygon> islands;
 		Point viewFrame[2];
 		int size_width;
-		int size_height;
-		int xmin, ymin, xmax, ymax;
-	
+		int size_height;		
+		Polygon s_view_frame;		
+		int xmin, ymin, xmax, ymax;	
 };
 #endif
