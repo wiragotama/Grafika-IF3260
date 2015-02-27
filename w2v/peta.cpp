@@ -27,21 +27,16 @@ void Peta::windowToView(Canvas *canvas) {
 		it->drawBackground(canvas, canvas->pixel_color(255,0,0));
 	}
 
-	show_s_view_frame(canvas);
+	showSmallViewFrame(canvas);
 
 }
 
-<<<<<<< HEAD
 void Peta::showSmallViewFrame(Canvas *canvas){
-=======
-void Peta::show_s_view_frame(Canvas *canvas){
-	Polygon s_view_frame;
->>>>>>> 7804fdff1e06e83f0387c58400a88c6a3327f12f
+	Polygon smallViewFrame;
 	Point p1(500,350);
 	Point p2(600,350);
 	Point p3(600,450);
 	Point p4(500,450);
-<<<<<<< HEAD
 	smallViewFrame.addPoint(p1);
 	smallViewFrame.addPoint(p2);
 	smallViewFrame.addPoint(p3);
@@ -77,14 +72,6 @@ void Peta::moveHighlightedArea(char c,Canvas* canvas) {
 	
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
 }
-=======
-	s_view_frame.addPoint(p1);
-	s_view_frame.addPoint(p2);
-	s_view_frame.addPoint(p3);
-	s_view_frame.addPoint(p4);
-	s_view_frame.drawBackground(canvas, canvas->pixel_color(0,255,0));
-}	
->>>>>>> 7804fdff1e06e83f0387c58400a88c6a3327f12f
 
 void Peta::loadFile(const char *filename) {
 	int count, p1, p2;
