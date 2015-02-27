@@ -7,7 +7,7 @@ Helikopter::Helikopter(Point topLeftPosition) : kincir(topLeftPosition), body(to
 	body.setTopLeftPosition(topLeftPosition);
 	
 	tmp.move(15, body.getHeight());
-	//tire.setMidPoint(tmp);
+	tire.setMidPoint(tmp);
 	
 	kincir.move(body.getWidth()/2,body.getHeight()/2);
 }
@@ -24,8 +24,10 @@ void Helikopter::setTopLeftPosition(Point P) {
 }
 
 void Helikopter::move(int dx, int dy) {
+	if ((body.getBrokenFlag()==true) && (getTopLeftPosition().getOrdinat()%5==0)) 
+		body.separateBrokenParts(2, 0);
 	body.move(dx, dy);
-	//tire.move(dx, dy);
+	tire.move(dx, dy);
 	this->topLeftPosition.move(dx, dy);
 	kincir.move(dx, dy);
 }
@@ -40,7 +42,7 @@ int Helikopter::getHeight() {
 
 void Helikopter::brokeBody() {
 	body.broke();
-	kincir.move(-40, -100);
+	kincir.move(0, -100);
 }
 
 void Helikopter::bounceTire() {
@@ -57,7 +59,7 @@ Body Helikopter::getBody() {
 
 void Helikopter::draw(Canvas *canvas, uint32_t color) {
 	body.draw(canvas, color);
-	//tire.draw(canvas, color);
+	tire.draw(canvas, color);
 	kincir.draw(canvas, canvas->pixel_color(0,0,255));
 	double thirtyDegree = 0.03490658503989;
 	kincir.rotate(thirtyDegree);

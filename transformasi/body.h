@@ -28,8 +28,10 @@ class Body {
 		void setTopLeftPosition(Point topLeftPosition);
 		Point getTopLeftPosition();
 		
-		int getWidth();
-		int getHeight();
+		bool getBrokenFlag() const;
+		void separateBrokenParts(int dx, int dy);
+		int getWidth() const;
+		int getHeight() const;
 		
 	private :
 		vector<Polygon> polygons;

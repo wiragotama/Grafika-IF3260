@@ -118,7 +118,10 @@ void Canvas::resetDirtyBit(int screen_x, int screen_y, int screen_x2, int screen
 }
 
 long Canvas::getCursorLocation(int screen_x, int screen_y) { //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada posisi coor_x,coor_y di layar
-	return (screen_x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (screen_y+vinfo.yoffset) * finfo.line_length;
+	if (screen_x >=0 && screen_y>=0 && screen_x <=vinfo.xres && screen_y <= vinfo.yres)
+		return (screen_x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (screen_y+vinfo.yoffset) * finfo.line_length;
+	else
+		return -1; //diluar jangkauan
 }
 
 uint32_t Canvas::getColor(int screen_x, int screen_y) { //mendapatkan warna yang sedang ditunjuk kursor pada koordinat screen_x,screen_y di layar

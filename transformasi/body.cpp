@@ -43,7 +43,7 @@ void Body::broke() {
 	polygons[0].loadPolygon(ply1.c_str());
 	polygons[0].loadPattern(ptr.c_str());
 	
-	polygons[1].setTopLeftPosition(polygons[0].getTopLeftPosition().getAbsis()+120, polygons[0].getTopLeftPosition().getOrdinat());
+	polygons[1].setTopLeftPosition(polygons[0].getTopLeftPosition().getAbsis()+30, polygons[0].getTopLeftPosition().getOrdinat());
 	polygons[1].loadPolygon(ply2.c_str());
 	polygons[1].loadPattern(ptr.c_str());
 }
@@ -56,13 +56,22 @@ Point Body::getTopLeftPosition() {
 	return topLeftPosition;
 }
 
-int Body::getWidth() {
+bool Body::getBrokenFlag() const {
+	return broken;
+}
+
+void Body::separateBrokenParts(int dx, int dy) {
+	polygons[0].move((-1)*(dx/2), (-1)*(dy/2));
+	polygons[1].move((dx/2), (dy/2));
+}
+
+int Body::getWidth() const {
 	if (broken)
 		return polygons[1].getMostRightPoint().getAbsis() - polygons[0].getMostLeftPoint().getAbsis();
 	else
 		return polygons[0].getMostRightPoint().getAbsis() - polygons[0].getMostLeftPoint().getAbsis();
 }
 
-int Body::getHeight() {
+int Body::getHeight() const {
 	return polygons[0].getMostBottomPoint().getOrdinat() - polygons[0].getMostUpperPoint().getOrdinat();
 }
