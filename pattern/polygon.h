@@ -45,7 +45,7 @@ class Polygon {
 		uint32_t getColor(int x, int y);
 		void floodFill(Canvas*, int screen_x, int screen_y);
 		
-	public :
+	private :
 		vector<Point> points;
 		Pattern pattern;
 		Point firePoint;

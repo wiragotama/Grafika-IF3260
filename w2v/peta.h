@@ -21,8 +21,6 @@ class Peta {
 		void show_s_view_frame(Canvas*);
 	private:
 		void loadFile(const char*);
-
-	public:
 		const int INSIDE; // 0000
 		const int LEFT;   // 0001
 		const int RIGHT;  // 0010
