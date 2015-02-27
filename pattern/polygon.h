@@ -17,6 +17,7 @@ class Polygon {
 		~Polygon();
 
 		void draw(Canvas*, uint32_t color);
+		void drawBackground(Canvas*, uint32_t color);
 		void move(int dx, int dy);
 		void loadPolygon(const char* filename);
 		void loadPattern(const char *filename);
@@ -44,6 +45,7 @@ class Polygon {
 	private :
 		uint32_t getColor(int x, int y);
 		void floodFill(Canvas*, int screen_x, int screen_y);
+		void floodFillBackground(Canvas*, int screen_x, int screen_y);
 		
 	private :
 		vector<Point> points;
