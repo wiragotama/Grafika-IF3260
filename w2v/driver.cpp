@@ -15,5 +15,4 @@ int main() {
 	peta.windowToView(&canvas);
 	canvas.flush();
 	return 0;
-
 }
