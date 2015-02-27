@@ -24,7 +24,7 @@ void Peta::windowToView(Canvas *canvas) {
 		// }
 		// p.draw(canvas, canvas->pixel_color(255,0,0));
 		// CohenSutherlandLineClipAndDraw (p[0], p[1], canvas);
-		it->draw(canvas, canvas->pixel_color(255,0,0));
+		it->drawBackground(canvas, canvas->pixel_color(255,0,0));
 	}
 
 	show_s_view_frame(canvas);
@@ -41,7 +41,7 @@ void Peta::show_s_view_frame(Canvas *canvas){
 	s_view_frame.addPoint(p2);
 	s_view_frame.addPoint(p3);
 	s_view_frame.addPoint(p4);
-	s_view_frame.draw(canvas, canvas->pixel_color(0,255,0));
+	s_view_frame.drawBackground(canvas, canvas->pixel_color(0,255,0));
 }	
 
 void Peta::loadFile(const char *filename) {
@@ -148,7 +148,7 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 
 	if (accept) {
 		Line l(Point(x0,y0), Point(x1,y1));
-		l.draw(canvas, 1, canvas->pixel_color(255,0,0));
+		l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
        // Following functions are left for implementation by user based on
        // their platform (OpenGL/graphics.h etc.)
        // DrawRectangle(xmin, ymin, xmax, ymax);
