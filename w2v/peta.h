@@ -16,8 +16,8 @@ class Peta {
 		void windowToView(Canvas*);
 		void zoomIn();
 		void zoomOut();
-		OutCode ComputeOutCode(int,int);
-		void CohenSutherlandLineClipAndDraw(int,int,int,int);
+		OutCode ComputeOutCode(int x,int y);
+		void CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas*);
 	private:
 		void loadFile(const char*);
 
