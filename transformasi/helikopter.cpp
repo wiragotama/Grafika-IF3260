@@ -1,7 +1,6 @@
 #include "helikopter.h"
 
-Helikopter::Helikopter(Canvas *p_canvas, Point topLeftPosition) : kincir(p_canvas), body(p_canvas, topLeftPosition), tire(topLeftPosition, 10) {
-	this->canvas = p_canvas;
+Helikopter::Helikopter(Point topLeftPosition) : kincir(), body(topLeftPosition), tire(topLeftPosition, 10) {
 	this->topLeftPosition = topLeftPosition;
 	
 	Point tmp = topLeftPosition;
@@ -56,10 +55,10 @@ Body Helikopter::getBody() {
 	return body;
 }
 
-void Helikopter::draw(uint32_t color) {
-	body.draw(color);
+void Helikopter::draw(Canvas *canvas, uint32_t color) {
+	body.draw(canvas, color);
 	tire.draw(canvas, color);
-	kincir.draw();
+	kincir.draw(canvas, color);
 	double thirtyDegree = 0.03490658503989;
 	kincir.rotate(thirtyDegree);
 }
