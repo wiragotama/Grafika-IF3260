@@ -10,11 +10,11 @@ int main() {
 	Canvas canvas;
 	Point topLeftPosition(130,50);
 	
-	Helikopter helikopter(&canvas, topLeftPosition);
+	Helikopter helikopter(topLeftPosition);
 	
 	Point topLeftPositionKapal(1,400);
 	
-	Polygon kapal(&canvas, topLeftPositionKapal);
+	Polygon kapal(topLeftPositionKapal);
 	string polygonFile = "kapal.info"; //nama file jgn sampe salah ya... nanti kena segfault
 	kapal.loadPolygon(polygonFile.c_str());
 	
@@ -26,8 +26,8 @@ int main() {
 	int c = 0;
 	
 	while(!kenaPeluru) {
-		helikopter.draw(canvas.pixel_color(255,0,0));
-		kapal.draw(canvas.pixel_color(0,255,0));	
+		helikopter.draw(&canvas, canvas.pixel_color(255,0,0));
+		kapal.draw(&canvas, canvas.pixel_color(0,255,0));	
 		if (c>1050) p.draw();
 		
 		canvas.flush();
@@ -52,7 +52,7 @@ int main() {
 		c++;
 	}
 	//ceritanya bagian ini dah kena peluru
-	Point x(320,-50);
+	/*Point x(320,-50);
 	TerjunPayung terjunPayung(&canvas, x);
 	
 	helikopter.brokeBody();
@@ -73,7 +73,7 @@ int main() {
 		terjunPayung.moveDown(1);
 		usleep(5000);
 		c++;
-	}
+	}*/
 	return 0;
 }
 
