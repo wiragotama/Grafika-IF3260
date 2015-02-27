@@ -2,13 +2,13 @@
 
 const double Kincir::PI = 3.141592654;
 
-Kincir::Kincir(Canvas *p_canvas) : center(400, 400) {
+Kincir::Kincir() : center(400, 400) {
     angle = 0;
-    init(p_canvas);
+    init();
 }
 
-Kincir::Kincir(Canvas *p_canvas, Point center) {}
-Kincir::Kincir(Canvas *p_canvas, int x, int y) {}
+Kincir::Kincir(Point center) {}
+Kincir::Kincir(int x, int y) {}
 Kincir::Kincir(const Kincir& lonte) {}
 const Kincir& Kincir::operator= (const Kincir& lonte) {}
 Kincir::~Kincir() {}
@@ -39,27 +39,27 @@ void Kincir::rotate(double radians) {
     }
 }
 
-void Kincir::draw() {
+void Kincir::draw(Canvas *canvas, uint32_t color) {
     for (vector<Polygon>::iterator it = transformed.begin(); it != transformed.end(); it++)
-        it->draw(0x00FFFF);
+        it->draw(canvas, color);
 }
 
-void Kincir::init(Canvas *p_canvas) {
+void Kincir::init() {
     Point topLeft1(center.getAbsis(), center.getOrdinat()-50);
-    Polygon baling1(p_canvas, topLeft1);
-    baling1.loadPolygon("kincir1.info");
+    Polygon baling1(topLeft1);
+    baling1.loadPolygon(kincir1Path);
 
     Point topLeft2(center.getAbsis(), center.getOrdinat());
-    Polygon baling2(p_canvas, topLeft2);
-    baling2.loadPolygon("kincir2.info");
+    Polygon baling2(topLeft2);
+    baling2.loadPolygon(kincir2Path);
 
     Point topLeft3(center.getAbsis()-100, center.getOrdinat());
-    Polygon baling3(p_canvas, topLeft3);
-    baling3.loadPolygon("kincir3.info");
+    Polygon baling3(topLeft3);
+    baling3.loadPolygon(kincir3Path);
 
     Point topLeft4(center.getAbsis() - 50, center.getOrdinat()-100);
-    Polygon baling4(p_canvas, topLeft4);
-    baling4.loadPolygon("kincir4.info");
+    Polygon baling4(topLeft4);
+    baling4.loadPolygon(kincir4Path);
 
     orig.push_back(baling1);
     orig.push_back(baling2);
