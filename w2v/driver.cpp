@@ -13,7 +13,6 @@ int main() {
 	Canvas canvas;
 	Peta peta;
 	peta.windowToView(&canvas);
-	peta.show_s_view_frame(&canvas);
 	canvas.flush();
 	return 0;
 }

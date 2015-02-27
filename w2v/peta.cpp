@@ -10,8 +10,6 @@ Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8) {
 	this->xmax = 100;
 	this->ymin = 0;
 	this->ymax = 100;
-	this->size_width = 480;
-	this->size_height = 320;
 }
 
 Peta::~Peta() {}
@@ -29,9 +27,12 @@ void Peta::windowToView(Canvas *canvas) {
 		it->draw(canvas, canvas->pixel_color(255,0,0));
 	}
 
+	show_s_view_frame(canvas);
+
 }
 
 void Peta::show_s_view_frame(Canvas *canvas){
+	Polygon s_view_frame;
 	Point p1(500,350);
 	Point p2(600,350);
 	Point p3(600,450);
