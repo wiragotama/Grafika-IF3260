@@ -30,7 +30,7 @@ class Helikopter : public Drawable {
 		Body getBody();
 		
 		void draw(Canvas *canvas, uint32_t color);
-		bool atBottomOfScreen();
+		bool atBottomOfScreen(int yres);
 		void kincirDestroy();
 		
 	private :

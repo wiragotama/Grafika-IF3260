@@ -7,7 +7,11 @@ Kincir::Kincir() : center(400, 400) {
     init();
 }
 
-Kincir::Kincir(Point center) {}
+Kincir::Kincir(Point centerPoint) : center(centerPoint) {
+	angle = 0;
+	init();
+}
+
 Kincir::Kincir(int x, int y) {}
 Kincir::Kincir(const Kincir& lonte) {}
 const Kincir& Kincir::operator= (const Kincir& lonte) {}
@@ -45,21 +49,25 @@ void Kincir::draw(Canvas *canvas, uint32_t color) {
 }
 
 void Kincir::init() {
-    Point topLeft1(center.getAbsis(), center.getOrdinat()-50);
+    Point topLeft1(center.getAbsis(), center.getOrdinat()-10);
     Polygon baling1(topLeft1);
     baling1.loadPolygon(kincir1Path);
+    baling1.loadPattern(kincirPattern);
 
     Point topLeft2(center.getAbsis(), center.getOrdinat());
     Polygon baling2(topLeft2);
     baling2.loadPolygon(kincir2Path);
+    baling2.loadPattern(kincirPattern);
 
-    Point topLeft3(center.getAbsis()-100, center.getOrdinat());
+    Point topLeft3(center.getAbsis()-20, center.getOrdinat());
     Polygon baling3(topLeft3);
     baling3.loadPolygon(kincir3Path);
+    baling3.loadPattern(kincirPattern);
 
-    Point topLeft4(center.getAbsis() - 50, center.getOrdinat()-100);
+    Point topLeft4(center.getAbsis() - 10, center.getOrdinat()-20);
     Polygon baling4(topLeft4);
     baling4.loadPolygon(kincir4Path);
+    baling4.loadPattern(kincirPattern);
 
     orig.push_back(baling1);
     orig.push_back(baling2);

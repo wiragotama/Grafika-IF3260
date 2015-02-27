@@ -66,7 +66,7 @@ int main() {
 		canvas.flush();
 		if (!stopMoveDown)
 			helikopter.move(0,1);
-		if (helikopter.atBottomOfScreen()) {
+		if (helikopter.atBottomOfScreen(canvas.get_vinfo().yres)) {
 			helikopter.bounceTire();
 			bool stopMoveDown = true;
 		}

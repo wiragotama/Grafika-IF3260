@@ -20,6 +20,25 @@ Polygon::~Polygon() {
 		points.erase(points.begin());
 }
 
+Polygon::Polygon(const Polygon& ply) : pattern(ply.getPattern()) {
+	points = ply.getPoints();
+	firePoint = ply.getFirePoint();
+	originFirePoint = ply.getOriginFirePoint();
+	topLeftPosition = ply.getTopLeftPosition();
+}
+
+Point Polygon::getOriginFirePoint() const {
+	return originFirePoint;
+}
+
+vector<Point> Polygon::getPoints() const {
+	return points;
+}
+
+Pattern Polygon::getPattern() const {
+	return pattern;
+}
+
 void Polygon::printInfo() {
     printf("Polygon:");
     for (vector<Point>::iterator it = points.begin(); it != points.end(); it++) {
@@ -165,11 +184,11 @@ Point Polygon::getPoint(int idx) {
 	return points[idx];
 }
 
-Point Polygon::getFirePoint() {
+Point Polygon::getFirePoint() const {
 	return firePoint;
 }
 
-Point Polygon::getTopLeftPosition() {
+Point Polygon::getTopLeftPosition() const {
 	return topLeftPosition;
 }
 

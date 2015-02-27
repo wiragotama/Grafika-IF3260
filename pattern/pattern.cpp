@@ -5,9 +5,31 @@ Pattern::Pattern() {
 	matrix = NULL;
 }
 
+Pattern::Pattern(const Pattern& pattern) {
+	uint32_t** other = pattern.getMatrix();
+	if (other!=NULL) {
+		width = pattern.getWidth();
+		height = pattern.getHeight();
+		
+		matrix = new uint32_t* [height];
+		for (int i = 0; i < height; i++) {
+			matrix[i] = new uint32_t[width];
+			memcpy(matrix[i], other[i], sizeof(uint32_t)*width);
+		}
+		
+	} else {
+		matrix = NULL;
+		width = 0;
+		height = 0;
+	}
+}
+
 Pattern::~Pattern() {
-	if (matrix!=NULL)
-		free(matrix);
+	if (matrix!=NULL) {
+		for (int i = 0; i < height; i++)
+			delete[] matrix[i];
+		delete[] matrix;
+	}
 }
 
 void Pattern::loadFile(const char *filename) {
@@ -29,6 +51,7 @@ void Pattern::loadFile(const char *filename) {
 			matrix[it][j] = value;
 		}
 	}
+	fclose(matrix_file);
 }
 
 void Pattern::setElement(int row, int column, uint32_t color) {
@@ -39,14 +62,14 @@ int Pattern::getColor(int row, int column) {
 	return matrix[row][column];
 }
 
-int Pattern::getWidth() {
+int Pattern::getWidth() const {
 	return width;
 }
 
-int Pattern::getHeight() {
+int Pattern::getHeight() const {
 	return height;
 }
 
-uint32_t** Pattern::getMatrix() {
+uint32_t** Pattern::getMatrix() const {
 	return matrix;
 }

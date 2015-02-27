@@ -1,15 +1,15 @@
 #include "helikopter.h"
 
-Helikopter::Helikopter(Point topLeftPosition) : kincir(), body(topLeftPosition), tire(topLeftPosition, 10) {
+Helikopter::Helikopter(Point topLeftPosition) : kincir(topLeftPosition), body(topLeftPosition), tire(topLeftPosition, 3) {
 	this->topLeftPosition = topLeftPosition;
 	
 	Point tmp = topLeftPosition;
 	body.setTopLeftPosition(topLeftPosition);
 	
-	tmp.move(30, body.getHeight()+10);
+	tmp.move(15, body.getHeight());
 	tire.setMidPoint(tmp);
 	
-	kincir.move(-180, -350);
+	kincir.move(body.getWidth()/2,0);
 }
 
 Helikopter::~Helikopter() {
@@ -58,7 +58,7 @@ Body Helikopter::getBody() {
 void Helikopter::draw(Canvas *canvas, uint32_t color) {
 	body.draw(canvas, color);
 	tire.draw(canvas, color);
-	kincir.draw(canvas, color);
+	kincir.draw(canvas, canvas->pixel_color(0,0,255));
 	double thirtyDegree = 0.03490658503989;
 	kincir.rotate(thirtyDegree);
 }
@@ -67,6 +67,6 @@ void Helikopter::kincirDestroy() {
 	kincir.destroy();
 }
 
-bool Helikopter::atBottomOfScreen() {
-	return (topLeftPosition.getOrdinat()+body.getHeight()+tire.getHeight() >= canvas->get_vinfo().yres);
+bool Helikopter::atBottomOfScreen(int yres) {
+	return (topLeftPosition.getOrdinat()+body.getHeight()+tire.getHeight() >= yres);
 }
