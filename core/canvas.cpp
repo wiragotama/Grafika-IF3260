@@ -96,6 +96,15 @@ void Canvas::putPixelColor(int screen_x, int screen_y, uint32_t color) { //letak
 	}
 }
 
+void Canvas::putBackgroundPixel(int screen_x, int screen_y, uint32_t color) {
+long location = getCursorLocation(screen_x,screen_y);
+	if(location >= getScreensize() || location < 0);
+		//nothing
+	else { 
+		*((uint32_t*)(backbuffer + location)) = color; //dirty bit untuk menandakan sudah pernah menulis di tempat itu
+	}
+}
+
 long Canvas::getCursorLocation(int screen_x, int screen_y) { //mendapatkan lokasi pixel (angka pointer utk framebuffer) dari cursor pada posisi coor_x,coor_y di layar
 	return (screen_x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (screen_y+vinfo.yoffset) * finfo.line_length;
 }

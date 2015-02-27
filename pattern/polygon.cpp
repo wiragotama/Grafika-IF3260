@@ -108,6 +108,21 @@ void Polygon::draw(Canvas* canvas, uint32_t color) {
 		floodFill(canvas, firePoint.getAbsis(), firePoint.getOrdinat());
 }
 
+void Polygon::drawBackground(Canvas *canvas, uint32_t color) {
+	for (int i=1; i<points.size(); i++) {
+		Line line(points[i], points[i-1]);
+		line.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
+		line.drawBackground(canvas, 1.0, color);
+	}
+	Line line(points[points.size()-1], points[0]);
+	line.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
+	line.drawBackground(canvas, 1.0, color);
+
+	//flood fill
+	if (pattern.getMatrix()!=NULL)
+		floodFillBackground(canvas, firePoint.getAbsis(), firePoint.getOrdinat());
+}
+
 void Polygon::floodFill(Canvas* canvas, int x, int y) {
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
 	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
@@ -121,6 +136,22 @@ void Polygon::floodFill(Canvas* canvas, int x, int y) {
 		floodFill(canvas, x+1, y);
 		floodFill(canvas, x, y-1);
 		floodFill(canvas, x, y+1);
+	}
+}
+
+void Polygon::floodFillBackground(Canvas* canvas, int x, int y) {
+	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
+	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
+
+	int screen_x = x + topLeftPosition.getAbsis();
+	int screen_y = y + topLeftPosition.getOrdinat();
+
+	if ((screen_x>=0 && screen_x<canvas->get_vinfo().xres) && (screen_y>=0 && screen_y<canvas->get_vinfo().yres)) {
+		canvas->putBackgroundPixel(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
+		floodFillBackground(canvas, x-1, y);
+		floodFillBackground(canvas, x+1, y);
+		floodFillBackground(canvas, x, y-1);
+		floodFillBackground(canvas, x, y+1);
 	}
 }
 

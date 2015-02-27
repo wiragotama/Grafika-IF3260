@@ -13,6 +13,7 @@ int main() {
 	char c;
 	Canvas canvas;
 	Peta peta;
+<<<<<<< HEAD
 	GraphicsIO graphicsIO;
 	peta.showHighlightedArea(&canvas);
 	do {
@@ -26,5 +27,9 @@ int main() {
 		peta.moveHighlightedArea(c,&canvas);
 	}
 	while (c!='\n');
+=======
+	peta.windowToView(&canvas);
+	canvas.flush();
+>>>>>>> 7804fdff1e06e83f0387c58400a88c6a3327f12f
 	return 0;
 }
