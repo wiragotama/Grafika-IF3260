@@ -16,6 +16,18 @@ void Peta::windowToView(Canvas *canvas) {
 	}
 }
 
+void Peta::show_s_view_frame(Canvas *canvas){
+	Point p1(500,350);
+	Point p2(600,350);
+	Point p3(600,450);
+	Point p4(500,450);
+	s_view_frame.addPoint(p1);
+	s_view_frame.addPoint(p2);
+	s_view_frame.addPoint(p3);
+	s_view_frame.addPoint(p4);
+	s_view_frame.draw(canvas, canvas->pixel_color(0,255,0));
+}	
+
 void Peta::loadFile(const char *filename) {
 	int count, p1, p2;
 	uint32_t value;
@@ -29,7 +41,6 @@ void Peta::loadFile(const char *filename) {
 		Point p(p1,p2);
 		polygon.addPoint(p);
 	}
-
 	islands.push_back(polygon);
 	fclose(file);
 }

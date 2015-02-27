@@ -14,6 +14,7 @@ class Peta {
 		void windowToView(Canvas*);
 		void zoomIn();
 		void zoomOut();
+		void show_s_view_frame(Canvas*);
 	private:
 		void loadFile(const char*);
 
@@ -21,7 +22,7 @@ class Peta {
 		vector<Polygon> islands;
 		Point viewFrame[2];
 		int size_width;
-		int size_height;
-	
+		int size_height;		
+		Polygon s_view_frame;		
 };
 #endif
