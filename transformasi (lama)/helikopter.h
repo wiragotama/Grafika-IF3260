@@ -13,7 +13,7 @@
 
 class Helikopter : public Drawable {
 	public :
-		Helikopter(Point topLeftPosition);
+		Helikopter(Canvas *p_canvas, Point topLeftPosition);
 		~Helikopter();
 		
 		Point getTopLeftPosition();
@@ -29,13 +29,14 @@ class Helikopter : public Drawable {
 		Tire getTire();
 		Body getBody();
 		
-		void draw(Canvas *canvas, uint32_t color);
+		void draw(uint32_t color);
 		bool atBottomOfScreen();
 		void kincirDestroy();
 		
 	private :
 		Body body;
 		Tire tire;
+		Canvas *canvas;
 		Kincir kincir;
 		Point topLeftPosition;
 };

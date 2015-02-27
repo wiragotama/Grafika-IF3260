@@ -5,7 +5,7 @@
 
 class Drawable {
 	public:
-		virtual void draw(Canvas *canvas, uint32_t color) = 0;
+		virtual void draw(uint32_t color) = 0;
 		
 		virtual Point getTopLeftPosition() = 0;
 		virtual void setTopLeftPosition(Point P) = 0;

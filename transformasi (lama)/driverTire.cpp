@@ -8,7 +8,7 @@ int main() {
 	while (true) {
 		tire.draw(&canvas, canvas.pixel_color(255,0,0));
 		tire.bounce();
-		sleep(1);
+		sleep(0.5);
 		canvas.flush();
 	}
 	return 0;

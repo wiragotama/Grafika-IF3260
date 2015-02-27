@@ -12,17 +12,12 @@
 #define colorGP 255
 #define colorBP 0
 
-#define bodyPath "helikopterBody/body.info"
-#define leftBody "helikopterBody/bodyLeft.info"
-#define rightBody "helikopterBody/bodyRight.info"
-#define bodyPattern "helikopterBody/bodyPattern.info"
-
 class Body {
 	public:
-		Body(Point topLeftPosition);
+		Body(Canvas *p_canvas, Point topLeftPosition);
 		~Body();
 		
-		void draw(Canvas *canvas, uint32_t color);
+		void draw(uint32_t);
 		void move(int dx, int dy);
 		void broke();
 		void setTopLeftPosition(Point topLeftPosition);
