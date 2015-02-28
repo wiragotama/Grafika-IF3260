@@ -6,32 +6,6 @@ Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8) {
 	this->loadFile("pulau/papua.info");
 	this->loadFile("pulau/sulawesi.info");
 	this->loadFile("pulau/sumatera.info");
-	this->xmin = 0;
-	this->xmax = 100;
-	this->ymin = 0;
-	this->ymax = 100;
-}
-
-Peta::~Peta() {}
-
-void Peta::drawIndonesia(Canvas *canvas) {
-	for(vector<Polygon>::iterator it = islands.begin(); it != islands.end(); ++it) {
-		it->drawBackground(canvas, canvas->pixel_color(255,0,0));
-	}
-}
-
-void Peta::initSmallViewFrame() {
-	Point p1(500,350);
-	Point p2(600,350);
-	Point p3(600,450);
-	Point p4(500,450);
-	smallViewFrame.addPoint(p1);
-	smallViewFrame.addPoint(p2);
-	smallViewFrame.addPoint(p3);
-	smallViewFrame.addPoint(p4);
-}
-
-void Peta::showHighlightedArea(Canvas* canvas) {
 	Point p1(0,0);
 	Point p2(100,0);
 	Point p3(100,100);
@@ -40,6 +14,43 @@ void Peta::showHighlightedArea(Canvas* canvas) {
 	highlightedArea.addPoint(p2);
 	highlightedArea.addPoint(p3);
 	highlightedArea.addPoint(p4);
+
+	Point p1a(500,350);
+	Point p2a(600,350);
+	Point p3a(600,450);
+	Point p4a(500,450);
+	viewFrame.addPoint(p1a);
+	viewFrame.addPoint(p2a);
+	viewFrame.addPoint(p3a);
+	viewFrame.addPoint(p4a);
+}
+
+Peta::~Peta() {}
+
+void Peta::drawIndonesia(Canvas *canvas) {
+	for(vector<Polygon>::iterator it = islands.begin(); it != islands.end(); ++it) {
+		it->drawBackground(canvas, canvas->pixel_color(255,0,0));
+		vector<Point> points = it->getPoints();
+		// it->printInfo();
+		for (vector<Point>::iterator it1 = points.begin(); it1 != points.end(); ++it1) {
+			// it1->printInfo();
+			// getchar();
+			if (it1+1 != points.end()) {
+				CohenSutherlandLineClipAndDraw(*it1, *(it1+1), canvas);
+			} else {
+				CohenSutherlandLineClipAndDraw(*it1, points.front(), canvas);
+			}
+		}
+	}
+	getchar();
+	drawViewFrame(canvas);
+}
+
+void Peta::drawViewFrame(Canvas* canvas) {
+	viewFrame.draw(canvas, canvas->pixel_color(0,255,0));
+}
+
+void Peta::showHighlightedArea(Canvas* canvas) {
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
 }
 
@@ -61,6 +72,8 @@ void Peta::moveHighlightedArea(char c, Canvas* canvas) {
 	}
 
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
+	// highlightedArea.printInfo();
+	// getchar();
 }
 
 void Peta::loadFile(const char *filename) {
@@ -85,7 +98,7 @@ void Peta::loadFile(const char *filename) {
 
 // ASSUME THAT xmax, xmin, ymax and ymin are global constants.
 
-OutCode Peta::ComputeOutCode(int x, int y) {
+OutCode Peta::ComputeOutCode(int x, int y, int xmin, int ymin, int xmax, int ymax) {
 	OutCode code;
 
 	code = INSIDE;          // initialised as being inside of clip window
@@ -115,8 +128,20 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 	int x1 = p1.getAbsis();
 	int y1 = p1.getOrdinat();
 
-	OutCode outcode0 = ComputeOutCode(x0, y0);
-	OutCode outcode1 = ComputeOutCode(x1, y1);
+	int xmin = highlightedArea.getMinX();
+	int ymin = highlightedArea.getMinY();
+	int xmax = highlightedArea.getMaxX();
+	int ymax = highlightedArea.getMaxY();
+// highlightedArea.getPoint(0).printInfo();
+// highlightedArea.getPoint(1).printInfo();
+// highlightedArea.getPoint(2).printInfo();
+// highlightedArea.getPoint(3).printInfo();
+// 	highlightedArea.printInfo();
+
+	// printf("cibai %d %d %d %d\n", xmin, ymin, xmax, ymax);
+	// getchar();
+	OutCode outcode0 = ComputeOutCode(x0, y0, xmin, ymin, xmax, ymax);
+	OutCode outcode1 = ComputeOutCode(x1, y1, xmin, ymin, xmax, ymax);
 	// printf("%d %d %d %d %d %d\n", x0, y0, x1, y1, outcode0, outcode1);
 	// printf("xmin ymin xmax ymax = %d %d %d %d\n", xmin, ymin, xmax, ymax);
 	bool accept = false;
@@ -156,25 +181,42 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 			if (outcodeOut == outcode0) {
 				x0 = x;
 				y0 = y;
-				outcode0 = ComputeOutCode(x0, y0);
+				outcode0 = ComputeOutCode(x0, y0, xmin, ymin, xmax, ymax);
 			} else { // outcodeOut == outcode1
 				x1 = x;
 				y1 = y;
-				outcode1 = ComputeOutCode(x1, y1);
+				outcode1 = ComputeOutCode(x1, y1, xmin, ymin, xmax, ymax);
 			}
 		}
 	}
 
+
 	if (accept) {
-		Line l(Point(x0,y0), Point(x1,y1));
+		// printf("accept\n");
+		// printf("%d %d %d %d\n", x0, y0, x1, y1);
+		//jadi dapat (x0,y0) dan (x1,y1), yaitu point hasil clipping ke highlighted area
+		//setelah itu, scaling ke view frame
+
+		float xfactor = (float)(viewFrame.getMaxX() - viewFrame.getMinX())/(highlightedArea.getMaxX() - highlightedArea.getMinX());
+		float yfactor = (float)(viewFrame.getMaxY() - viewFrame.getMinY())/(highlightedArea.getMaxY() - highlightedArea.getMinY());
+		
+		int x0new = (int) (xfactor * (x0 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+		int y0new = (int) (yfactor * (y0 - highlightedArea.getMinY())) + viewFrame.getMinY();
+		int x1new = (int) (xfactor * (x1 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+		int y1new = (int) (yfactor * (y1 - highlightedArea.getMinY())) + viewFrame.getMinY();
+		
+		Line l(Point(x0new,y0new), Point(x1new,y1new));
+		//proses scaling
 		l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
        // Following functions are left for implementation by user based on
        // their platform (OpenGL/graphics.h etc.)
        // DrawRectangle(xmin, ymin, xmax, ymax);
        // LineSegment(x0, y0, x1, y1);
 	} else {
+		// printf("reject\n");
 		// Line l(Point(x0,y0), Point(x1,y1));
 		// l.draw(canvas, 1, canvas->pixel_color(255,0,0));
 	}
+	// getchar();
 }
 

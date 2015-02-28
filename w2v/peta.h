@@ -18,11 +18,11 @@ class Peta {
 		void zoomOut();
 		void showHighlightedArea(Canvas*);
 		void moveHighlightedArea(char,Canvas*);
-		OutCode ComputeOutCode(int x,int y);
-		void CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas*);
 
 	private:
-		void initSmallViewFrame();
+		OutCode ComputeOutCode(int x,int y, int, int, int, int);
+		void CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas*);
+		void drawViewFrame(Canvas*);
 		void loadFile(const char*);
 		const int INSIDE; // 0000
 		const int LEFT;   // 0001
@@ -32,13 +32,12 @@ class Peta {
 
 	private:
 		vector<Polygon> islands;
-		Polygon smallViewFrame;
+		Polygon viewFrame;
 
 		/*******************************************/
 		/*jangan lupa di refactor 2 atribut dibawah*/
-		Point viewFrame[2];
 		Polygon highlightedArea;
-		int xmin, ymin, xmax, ymax;
+		// int xmin, ymin, xmax, ymax;
 		/*******************************************/
 };
 #endif
