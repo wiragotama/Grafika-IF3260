@@ -14,25 +14,13 @@ Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8) {
 
 Peta::~Peta() {}
 
-void Peta::windowToView(Canvas *canvas) {
+void Peta::drawIndonesia(Canvas *canvas) {
 	for(vector<Polygon>::iterator it = islands.begin(); it != islands.end(); ++it) {
-		// vector<Point> p = it->points;
-		// CohenSutherlandLineClipAndDraw (p[0], p[1], canvas);
-		// for (vector<Point>::iterator it1 = p.begin(); it1 != p.end(); ++it1) {
-		// 	if ((it1+1) != p.end())
-		// 		CohenSutherlandLineClipAndDraw (*it1, *(it1+1), canvas);	
-		// }
-		// p.draw(canvas, canvas->pixel_color(255,0,0));
-		// CohenSutherlandLineClipAndDraw (p[0], p[1], canvas);
 		it->drawBackground(canvas, canvas->pixel_color(255,0,0));
 	}
-
-	showSmallViewFrame(canvas);
-
 }
 
-void Peta::showSmallViewFrame(Canvas *canvas){
-	Polygon smallViewFrame;
+void Peta::initSmallViewFrame() {
 	Point p1(500,350);
 	Point p2(600,350);
 	Point p3(600,450);
@@ -41,7 +29,6 @@ void Peta::showSmallViewFrame(Canvas *canvas){
 	smallViewFrame.addPoint(p2);
 	smallViewFrame.addPoint(p3);
 	smallViewFrame.addPoint(p4);
-	smallViewFrame.draw(canvas, canvas->pixel_color(0,255,0));
 }
 
 void Peta::showHighlightedArea(Canvas* canvas) {
@@ -56,20 +43,23 @@ void Peta::showHighlightedArea(Canvas* canvas) {
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
 }
 
-void Peta::moveHighlightedArea(char c,Canvas* canvas) {
-	if (c == 97 && highlightedArea.getMinX() > 0) {//left gradient
+void Peta::moveHighlightedArea(char c, Canvas* canvas) {
+	int min_x = highlightedArea.getMinX(), max_x = highlightedArea.getMaxX(),
+		min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
+
+	if (c == 97 && min_x > 0) { //left gradient
 		highlightedArea.move(-1,0);
 	}
-	else if (c == 119 && highlightedArea.getMinY() > 0) { //up gradient
+	else if (c == 119 && min_y > 0) { //up gradient
 		highlightedArea.move(0,-1);
 	}
-	else if (c == 100 && highlightedArea.getMaxX() < 640) { //right gradient
+	else if (c == 100 && max_x < 640) { //right gradient
 		highlightedArea.move(1,0);
 	}
-	else if (c == 115 && highlightedArea.getMaxY() < 480) { //down gradient
+	else if (c == 115 && max_y < 480) { //down gradient
 		highlightedArea.move(0,1);
 	}
-	
+
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
 }
 
@@ -89,15 +79,15 @@ void Peta::loadFile(const char *filename) {
 	islands.push_back(polygon);
 	fclose(file);
 }
- 
+
 // Compute the bit code for a point (x, y) using the clip rectangle
 // bounded diagonally by (xmin, ymin), and (xmax, ymax)
- 
+
 // ASSUME THAT xmax, xmin, ymax and ymin are global constants.
- 
+
 OutCode Peta::ComputeOutCode(int x, int y) {
 	OutCode code;
- 
+
 	code = INSIDE;          // initialised as being inside of clip window
  	// printf("Code gw jing %d\n", code);
 
@@ -113,13 +103,13 @@ OutCode Peta::ComputeOutCode(int x, int y) {
 
 	return code;
 }
- 
+
 // Cohen–Sutherland clipping algorithm clips a line from
-// P0 = (x0, y0) to P1 = (x1, y1) against a rectangle with 
+// P0 = (x0, y0) to P1 = (x1, y1) against a rectangle with
 // diagonal from (xmin, ymin) to (xmax, ymax).
 void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 	// compute outcodes for P0, P1, and whatever point lies outside the clip rectangle
-	
+
 	int x0 = p0.getAbsis();
 	int y0 = p0.getOrdinat();
 	int x1 = p1.getAbsis();
@@ -130,7 +120,7 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 	// printf("%d %d %d %d %d %d\n", x0, y0, x1, y1, outcode0, outcode1);
 	// printf("xmin ymin xmax ymax = %d %d %d %d\n", xmin, ymin, xmax, ymax);
 	bool accept = false;
- 
+
 	while (true) {
 		if (!(outcode0 | outcode1)) { // Bitwise OR is 0. Trivially accept and get out of loop
 			accept = true;
@@ -141,10 +131,10 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 			// failed both tests, so calculate the line segment to clip
 			// from an outside point to an intersection with clip edge
 			int x, y;
- 
+
 			// At least one endpoint is outside the clip rectangle; pick it.
 			OutCode outcodeOut = outcode0 ? outcode0 : outcode1;
- 
+
 			// Now find the intersection point;
 			// use formulas y = y0 + slope * (x - x0), x = x0 + (1 / slope) * (y - y0)
 			if (outcodeOut & TOP) {           // point is above the clip rectangle
@@ -160,14 +150,14 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 				y = y0 + (y1 - y0) * (xmin - x0) / (x1 - x0);
 				x = xmin;
 			}
- 
+
 			// Now we move outside point to intersection point to clip
 			// and get ready for next pass.
 			if (outcodeOut == outcode0) {
 				x0 = x;
 				y0 = y;
 				outcode0 = ComputeOutCode(x0, y0);
-			} else {
+			} else { // outcodeOut == outcode1
 				x1 = x;
 				y1 = y;
 				outcode1 = ComputeOutCode(x1, y1);

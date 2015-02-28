@@ -52,6 +52,7 @@ class Polygon {
 		Pattern getPattern() const;
 
 	private :
+        void init();
 		uint32_t getColor(int x, int y);
 		void floodFill(Canvas*, int screen_x, int screen_y);
 		void floodFillBackground(Canvas*, int screen_x, int screen_y);

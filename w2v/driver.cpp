@@ -15,15 +15,16 @@ int main() {
 	Canvas canvas;
 	Peta peta;
 	GraphicsIO graphicsIO;
+
 	peta.showHighlightedArea(&canvas);
 	do {
-		peta.windowToView(&canvas);
+		peta.drawIndonesia(&canvas);
 		canvas.flush();
 
 		c = graphicsIO.getch();
 
-		peta.moveHighlightedArea(c,&canvas);
-	} while (c!='\n');
+		peta.moveHighlightedArea(c, &canvas);
+	} while (c != '\n');
 
 	return 0;
 }

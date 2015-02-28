@@ -2,13 +2,17 @@
 
 const int MAXINT = 0x7FFFFFFF;
 
-Polygon::Polygon() {}
+Polygon::Polygon() {
+    init();
+}
 
 Polygon::Polygon(Point topLeftPosition) {
+    init();
 	this->topLeftPosition = topLeftPosition;
 }
 
 Polygon::Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint, Pattern pattern_t) : pattern(pattern_t) {
+    init();
     this->topLeftPosition = topLeftPosition;
     points = nodes;
     this->firePoint = firePoint;
@@ -21,6 +25,7 @@ Polygon::~Polygon() {
 }
 
 Polygon::Polygon(const Polygon& ply) : pattern(ply.getPattern()) {
+    init();
 	points = ply.getPoints();
 	firePoint = ply.getFirePoint();
 	originFirePoint = ply.getOriginFirePoint();
@@ -36,6 +41,10 @@ const Polygon& Polygon::operator=(const Polygon& ply) {
 	return *this;
 }
 
+void Polygon::init() {
+    min_x = max_x = min_y = max_y = -1;
+}
+
 int Polygon::getMaxY() const {
     if (max_y == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
@@ -46,9 +55,10 @@ int Polygon::getMaxY() const {
             int y = it->getOrdinat();
             if (y > max_y)
                 max_y = y;
+            it++;
         }
     }
-    return max_y+topLeftPosition.getOrdinat();
+    return max_y + topLeftPosition.getOrdinat();
 }
 
 int Polygon::getMinY() const {
@@ -61,9 +71,10 @@ int Polygon::getMinY() const {
             int y = it->getOrdinat();
             if (y < min_y)
                 min_y = y;
+            it++;
         }
     }
-    return min_y+topLeftPosition.getOrdinat();
+    return min_y + topLeftPosition.getOrdinat();
 }
 
 int Polygon::getMinX() const {
@@ -76,9 +87,10 @@ int Polygon::getMinX() const {
             int x = it->getAbsis();
             if (x < min_x)
                 min_x = x;
+            it++;
         }
     }
-    return min_x+topLeftPosition.getAbsis();
+    return min_x + topLeftPosition.getAbsis();
 }
 
 int Polygon::getMaxX() const {
@@ -91,9 +103,10 @@ int Polygon::getMaxX() const {
             int x = it->getAbsis();
             if (x > max_x)
                 max_x = x;
+            it++;
         }
     }
-    return max_x+topLeftPosition.getAbsis();
+    return max_x + topLeftPosition.getAbsis();
 }
 
 Point Polygon::getOriginFirePoint() const {
@@ -236,6 +249,7 @@ void Polygon::move(int dx, int dy) {
 	}
 
 	firePoint.move(dx, dy);
+	topLeftPosition.move(dx, dy);
 }
 
 void Polygon::loadPolygon(const char* filename) {
