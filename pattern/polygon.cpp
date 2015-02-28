@@ -175,7 +175,8 @@ void Polygon::erasePoints() {
 }
 
 void Polygon::draw(Canvas* canvas, uint32_t color) {
-
+	// printf("ini %d %d\n",topLeftPosition.getAbsis(),topLeftPosition.getOrdinat());
+	// getchar();
 	for (int i=1; i<points.size(); i++) {
 		Line line(points[i], points[i-1]);
 		line.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());

@@ -1,6 +1,6 @@
 #include "peta.h"
 
-Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8) {
+Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(Point(0,0)) {
 	this->loadFile("pulau/jawa.info");
 	this->loadFile("pulau/kalimantan.info");
 	this->loadFile("pulau/papua.info");
@@ -42,7 +42,7 @@ void Peta::drawIndonesia(Canvas *canvas) {
 			}
 		}
 	}
-	getchar();
+	// getchar();
 	drawViewFrame(canvas);
 }
 
@@ -71,6 +71,9 @@ void Peta::moveHighlightedArea(char c, Canvas* canvas) {
 		highlightedArea.move(0,1);
 	}
 
+
+	// highlightedArea.printInfo();getchar();
+
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
 	// highlightedArea.printInfo();
 	// getchar();
@@ -82,7 +85,7 @@ void Peta::loadFile(const char *filename) {
 	FILE *file;
 	file = fopen(filename,"r");
 	fscanf(file, "%d", &count);
-	Polygon polygon;
+	Polygon polygon(Point(0,0));
 
 	for(int it=0; it<count ; ++it) {
 		fscanf(file, "%d %d", &p1, &p2);
@@ -132,6 +135,7 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 	int ymin = highlightedArea.getMinY();
 	int xmax = highlightedArea.getMaxX();
 	int ymax = highlightedArea.getMaxY();
+	// printf("%d %d %d %d jinggg\n", );
 // highlightedArea.getPoint(0).printInfo();
 // highlightedArea.getPoint(1).printInfo();
 // highlightedArea.getPoint(2).printInfo();
@@ -199,12 +203,22 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 
 		float xfactor = (float)(viewFrame.getMaxX() - viewFrame.getMinX())/(highlightedArea.getMaxX() - highlightedArea.getMinX());
 		float yfactor = (float)(viewFrame.getMaxY() - viewFrame.getMinY())/(highlightedArea.getMaxY() - highlightedArea.getMinY());
-		
+
+
 		int x0new = (int) (xfactor * (x0 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
 		int y0new = (int) (yfactor * (y0 - highlightedArea.getMinY())) + viewFrame.getMinY();
 		int x1new = (int) (xfactor * (x1 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
 		int y1new = (int) (yfactor * (y1 - highlightedArea.getMinY())) + viewFrame.getMinY();
-		
+		// printf("\n\n\nawalnya");
+		// p0.printInfo();p1.printInfo();
+		// cout << xfactor << " " << yfactor << " jingg" << endl;
+		// highlightedArea.printInfo();
+		// viewFrame.printInfo();
+		// cout << x0 << " " << x0new << " jinggx0" << endl;
+		// cout << y0 << " " << y0new << " jinggy0" << endl;
+		// cout << x1 << " " << x1new << " jinggx1" << endl;
+		// cout << y1 << " " << y1new << " jinggy1" << endl;
+
 		Line l(Point(x0new,y0new), Point(x1new,y1new));
 		//proses scaling
 		l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));

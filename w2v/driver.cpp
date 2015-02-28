@@ -22,7 +22,6 @@ int main() {
 		canvas.flush();
 
 		c = graphicsIO.getch();
-
 		peta.moveHighlightedArea(c, &canvas);
 	} while (c != '\n');
 
