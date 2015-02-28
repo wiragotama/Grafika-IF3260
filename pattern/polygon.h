@@ -25,7 +25,7 @@ class Polygon {
         Polygon rotate(double angle, int rx, int ry);
         void printInfo();
 		void addPoint(Point P);
-		
+
 		/* Setter & Getter */
 		void setPoint(int idx, Point P);
 		void setFirePoint(Point P);
@@ -39,25 +39,31 @@ class Polygon {
 		Point getMostLeftPoint() const;
 		Point getMostBottomPoint() const;
 		Point getMostUpperPoint() const;
+        int getMaxY() const;
+        int getMinY() const;
+        int getMinX() const;
+        int getMaxX() const;
 
 		int getWidth() const;
 		int getHeight() const;
 
 		void erasePoints();
-		
+
 		Pattern getPattern() const;
-		
+
 	private :
 		uint32_t getColor(int x, int y);
 		void floodFill(Canvas*, int screen_x, int screen_y);
 		void floodFillBackground(Canvas*, int screen_x, int screen_y);
-		
+
 	private :
 		vector<Point> points;
 		Pattern pattern;
 		Point firePoint;
 		Point originFirePoint;
 		Point topLeftPosition;
+
+        mutable int max_x, max_y, min_x, min_y;
 };
 
 #endif

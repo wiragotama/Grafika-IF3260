@@ -57,16 +57,16 @@ void Peta::showHighlightedArea(Canvas* canvas) {
 }
 
 void Peta::moveHighlightedArea(char c,Canvas* canvas) {
-	if(c==97 && highlightedArea.getMostLeftPoint().getAbsis()>0) {//left gradient
+	if (c == 97 && highlightedArea.getMinX() > 0) {//left gradient
 		highlightedArea.move(-1,0);
 	}
-	else if (c==119 && highlightedArea.getMostUpperPoint().getOrdinat()>0) { //up gradient
+	else if (c == 119 && highlightedArea.getMinY() > 0) { //up gradient
 		highlightedArea.move(0,-1);
 	}
-	else if (c==100 && highlightedArea.getMostRightPoint().getAbsis()<640) { //right gradient
+	else if (c == 100 && highlightedArea.getMaxX() < 640) { //right gradient
 		highlightedArea.move(1,0);
 	}
-	else if (c==115 && highlightedArea.getMostBottomPoint().getOrdinat()<480) { //down gradient
+	else if (c == 115 && highlightedArea.getMaxY() < 480) { //down gradient
 		highlightedArea.move(0,1);
 	}
 	

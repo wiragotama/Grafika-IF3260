@@ -2,6 +2,7 @@
 #include "peta.h"
 #include "../core/graphicsio.h"
 #include "../transformasi/TerjunPayung.h"
+
 int main() {
 	// GraphicsIO graphicsIO;
 	// char c;
@@ -16,13 +17,13 @@ int main() {
 	GraphicsIO graphicsIO;
 	peta.showHighlightedArea(&canvas);
 	do {
-		system("clear");
 		peta.windowToView(&canvas);
 		canvas.flush();
-		
+
 		c = graphicsIO.getch();
-		
+
 		peta.moveHighlightedArea(c,&canvas);
 	} while (c!='\n');
+
 	return 0;
 }

@@ -1,4 +1,4 @@
-#include "../pattern/polygon.h" 
+#include "../pattern/polygon.h"
 
 const int MAXINT = 0x7FFFFFFF;
 
@@ -34,6 +34,66 @@ const Polygon& Polygon::operator=(const Polygon& ply) {
 	originFirePoint = ply.getOriginFirePoint();
 	topLeftPosition = ply.getTopLeftPosition();
 	return *this;
+}
+
+int Polygon::getMaxY() const {
+    if (max_y == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        max_y = it->getOrdinat(); it++;
+
+        while (it != points.end()) {
+            int y = it->getOrdinat();
+            if (y > max_y)
+                max_y = y;
+        }
+    }
+    return max_y+topLeftPosition.getOrdinat();
+}
+
+int Polygon::getMinY() const {
+    if (min_y == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        min_y = it->getOrdinat(); it++;
+
+        while (it != points.end()) {
+            int y = it->getOrdinat();
+            if (y < min_y)
+                min_y = y;
+        }
+    }
+    return min_y+topLeftPosition.getOrdinat();
+}
+
+int Polygon::getMinX() const {
+    if (min_x == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        min_x = it->getAbsis(); it++;
+
+        while (it != points.end()) {
+            int x = it->getAbsis();
+            if (x < min_x)
+                min_x = x;
+        }
+    }
+    return min_x+topLeftPosition.getAbsis();
+}
+
+int Polygon::getMaxX() const {
+    if (max_x == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        max_x = it->getAbsis(); it++;
+
+        while (it != points.end()) {
+            int x = it->getAbsis();
+            if (x > max_x)
+                max_x = x;
+        }
+    }
+    return max_x+topLeftPosition.getAbsis();
 }
 
 Point Polygon::getOriginFirePoint() const {
