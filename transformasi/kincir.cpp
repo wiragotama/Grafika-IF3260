@@ -44,8 +44,10 @@ void Kincir::rotate(double radians) {
 }
 
 void Kincir::draw(Canvas *canvas, uint32_t color) {
-    for (vector<Polygon>::iterator it = transformed.begin(); it != transformed.end(); it++)
+    for (vector<Polygon>::iterator it = transformed.begin(); it != transformed.end(); it++) {
+        it->printInfo();
         it->draw(canvas, color);
+    }
 }
 
 void Kincir::init() {
