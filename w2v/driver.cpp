@@ -3,13 +3,6 @@
 #include "../core/graphicsio.h"
 
 int main() {
-	// GraphicsIO graphicsIO;
-	// char c;
-	// do {
-	// 	system("clear");
-	// 	c = graphicsIO.getch();
-	// 	printf("haha %d", c);
-	// } while (c!='\n');
 	char c;
 	Canvas canvas;
 	Peta peta;
@@ -17,13 +10,17 @@ int main() {
 	peta.showHighlightedArea(&canvas);
 	
 	//Membuat input nonblocking
-	//GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
 	
 	do {
 		peta.drawIndonesia(&canvas);
+        peta.drawHeli(&canvas);
+		peta.drawKapal(&canvas);
 		peta.showHighlightedArea(&canvas);
 		
 		canvas.flush();
+		
+		peta.moveKapal();
 		
 		int i = GraphicsIO::kbhit();
 		if(i != 0){
@@ -34,7 +31,7 @@ int main() {
 	} while (c != '\n');
 	
 	//Membuat input kembali blocking
-	//GraphicsIO::nonblock(GraphicsIO::NONBLOCK_DISABLE);
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_DISABLE);
 
 	return 0;
 }

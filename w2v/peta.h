@@ -15,6 +15,9 @@ class Peta {
 		Peta();
 		~Peta();
 		void drawIndonesia(Canvas*);
+		void drawKapal(Canvas*);
+		void moveKapal();
+        void drawHeli(Canvas*);
 		void zoomIn();
 		void zoomOut();
 		void showHighlightedArea(Canvas*);
@@ -26,6 +29,7 @@ class Peta {
 		void drawViewFrame(Canvas*);
 		void loadFile(const char*);
 		void scaleAndDraw(Canvas*, Point p0, Point p1);
+		void initialzeKapal();
 		const int INSIDE; // 0000
 		const int LEFT;   // 0001
 		const int RIGHT;  // 0010
@@ -39,5 +43,8 @@ class Peta {
         Helikopter heli;
 
         int dx_heli;
+		Polygon kapal;
+		Polygon layarKapal;
+		bool arahKapal;
 };
 #endif
