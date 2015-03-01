@@ -23,6 +23,8 @@ Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(
 	viewFrame.addPoint(p2a);
 	viewFrame.addPoint(p3a);
 	viewFrame.addPoint(p4a);
+	
+	initialzeKapal();
 }
 
 Peta::~Peta() {}
@@ -40,6 +42,37 @@ void Peta::drawIndonesia(Canvas *canvas) {
 		}
 	}
 	drawViewFrame(canvas);
+}
+
+
+void Peta::drawKapal(Canvas *canvas) {
+
+	kapal.drawBackground(canvas, canvas->pixel_color(255,0,0));
+	vector<Point> points = kapal.getPoints();
+
+	for (vector<Point>::iterator it1 = points.begin(); it1 != points.end(); ++it1) {
+		if (it1+1 != points.end()) {
+			Point topLeft = kapal.getTopLeftPosition();
+			Point P1 = *it1;
+			P1.setAbsis(P1.getAbsis()+topLeft.getAbsis());
+			P1.setOrdinat(P1.getOrdinat()+topLeft.getOrdinat());
+			Point P2 = *(it1+1);
+			P2.setAbsis(P2.getAbsis()+topLeft.getAbsis());
+			P2.setOrdinat(P2.getOrdinat()+topLeft.getOrdinat());
+			
+			CohenSutherlandLineClipAndDraw(P1, P2, canvas);
+		} else {
+			Point topLeft = kapal.getTopLeftPosition();
+			Point P1 = *it1;
+			P1.setAbsis(P1.getAbsis()+topLeft.getAbsis());
+			P1.setOrdinat(P1.getOrdinat()+topLeft.getOrdinat());
+			Point P2 = points.front();
+			P2.setAbsis(P2.getAbsis()+topLeft.getAbsis());
+			P2.setOrdinat(P2.getOrdinat()+topLeft.getOrdinat());
+			
+			CohenSutherlandLineClipAndDraw(P1, P2, canvas);
+		}
+	}
 }
 
 void Peta::zoomOut() {
@@ -232,4 +265,11 @@ void Peta::scaleAndDraw(Canvas* canvas, Point p0, Point p1) {
 
 	Line l(Point(x0new,y0new), Point(x1new,y1new));
 	l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
+}
+
+void Peta::initialzeKapal(){
+	Point topLeftPositionKapal(50,200);
+	kapal.setTopLeftPosition(topLeftPositionKapal);
+	string polygonFile = "kapal.info";
+	kapal.loadPolygon(polygonFile.c_str());
 }

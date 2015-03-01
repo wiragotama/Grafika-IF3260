@@ -4,13 +4,6 @@
 #include "../transformasi/TerjunPayung.h"
 
 int main() {
-	// GraphicsIO graphicsIO;
-	// char c;
-	// do {
-	// 	system("clear");
-	// 	c = graphicsIO.getch();
-	// 	printf("haha %d", c);
-	// } while (c!='\n');
 	char c;
 	Canvas canvas;
 	Peta peta;
@@ -23,6 +16,7 @@ int main() {
 	
 	do {
 		peta.drawIndonesia(&canvas);
+		peta.drawKapal(&canvas);
 		peta.showHighlightedArea(&canvas);
 		
 		canvas.flush();
