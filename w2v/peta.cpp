@@ -31,10 +31,7 @@ void Peta::drawIndonesia(Canvas *canvas) {
 	for(vector<Polygon>::iterator it = islands.begin(); it != islands.end(); ++it) {
 		it->drawBackground(canvas, canvas->pixel_color(255,0,0));
 		vector<Point> points = it->getPoints();
-		// it->printInfo();
 		for (vector<Point>::iterator it1 = points.begin(); it1 != points.end(); ++it1) {
-			// it1->printInfo();
-			// getchar();
 			if (it1+1 != points.end()) {
 				CohenSutherlandLineClipAndDraw(*it1, *(it1+1), canvas);
 			} else {
@@ -42,8 +39,11 @@ void Peta::drawIndonesia(Canvas *canvas) {
 			}
 		}
 	}
-	// getchar();
 	drawViewFrame(canvas);
+}
+
+void Peta::zoomOut() {
+
 }
 
 void Peta::drawViewFrame(Canvas* canvas) {
@@ -69,6 +69,10 @@ void Peta::moveHighlightedArea(char c, Canvas* canvas) {
 	}
 	else if (c == 115 && max_y < 480) { //down gradient
 		highlightedArea.move(0,1);
+	} else if (c == 45 && min_x > 0 && min_y > 0 && max_x < 640 && max_y < 480) { //zoomout
+
+	} else if (c == 43) {
+
 	}
 
 

@@ -15,6 +15,7 @@ class Point {
 		void setAbsis(int x);
 		void setOrdinat(int y);
         void printInfo();
+        bool isOrigin() const;
 		/* Move on screen */
 		void moveRight(int d);
 		void moveLeft(int d);
