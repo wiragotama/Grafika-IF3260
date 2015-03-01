@@ -30,6 +30,7 @@ class Polygon {
 		void setPoint(int idx, Point P);
 		void setFirePoint(Point P);
 		void setTopLeftPosition(int x, int y);
+		void setTopLeftPosition(Point p);
 		Point getPoint(int idx);
 		vector<Point> getPoints() const;
 		Point getFirePoint() const;

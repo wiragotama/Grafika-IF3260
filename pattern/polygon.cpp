@@ -42,11 +42,11 @@ const Polygon& Polygon::operator=(const Polygon& ply) {
 }
 
 void Polygon::init() {
-    min_x = max_x = min_y = max_y = -1;
+	min_x = max_x = min_y = max_y = -1;
 }
 
 int Polygon::getMaxY() const {
-    if (max_y == -1) { // haven't computed yet
+    // if (max_y == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
         max_y = it->getOrdinat(); it++;
@@ -57,12 +57,12 @@ int Polygon::getMaxY() const {
                 max_y = y;
             it++;
         }
-    }
+    // }
     return max_y + topLeftPosition.getOrdinat();
 }
 
 int Polygon::getMinY() const {
-    if (min_y == -1) { // haven't computed yet
+    // if (min_y == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
         min_y = it->getOrdinat(); it++;
@@ -73,12 +73,12 @@ int Polygon::getMinY() const {
                 min_y = y;
             it++;
         }
-    }
+    // }
     return min_y + topLeftPosition.getOrdinat();
 }
 
 int Polygon::getMinX() const {
-    if (min_x == -1) { // haven't computed yet
+    // if (min_x == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
         min_x = it->getAbsis(); it++;
@@ -89,12 +89,12 @@ int Polygon::getMinX() const {
                 min_x = x;
             it++;
         }
-    }
+    // }
     return min_x + topLeftPosition.getAbsis();
 }
 
 int Polygon::getMaxX() const {
-    if (max_x == -1) { // haven't computed yet
+    // if (max_x == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
         max_x = it->getAbsis(); it++;
@@ -105,7 +105,7 @@ int Polygon::getMaxX() const {
                 max_x = x;
             it++;
         }
-    }
+    // }
     return max_x + topLeftPosition.getAbsis();
 }
 
@@ -129,6 +129,8 @@ void Polygon::printInfo() {
     }
     printf("\nFirePoint: ");
     firePoint.printInfo();
+    printf("\ntopleftPosition");
+    topLeftPosition.printInfo();
     printf("\n");
 }
 
@@ -299,6 +301,10 @@ void Polygon::setFirePoint(Point P) {
 void Polygon::setTopLeftPosition(int x, int y) {
 	topLeftPosition.setAbsis(x);
 	topLeftPosition.setOrdinat(y);
+}
+
+void Polygon::setTopLeftPosition(Point p) {
+	topLeftPosition = p;
 }
 
 Point Polygon::getPoint(int idx) {

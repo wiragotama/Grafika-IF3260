@@ -43,7 +43,40 @@ void Peta::drawIndonesia(Canvas *canvas) {
 }
 
 void Peta::zoomOut() {
+	Point p = highlightedArea.getTopLeftPosition();
+	p.move(-1,-1);
+	highlightedArea.setTopLeftPosition(p);
+	
+	p = highlightedArea.getPoint(1);
+	p.moveRight(2);
+	highlightedArea.setPoint(1, p);
 
+	p = highlightedArea.getPoint(2);
+	p.move(2,2);
+	highlightedArea.setPoint(2, p);
+
+	p = highlightedArea.getPoint(3);
+	p.moveDown(2);
+	highlightedArea.setPoint(3, p);
+}
+
+
+void Peta::zoomIn() {	
+	Point p = highlightedArea.getTopLeftPosition();
+	p.move(1,1);
+	highlightedArea.setTopLeftPosition(p);
+	
+	p = highlightedArea.getPoint(1);
+	p.moveLeft(2);
+	highlightedArea.setPoint(1, p);
+
+	p = highlightedArea.getPoint(2);
+	p.move(-2,-2);
+	highlightedArea.setPoint(2, p);
+
+	p = highlightedArea.getPoint(3);
+	p.moveUp(2);
+	highlightedArea.setPoint(3, p);
 }
 
 void Peta::drawViewFrame(Canvas* canvas) {
@@ -69,18 +102,13 @@ void Peta::moveHighlightedArea(char c, Canvas* canvas) {
 	}
 	else if (c == 115 && max_y < 480) { //down gradient
 		highlightedArea.move(0,1);
-	} else if (c == 45 && min_x > 0 && min_y > 0 && max_x < 640 && max_y < 480) { //zoomout
-
+	} else if (c == 45 && min_x > 0 && min_y > 0 && max_x < 640 && max_y < 480) { //zoomout //tanda (-)
+		this->zoomOut();
 	} else if (c == 43) {
-
+		this->zoomIn();
 	}
 
-
-	// highlightedArea.printInfo();getchar();
-
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
-	// highlightedArea.printInfo();
-	// getchar();
 }
 
 void Peta::loadFile(const char *filename) {
@@ -139,19 +167,10 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 	int ymin = highlightedArea.getMinY();
 	int xmax = highlightedArea.getMaxX();
 	int ymax = highlightedArea.getMaxY();
-	// printf("%d %d %d %d jinggg\n", );
-// highlightedArea.getPoint(0).printInfo();
-// highlightedArea.getPoint(1).printInfo();
-// highlightedArea.getPoint(2).printInfo();
-// highlightedArea.getPoint(3).printInfo();
-// 	highlightedArea.printInfo();
 
-	// printf("cibai %d %d %d %d\n", xmin, ymin, xmax, ymax);
-	// getchar();
 	OutCode outcode0 = ComputeOutCode(x0, y0, xmin, ymin, xmax, ymax);
 	OutCode outcode1 = ComputeOutCode(x1, y1, xmin, ymin, xmax, ymax);
-	// printf("%d %d %d %d %d %d\n", x0, y0, x1, y1, outcode0, outcode1);
-	// printf("xmin ymin xmax ymax = %d %d %d %d\n", xmin, ymin, xmax, ymax);
+
 	bool accept = false;
 
 	while (true) {
@@ -200,41 +219,27 @@ void Peta::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
 
 
 	if (accept) {
-		// printf("accept\n");
-		// printf("%d %d %d %d\n", x0, y0, x1, y1);
 		//jadi dapat (x0,y0) dan (x1,y1), yaitu point hasil clipping ke highlighted area
 		//setelah itu, scaling ke view frame
-
-		float xfactor = (float)(viewFrame.getMaxX() - viewFrame.getMinX())/(highlightedArea.getMaxX() - highlightedArea.getMinX());
-		float yfactor = (float)(viewFrame.getMaxY() - viewFrame.getMinY())/(highlightedArea.getMaxY() - highlightedArea.getMinY());
-
-
-		int x0new = (int) (xfactor * (x0 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
-		int y0new = (int) (yfactor * (y0 - highlightedArea.getMinY())) + viewFrame.getMinY();
-		int x1new = (int) (xfactor * (x1 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
-		int y1new = (int) (yfactor * (y1 - highlightedArea.getMinY())) + viewFrame.getMinY();
-		// printf("\n\n\nawalnya");
-		// p0.printInfo();p1.printInfo();
-		// cout << xfactor << " " << yfactor << " jingg" << endl;
-		// highlightedArea.printInfo();
-		// viewFrame.printInfo();
-		// cout << x0 << " " << x0new << " jinggx0" << endl;
-		// cout << y0 << " " << y0new << " jinggy0" << endl;
-		// cout << x1 << " " << x1new << " jinggx1" << endl;
-		// cout << y1 << " " << y1new << " jinggy1" << endl;
-
-		Line l(Point(x0new,y0new), Point(x1new,y1new));
-		//proses scaling
-		l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
-       // Following functions are left for implementation by user based on
-       // their platform (OpenGL/graphics.h etc.)
-       // DrawRectangle(xmin, ymin, xmax, ymax);
-       // LineSegment(x0, y0, x1, y1);
-	} else {
-		// printf("reject\n");
-		// Line l(Point(x0,y0), Point(x1,y1));
-		// l.draw(canvas, 1, canvas->pixel_color(255,0,0));
+		scaleAndDraw(canvas, Point(x0,y0), Point(x1,y1));
 	}
-	// getchar();
 }
 
+void Peta::scaleAndDraw(Canvas* canvas, Point p0, Point p1) {
+	int x0 = p0.getAbsis();
+	int y0 = p0.getOrdinat();
+
+	int x1 = p1.getAbsis();
+	int y1 = p1.getOrdinat();
+
+	float xfactor = (float)(viewFrame.getMaxX() - viewFrame.getMinX())/(highlightedArea.getMaxX() - highlightedArea.getMinX());
+	float yfactor = (float)(viewFrame.getMaxY() - viewFrame.getMinY())/(highlightedArea.getMaxY() - highlightedArea.getMinY());
+
+	int x0new = (int) (xfactor * (x0 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+	int y0new = (int) (yfactor * (y0 - highlightedArea.getMinY())) + viewFrame.getMinY();
+	int x1new = (int) (xfactor * (x1 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+	int y1new = (int) (yfactor * (y1 - highlightedArea.getMinY())) + viewFrame.getMinY();
+
+	Line l(Point(x0new,y0new), Point(x1new,y1new));
+	l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
+}

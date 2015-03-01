@@ -24,6 +24,7 @@ class Peta {
 		void CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas*);
 		void drawViewFrame(Canvas*);
 		void loadFile(const char*);
+		void scaleAndDraw(Canvas*, Point p0, Point p1);
 		const int INSIDE; // 0000
 		const int LEFT;   // 0001
 		const int RIGHT;  // 0010
