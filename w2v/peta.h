@@ -15,6 +15,7 @@ class Peta {
 		~Peta();
 		void drawIndonesia(Canvas*);
 		void drawKapal(Canvas*);
+		void moveKapal();
 		void zoomIn();
 		void zoomOut();
 		void showHighlightedArea(Canvas*);

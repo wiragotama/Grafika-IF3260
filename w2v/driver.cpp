@@ -21,6 +21,8 @@ int main() {
 		
 		canvas.flush();
 		
+		peta.moveKapal();
+		
 		int i = GraphicsIO::kbhit();
 		if(i != 0){
 			c=fgetc(stdin);

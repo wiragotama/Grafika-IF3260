@@ -45,17 +45,7 @@ void Peta::drawIndonesia(Canvas *canvas) {
 }
 
 
-void Peta::drawKapal(Canvas *canvas) {
-	if(kapal.getMinX() <= 0 && !arahKapal)
-		arahKapal = true;
-	if(kapal.getMaxX() >= 640 && arahKapal)
-		arahKapal = false;
-	
-	if(arahKapal)
-		kapal.move(1,0);
-	else
-		kapal.move(-1,0);
-	
+void Peta::drawKapal(Canvas *canvas) {	
 	kapal.drawBackground(canvas, canvas->pixel_color(255,0,0));
 	vector<Point> points = kapal.getPoints();
 
@@ -82,6 +72,18 @@ void Peta::drawKapal(Canvas *canvas) {
 			CohenSutherlandLineClipAndDraw(P1, P2, canvas);
 		}
 	}
+}
+
+void Peta::moveKapal(){
+	if(kapal.getMinX() <= 0 && !arahKapal)
+		arahKapal = true;
+	if(kapal.getMaxX() >= 640 && arahKapal)
+		arahKapal = false;
+	
+	if(arahKapal)
+		kapal.move(1,0);
+	else
+		kapal.move(-1,0);
 }
 
 void Peta::zoomOut() {
