@@ -17,7 +17,7 @@ class Peta {
 		void zoomIn();
 		void zoomOut();
 		void showHighlightedArea(Canvas*);
-		void moveHighlightedArea(char,Canvas*);
+		void moveHighlightedArea(char, Canvas*);
 
 	private:
 		OutCode ComputeOutCode(int x,int y, int, int, int, int);
@@ -34,11 +34,6 @@ class Peta {
 	private:
 		vector<Polygon> islands;
 		Polygon viewFrame;
-
-		/*******************************************/
-		/*jangan lupa di refactor 2 atribut dibawah*/
 		Polygon highlightedArea;
-		// int xmin, ymin, xmax, ymax;
-		/*******************************************/
 };
 #endif

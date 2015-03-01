@@ -370,6 +370,50 @@ Point Polygon::getMostUpperPoint() const {
 int Polygon::getWidth() const {
 	return getMostRightPoint().getAbsis() - getMostLeftPoint().getAbsis();
 }
+
 int Polygon::getHeight() const {
 	return getMostBottomPoint().getAbsis() - getMostUpperPoint().getAbsis();
+}
+
+Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
+	vector<Point> transformed = points;
+	transformed.push_back(Point(0, 0));
+     
+    // Pindahkan titik tengah ke point(0,0);
+    for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
+    int awal_x = it->getAbsis();
+    int awal_y = it->getOrdinat();
+    it->setAbsis(awal_x - pivot_x);
+    it->setOrdinat(awal_y - pivot_y);
+    }
+     
+    // transformasi ubah ukuran
+    for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
+    int awal_x = it->getAbsis();
+    int awal_y = it->getOrdinat();
+    it->setAbsis((int) (awal_x * scale));
+    it->setOrdinat((int) (awal_y *scale));
+    }
+     
+     
+    //Kembalikan ke posisi semula
+    for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
+		int awal_x = it->getAbsis();
+		int awal_y = it->getOrdinat();
+		it->setAbsis((int) (awal_x + pivot_x));
+		it->setOrdinat((int) (awal_y + pivot_y));
+    }
+     
+    //Ambil kembali firepoint dan topleftposition
+    Point newTopLeft = transformed[transformed.size()-1];
+	int dx = newTopLeft.getAbsis();
+	int dy = newTopLeft.getOrdinat();
+	newTopLeft.setAbsis(newTopLeft.getAbsis() + topLeftPosition.getAbsis());
+	newTopLeft.setOrdinat(newTopLeft.getOrdinat() + topLeftPosition.getOrdinat());
+	transformed.pop_back();
+	for (vector<Point>::iterator it = transformed.begin() ;it != transformed.end(); ++it) {
+		it->setAbsis(it->getAbsis() - dx);
+		it->setOrdinat(it->getOrdinat() - dy); 
+	}
+	return Polygon(newTopLeft, transformed, firePoint, pattern);
 }

@@ -43,40 +43,32 @@ void Peta::drawIndonesia(Canvas *canvas) {
 }
 
 void Peta::zoomOut() {
-	Point p = highlightedArea.getTopLeftPosition();
-	p.move(-1,-1);
-	highlightedArea.setTopLeftPosition(p);
-	
-	p = highlightedArea.getPoint(1);
-	p.moveRight(2);
-	highlightedArea.setPoint(1, p);
-
-	p = highlightedArea.getPoint(2);
-	p.move(2,2);
-	highlightedArea.setPoint(2, p);
-
-	p = highlightedArea.getPoint(3);
-	p.moveDown(2);
-	highlightedArea.setPoint(3, p);
+	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();
+	int highlightedAreaHeighth = highlightedArea.getMaxY() - highlightedArea.getMinY();
+	Polygon newhighlightedArea = highlightedArea.resizing (1.10, highlightedAreaWidth/2, highlightedAreaHeighth/2);
+	int minX = newhighlightedArea.getMinX();
+	int minY = newhighlightedArea.getMinY();
+	int maxX = newhighlightedArea.getMaxX();
+	int maxY = newhighlightedArea.getMaxY();
+	if (minX > 0 && minY > 0 && maxX < 640 && maxY<480) {
+		highlightedArea = newhighlightedArea;
+	}
 }
 
 
-void Peta::zoomIn() {	
-	Point p = highlightedArea.getTopLeftPosition();
-	p.move(1,1);
-	highlightedArea.setTopLeftPosition(p);
-	
-	p = highlightedArea.getPoint(1);
-	p.moveLeft(2);
-	highlightedArea.setPoint(1, p);
-
-	p = highlightedArea.getPoint(2);
-	p.move(-2,-2);
-	highlightedArea.setPoint(2, p);
-
-	p = highlightedArea.getPoint(3);
-	p.moveUp(2);
-	highlightedArea.setPoint(3, p);
+void Peta::zoomIn() {
+	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();
+	int highlightedAreaHeighth = highlightedArea.getMaxY() - highlightedArea.getMinY();
+	Polygon newhighlightedArea = highlightedArea.resizing (0.90, highlightedAreaWidth/2, highlightedAreaHeighth/2);
+	int minX = newhighlightedArea.getMinX();
+	int minY = newhighlightedArea.getMinY();
+	int maxX = newhighlightedArea.getMaxX();
+	int maxY = newhighlightedArea.getMaxY();
+	int newhighlightedAreaWidth = maxX - minX;
+	int newhighlightedAreaHeight = maxY - minY;
+	if (newhighlightedAreaHeight >= 50 && newhighlightedAreaWidth >= 50) {
+		highlightedArea = newhighlightedArea;
+	}
 }
 
 void Peta::drawViewFrame(Canvas* canvas) {
@@ -102,7 +94,7 @@ void Peta::moveHighlightedArea(char c, Canvas* canvas) {
 	}
 	else if (c == 115 && max_y < 480) { //down gradient
 		highlightedArea.move(0,1);
-	} else if (c == 45 && min_x > 0 && min_y > 0 && max_x < 640 && max_y < 480) { //zoomout //tanda (-)
+	} else if (c == 45) { //zoomout //tanda (-)
 		this->zoomOut();
 	} else if (c == 43) {
 		this->zoomIn();

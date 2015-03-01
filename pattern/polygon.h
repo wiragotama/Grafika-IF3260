@@ -51,7 +51,7 @@ class Polygon {
 		void erasePoints();
 
 		Pattern getPattern() const;
-
+		Polygon resizing(double scale, int pivot_x, int pivot_y);
 	private :
         void init();
 		uint32_t getColor(int x, int y);
