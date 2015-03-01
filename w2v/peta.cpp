@@ -72,6 +72,33 @@ void Peta::drawKapal(Canvas *canvas) {
 			CohenSutherlandLineClipAndDraw(P1, P2, canvas);
 		}
 	}
+	
+	layarKapal.drawBackground(canvas, canvas->pixel_color(255,0,0));
+	points = layarKapal.getPoints();
+
+	for (vector<Point>::iterator it1 = points.begin(); it1 != points.end(); ++it1) {
+		if (it1+1 != points.end()) {
+			Point topLeft = layarKapal.getTopLeftPosition();
+			Point P1 = *it1;
+			P1.setAbsis(P1.getAbsis()+topLeft.getAbsis());
+			P1.setOrdinat(P1.getOrdinat()+topLeft.getOrdinat());
+			Point P2 = *(it1+1);
+			P2.setAbsis(P2.getAbsis()+topLeft.getAbsis());
+			P2.setOrdinat(P2.getOrdinat()+topLeft.getOrdinat());
+			
+			CohenSutherlandLineClipAndDraw(P1, P2, canvas);
+		} else {
+			Point topLeft = layarKapal.getTopLeftPosition();
+			Point P1 = *it1;
+			P1.setAbsis(P1.getAbsis()+topLeft.getAbsis());
+			P1.setOrdinat(P1.getOrdinat()+topLeft.getOrdinat());
+			Point P2 = points.front();
+			P2.setAbsis(P2.getAbsis()+topLeft.getAbsis());
+			P2.setOrdinat(P2.getOrdinat()+topLeft.getOrdinat());
+			
+			CohenSutherlandLineClipAndDraw(P1, P2, canvas);
+		}
+	}
 }
 
 void Peta::moveKapal(){
@@ -80,10 +107,13 @@ void Peta::moveKapal(){
 	if(kapal.getMaxX() >= 640 && arahKapal)
 		arahKapal = false;
 	
-	if(arahKapal)
+	if(arahKapal){
 		kapal.move(1,0);
-	else
+		layarKapal.move(1,0);
+	}else{
 		kapal.move(-1,0);
+		layarKapal.move(-1,0);
+	}
 }
 
 void Peta::zoomOut() {
@@ -281,7 +311,13 @@ void Peta::scaleAndDraw(Canvas* canvas, Point p0, Point p1) {
 void Peta::initialzeKapal(){
 	Point topLeftPositionKapal(50,200);
 	kapal.setTopLeftPosition(topLeftPositionKapal);
-	string polygonFile = "kapal.info";
+	string polygonFile = "kapal2.info";
 	kapal.loadPolygon(polygonFile.c_str());
+	
+	Point topLeftPositionLayarKapal(50,175);
+	layarKapal.setTopLeftPosition(topLeftPositionLayarKapal);
+	polygonFile ="kapal2_layar.info";
+	layarKapal.loadPolygon(polygonFile.c_str());
+	
 	arahKapal = true;
 }
