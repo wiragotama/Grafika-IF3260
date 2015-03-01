@@ -32,6 +32,7 @@ class Body {
 		void separateBrokenParts(int dx, int dy);
 		int getWidth() const;
 		int getHeight() const;
+        vector<Polygon> getPolygons() const;
 		
 	private :
 		vector<Polygon> polygons;

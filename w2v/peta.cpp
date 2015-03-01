@@ -1,6 +1,6 @@
 #include "peta.h"
 
-Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(Point(0,0)) {
+Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(Point(0,0)), heli(Point(300, 100)) {
 	this->loadFile("pulau/jawa.info");
 	this->loadFile("pulau/kalimantan.info");
 	this->loadFile("pulau/papua.info");
@@ -23,6 +23,8 @@ Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(
 	viewFrame.addPoint(p2a);
 	viewFrame.addPoint(p3a);
 	viewFrame.addPoint(p4a);
+
+    int dx_heli = -1;
 }
 
 Peta::~Peta() {}
@@ -39,7 +41,39 @@ void Peta::drawIndonesia(Canvas *canvas) {
 			}
 		}
 	}
+    /*
+    vector<Polygon> polys = heli.getAllPolygons();
+    for (vector<Polygon>::iterator it = polys.begin(); it != polys.end(); it++) {
+        Point tl = it->getTopLeftPosition();
+        vector<Point> points = it->getPoints();
+		for (vector<Point>::iterator it1 = points.begin(); it1 != points.end(); ++it1) {
+			if (it1+1 != points.end()) {
+                Point p1 = *it1;
+                Point p2 = *(it1+1);
+                p1.move(tl.getAbsis(), tl.getOrdinat());
+                p2.move(tl.getAbsis(), tl.getOrdinat());
+				CohenSutherlandLineClipAndDraw(p1, p2, canvas);
+			} else {
+                Point p1 = *it1;
+                Point p2 = points.front();
+                p1.move(tl.getAbsis(), tl.getOrdinat());
+                p2.move(tl.getAbsis(), tl.getOrdinat());
+				CohenSutherlandLineClipAndDraw(p1, p2, canvas);
+			}
+		}
+    }*/
 	drawViewFrame(canvas);
+    heli.draw(canvas, canvas->pixel_color(255,0,0));
+
+    int tl = heli.getTopLeftPosition().getAbsis();
+
+    if (dx_heli == -1) { // lagi ke kiri
+        if (tl == 0) dx_heli = 1;
+
+    } else { // ke kanan
+        if (tl + heli.getWidth() == 640) dx_heli = -1;
+    }
+    heli.move(dx_heli, 0);
 }
 
 void Peta::zoomOut() {

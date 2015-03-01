@@ -6,6 +6,7 @@
 #include "../core/line.h"
 #include "../core/point.h"
 #include "../pattern/polygon.h"
+#include "../transformasi/helikopter.h"
 
 typedef int OutCode;
 
@@ -35,5 +36,8 @@ class Peta {
 		vector<Polygon> islands;
 		Polygon viewFrame;
 		Polygon highlightedArea;
+        Helikopter heli;
+
+        int dx_heli;
 };
 #endif

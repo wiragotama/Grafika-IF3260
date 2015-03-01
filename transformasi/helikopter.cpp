@@ -15,6 +15,13 @@ Helikopter::Helikopter(Point topLeftPosition) : kincir(topLeftPosition), body(to
 Helikopter::~Helikopter() {
 }
 
+vector<Polygon> Helikopter::getAllPolygons() const {
+    vector<Polygon> result = body.getPolygons();
+    vector<Polygon> result2 = kincir.getPolygons();
+    result.insert(result.end(), result2.begin(), result2.end());
+    return result;
+}
+
 Point Helikopter::getTopLeftPosition() {
 	return topLeftPosition;
 }
@@ -59,8 +66,7 @@ Body Helikopter::getBody() {
 
 void Helikopter::draw(Canvas *canvas, uint32_t color) {
 	body.draw(canvas, color);
-	tire.draw(canvas, color);
-	kincir.draw(canvas, canvas->pixel_color(0,0,255));
+	kincir.draw(canvas, canvas->pixel_color(255,0,0));
 	double thirtyDegree = 0.03490658503989;
 	kincir.rotate(thirtyDegree);
 }

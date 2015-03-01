@@ -27,6 +27,8 @@ class Kincir {
 		void rotate(double radians);
 		void move(int dx, int dy);
 
+        vector<Polygon> getPolygons() const;
+
     private:
 		void init();
 

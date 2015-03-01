@@ -12,10 +12,13 @@ Body::Body(Point topLeftPosition) {
 	string ply1 = bodyPath;
 	string ply2 = bodyPattern;
 	polygons[0].loadPolygon(ply1.c_str());
-	polygons[0].loadPattern(ply2.c_str());
 }
 
 Body::~Body() {
+}
+
+vector<Polygon> Body::getPolygons() const {
+    return polygons;
 }
 		
 void Body::draw(Canvas *canvas, uint32_t color) {
@@ -41,11 +44,9 @@ void Body::broke() {
 	polygons[1].erasePoints();
 	
 	polygons[0].loadPolygon(ply1.c_str());
-	polygons[0].loadPattern(ptr.c_str());
 	
 	polygons[1].setTopLeftPosition(polygons[0].getTopLeftPosition().getAbsis()+30, polygons[0].getTopLeftPosition().getOrdinat());
 	polygons[1].loadPolygon(ply2.c_str());
-	polygons[1].loadPattern(ptr.c_str());
 }
 
 void Body::setTopLeftPosition(Point topLeftPosition) {

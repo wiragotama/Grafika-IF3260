@@ -26,4 +26,4 @@ kincir:
 	g++ core/canvas.cpp core/point.cpp transformasi/kincir.cpp pattern/polygon.cpp core/line.cpp pattern/pattern.cpp transformasi/driverKincir.cpp -g -o bin/kincir
 
 view:
-	g++ core/canvas.cpp core/graphicsio.cpp core/line.cpp core/point.cpp pattern/polygon.cpp pattern/pattern.cpp w2v/peta.cpp w2v/driver.cpp -o bin/w2v
+	g++ core/canvas.cpp core/graphicsio.cpp core/line.cpp core/point.cpp core/circle.cpp pattern/polygon.cpp pattern/pattern.cpp transformasi/kincir.cpp transformasi/tire.cpp transformasi/body.cpp transformasi/helikopter.cpp w2v/peta.cpp w2v/driver.cpp -o bin/w2v

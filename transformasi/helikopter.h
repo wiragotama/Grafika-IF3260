@@ -28,6 +28,7 @@ class Helikopter : public Drawable {
 		
 		Tire getTire();
 		Body getBody();
+        vector<Polygon> getAllPolygons() const;
 		
 		void draw(Canvas *canvas, uint32_t color);
 		bool atBottomOfScreen(int yres);
