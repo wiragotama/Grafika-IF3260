@@ -17,7 +17,7 @@ class Peta {
 		void zoomIn();
 		void zoomOut();
 		void showHighlightedArea(Canvas*);
-		void moveHighlightedArea(char, Canvas*);
+		void moveHighlightedArea(char);
 
 	private:
 		OutCode ComputeOutCode(int x,int y, int, int, int, int);

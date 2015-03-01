@@ -23,14 +23,16 @@ int main() {
 	
 	do {
 		peta.drawIndonesia(&canvas);
+		peta.showHighlightedArea(&canvas);
+		
 		canvas.flush();
 		
 		int i = GraphicsIO::kbhit();
 		if(i != 0){
 			c=fgetc(stdin);
+			peta.moveHighlightedArea(c);
 		}
 		
-		peta.moveHighlightedArea(c, &canvas);
 	} while (c != '\n');
 	
 	//Membuat input kembali blocking

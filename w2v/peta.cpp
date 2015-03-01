@@ -79,7 +79,7 @@ void Peta::showHighlightedArea(Canvas* canvas) {
 	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
 }
 
-void Peta::moveHighlightedArea(char c, Canvas* canvas) {
+void Peta::moveHighlightedArea(char c) {
 	int min_x = highlightedArea.getMinX(), max_x = highlightedArea.getMaxX(),
 		min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
 
@@ -99,8 +99,6 @@ void Peta::moveHighlightedArea(char c, Canvas* canvas) {
 	} else if (c == 43) {
 		this->zoomIn();
 	}
-
-	highlightedArea.draw(canvas, canvas->pixel_color(0,255,255));
 }
 
 void Peta::loadFile(const char *filename) {
