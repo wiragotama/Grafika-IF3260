@@ -38,5 +38,6 @@ class Peta {
 		Polygon viewFrame;
 		Polygon highlightedArea;
 		Polygon kapal;
+		bool arahKapal;
 };
 #endif

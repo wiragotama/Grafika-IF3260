@@ -46,7 +46,16 @@ void Peta::drawIndonesia(Canvas *canvas) {
 
 
 void Peta::drawKapal(Canvas *canvas) {
-
+	if(kapal.getMinX() <= 0 && !arahKapal)
+		arahKapal = true;
+	if(kapal.getMaxX() >= 640 && arahKapal)
+		arahKapal = false;
+	
+	if(arahKapal)
+		kapal.move(1,0);
+	else
+		kapal.move(-1,0);
+	
 	kapal.drawBackground(canvas, canvas->pixel_color(255,0,0));
 	vector<Point> points = kapal.getPoints();
 
@@ -272,4 +281,5 @@ void Peta::initialzeKapal(){
 	kapal.setTopLeftPosition(topLeftPositionKapal);
 	string polygonFile = "kapal.info";
 	kapal.loadPolygon(polygonFile.c_str());
+	arahKapal = true;
 }
