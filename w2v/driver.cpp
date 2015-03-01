@@ -17,13 +17,24 @@ int main() {
 	GraphicsIO graphicsIO;
 
 	peta.showHighlightedArea(&canvas);
+	
+	//Membuat input nonblocking
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
+	
 	do {
 		peta.drawIndonesia(&canvas);
 		canvas.flush();
-
-		c = graphicsIO.getch();
+		
+		int i = GraphicsIO::kbhit();
+		if(i != 0){
+			c=fgetc(stdin);
+		}
+		
 		peta.moveHighlightedArea(c, &canvas);
 	} while (c != '\n');
+	
+	//Membuat input kembali blocking
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_DISABLE);
 
 	return 0;
 }

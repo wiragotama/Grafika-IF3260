@@ -15,6 +15,12 @@ class GraphicsIO {
 		char getche();
 		void gotoxy(int x, int y);
 		
+		static void nonblock(int state);
+		static int kbhit();
+		
+	public:
+		static const int NONBLOCK_ENABLE = 0;
+		static const int NONBLOCK_DISABLE = 1;
 	private :
 		struct termios old;
 		struct termios t_new;
