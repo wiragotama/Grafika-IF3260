@@ -57,18 +57,22 @@ void Kincir::init() {
     Point topLeft1(center.getAbsis(), center.getOrdinat()-10);
     Polygon baling1(topLeft1);
     baling1.loadPolygon(kincir1Path);
+    baling1.loadPattern(kincirPattern);
 
     Point topLeft2(center.getAbsis(), center.getOrdinat());
     Polygon baling2(topLeft2);
     baling2.loadPolygon(kincir2Path);
+    baling2.loadPattern(kincirPattern);
 
     Point topLeft3(center.getAbsis()-20, center.getOrdinat());
     Polygon baling3(topLeft3);
     baling3.loadPolygon(kincir3Path);
+    baling3.loadPattern(kincirPattern);
 
     Point topLeft4(center.getAbsis() - 10, center.getOrdinat()-20);
     Polygon baling4(topLeft4);
     baling4.loadPolygon(kincir4Path);
+    baling4.loadPattern(kincirPattern);
 
     orig.push_back(baling1);
     orig.push_back(baling2);

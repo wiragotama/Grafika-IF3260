@@ -55,15 +55,12 @@ class Polygon {
 	private :
         void init();
 		uint32_t getColor(int x, int y);
-<<<<<<< HEAD
 		void floodFill(Canvas*, int screen_x, int screen_y, uint32_t color);
 		void floodFillBackground(Canvas*, int screen_x, int screen_y, uint32_t color);
 		
-=======
+		/*
 		void floodFill(Canvas*, int screen_x, int screen_y);
-		void floodFillBackground(Canvas*, int screen_x, int screen_y);
-
->>>>>>> fccd60d12576056d970d69282d7e74b711f36e3e
+		void floodFillBackground(Canvas*, int screen_x, int screen_y);*/
 	private :
 		vector<Point> points;
 		Pattern pattern;

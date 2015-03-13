@@ -253,11 +253,7 @@ void Polygon::floodFillBackground(Canvas* canvas, int x, int y, uint32_t color) 
 }
 
 void Polygon::move(int dx, int dy) {
-	// for (int i=0; i<points.size(); i++) {
-	// 	points[i].move(dx, dy);
-	// }
-
-	firePoint.move(dx, dy);
+	//firePoint.move(dx, dy);
 	topLeftPosition.move(dx, dy);
 }
 
