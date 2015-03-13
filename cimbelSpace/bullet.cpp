@@ -1,10 +1,10 @@
 #include "bullet.h"
 
-Bullet::Bullet(int direction, Point topLeftPosition) : line(topLeftPosition, Point(topLeftPosition.getAbsis(),topLeftPosition.getOrdinat()+10)) {
+Bullet::Bullet(int direction, Point topLeftPosition) : line(Point(topLeftPosition.getAbsis()+2,topLeftPosition.getOrdinat()), Point(topLeftPosition.getAbsis()+2,topLeftPosition.getOrdinat()+10)) {
 	this-> direction = direction;
-	thickness = 5;
+	thickness = 4;
 	
-	setWidth(1);
+	setWidth(thickness);
 	setHeight(10);
 	flag = false; //ni buat resolve masalah segmentation fault pas projectile dah nyampe ujung layar
 	

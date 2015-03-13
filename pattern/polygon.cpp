@@ -264,11 +264,14 @@ void Polygon::loadPolygon(const char* filename) {
 
 	fscanf(matrix_file, "%d", &numPoints);
 
+	int max_x, min_x, max_y, min_y;
 	for (int i=0; i<numPoints; i++) {
 		fscanf(matrix_file, "%d %d", &x, &y);
+		
 		Point P(x,y);
 		points.push_back(P);
 	}
+	
 
 	fscanf(matrix_file,"%d %d",&x, &y);
 	firePoint = Point(x,y);
@@ -374,7 +377,7 @@ int Polygon::getWidth() const {
 }
 
 int Polygon::getHeight() const {
-	return getMostBottomPoint().getAbsis() - getMostUpperPoint().getAbsis();
+	return getMostBottomPoint().getOrdinat() - getMostUpperPoint().getOrdinat();
 }
 
 Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){

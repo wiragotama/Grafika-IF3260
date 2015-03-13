@@ -9,27 +9,17 @@ BulletController::~BulletController() {
 bool BulletController::crashCheck(Point objTopLeft, Point objBottomRight) {
 	bool crash = false;
 	for (int i=0; i<bullets.size() && !crash; i++) {
-		
-		if (bullets[i].getTopLeftPosition().getOrdinat() <= objBottomRight.getOrdinat() &&
-		
-		((bullets[i].getTopLeftPosition().getAbsis() + bullets[i].getWidth() <= objBottomRight.getAbsis() &&
-		bullets[i].getTopLeftPosition().getAbsis() + bullets[i].getWidth() >= objTopLeft.getAbsis()) ||
-		
-		(bullets[i].getTopLeftPosition().getAbsis() <= objBottomRight.getAbsis() &&
-		bullets[i].getTopLeftPosition().getAbsis() >= objTopLeft.getAbsis()) )
-		) {
+		Point tl_a = bullets[i].getTopLeftPosition();
+		Point br_a = Point(tl_a.getAbsis()+bullets[i].getWidth() , tl_a.getOrdinat()+bullets[i].getHeight());
+
+		Point tl_c = Point( std::max(tl_a.getAbsis(),objTopLeft.getAbsis()), std::max(tl_a.getOrdinat(),objTopLeft.getOrdinat()) );
+		Point br_c = Point( std::min(br_a.getAbsis(),objBottomRight.getAbsis()), std::min(br_a.getOrdinat(),objBottomRight.getOrdinat()) );
+
+		if (!(br_c.getAbsis() < tl_c.getAbsis() || br_c.getOrdinat() < tl_c.getOrdinat())) {	
 			crash = true;
+			bullets.erase(bullets.begin()+i);
 		}
-		else if (bullets[i].getTopLeftPosition().getOrdinat()+bullets[i].getHeight() >= objTopLeft.getOrdinat() &&
-		
-		((bullets[i].getTopLeftPosition().getAbsis() + bullets[i].getWidth() <= objBottomRight.getAbsis() &&
-		bullets[i].getTopLeftPosition().getAbsis() + bullets[i].getWidth() >= objTopLeft.getAbsis()) ||
-		
-		(bullets[i].getTopLeftPosition().getAbsis() <= objBottomRight.getAbsis() &&
-		bullets[i].getTopLeftPosition().getAbsis() >= objTopLeft.getAbsis()) )
-		) {
-			crash = true;
-		}
+		else i++;
 	}
 	return crash;
 }
@@ -57,4 +47,19 @@ void BulletController::draw(Canvas *canvas, uint32_t color) {
 void BulletController::move(int dx, int dy) {
 	for (int i=0; i<bullets.size(); i++)
 		bullets[i].move(dx, dy);
+}
+
+vector<Bullet> BulletController::getBullets() {
+	return bullets;
+}
+
+void BulletController::deleteBullet(int idx) {
+	bullets.erase(bullets.begin()+idx);
+}
+Bullet BulletController::getBullet(int idx) {
+	return bullets[idx];
+}
+
+int BulletController::getSize() {
+	return bullets.size();
 }

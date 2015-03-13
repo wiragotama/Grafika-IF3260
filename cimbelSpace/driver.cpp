@@ -9,18 +9,22 @@
 #include "../perang-perangan/projectile.h"
 #include "../transformasi/TerjunPayung.h"
 #include "../cimbelSpace/bulletController.h"
+#include "../cimbelSpace/alienController.h"
+#include <ctime>
 
 void gameIntroduction(Helikopter* helikopter, Canvas* canvas);
 void showRainbowPalette(Helikopter* helikopter, Canvas* canvas);
 void gamePlay(Helikopter* helikopter, Canvas *canvas);
-
+void keyHandle(char c, BulletController* bulletController, Helikopter *helikopter);
+void cleanUp(BulletController* bulletController, AlienController *alienController);
+bool planeCrash(AlienController *alienController, Helikopter* helikopter);
 
 int main() {
 	Canvas canvas;
 	Point topLeftPosition(540,400);
 	Helikopter helikopter(topLeftPosition);
 	
-	//gameIntroduction(&helikopter, &canvas);
+	gameIntroduction(&helikopter, &canvas);
 	gamePlay(&helikopter, &canvas);
 	return 0;
 }
@@ -82,12 +86,26 @@ void gameIntroduction(Helikopter* helikopter, Canvas* canvas) {
 void gamePlay(Helikopter* helikopter, Canvas *canvas) {
 	
 	BulletController bulletController;
+	AlienController alienController;
+	
 	GraphicsIO graphicsIO;
 	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
 	
 	char c;
+	int timeCounter = 0;
+	bool planeBroke = false;
 	do {
+		srand(time(NULL));
+		int rand_var = rand()%640 + 1; //posisi random spawn monster
+		if (timeCounter==200) {
+			//spawn monster
+			Point ATLP(rand_var, 1);
+			alienController.addAlien(ATLP);
+			timeCounter = 0;
+		}
+		
 		bulletController.draw(canvas, canvas->pixel_color(0,0,255));
+		alienController.draw(canvas, canvas->pixel_color(218,165,32));
 		helikopter->draw(canvas, helikopter->getColor());
 		
 		canvas->flush();
@@ -95,22 +113,60 @@ void gamePlay(Helikopter* helikopter, Canvas *canvas) {
 		int i = GraphicsIO::kbhit();
 		if (i!=0) {
 			c = fgetc(stdin);
-			if (c=='f') {
-				Point TLP(helikopter->getTopLeftPosition().getAbsis(), helikopter->getTopLeftPosition().getOrdinat()-11);
-				bulletController.addBullet(TLP, 1);
-			}
-			else if (c == 97 && helikopter->getTopLeftPosition().getAbsis() > 0) { //left gradient
-				helikopter->move(-2, 0);
-			}
-			else if (c == 100 && helikopter->getTopLeftPosition().getAbsis() + helikopter->getWidth() < 640) { //right gradient
-				helikopter->move(2, 0);
-			}
+			keyHandle(c, &bulletController, helikopter);
 		}
 		bulletController.move(0, -2);
-		bulletController.garbageCollector();
-		//Point BRP(helikopter->getTopLeftPosition().getAbsis()+helikopter->getWidth(), helikopter->getTopLeftPosition().getOrdinat()+helikopter->getHeight());
-		//bulletController.crashCheck(helikopter->getTopLeftPosition(), BRP);
+		alienController.move(0, 2);
+		//bersih2
+		planeBroke = planeCrash(&alienController, helikopter);
+		cleanUp(&bulletController, &alienController);
+		timeCounter++;
 		
-	} while (c!='\n');
+	} while (c!='\n' && !planeBroke);
+	helikopter->draw(canvas, helikopter->getColor());
+	canvas->flush();
 	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_DISABLE);
+}
+
+void keyHandle(char c, BulletController* bulletController, Helikopter *helikopter) {
+	if (c=='f') {
+		Point TLP(helikopter->getTopLeftPosition().getAbsis(), helikopter->getTopLeftPosition().getOrdinat()-11);
+		bulletController->addBullet(TLP, 1);
+	}
+	else if (c == 97 && helikopter->getTopLeftPosition().getAbsis() > 0) { //left gradient
+		helikopter->move(-2, 0);
+	}
+	else if (c == 100 && helikopter->getTopLeftPosition().getAbsis() + helikopter->getWidth() < 640) { //right gradient
+		helikopter->move(2, 0);
+	}
+}
+
+void cleanUp(BulletController* bulletController, AlienController *alienController) {
+	if (alienController->getSize() > 0) {
+		for (int i=0; i<bulletController->getSize();) {
+			Point BRP(bulletController->getBullet(i).getTopLeftPosition().getAbsis() + bulletController->getBullet(i).getWidth(), 
+					bulletController->getBullet(i).getTopLeftPosition().getOrdinat() + bulletController->getBullet(i).getHeight());
+			bool flag = alienController->crashDelete(bulletController->getBullet(i).getTopLeftPosition(), BRP);
+			if (flag) {
+				bulletController->deleteBullet(i);
+			}
+			else i++;
+		}
+	}
+	alienController->garbageCollector();
+	bulletController->garbageCollector();
+}
+
+bool planeCrash(AlienController *alienController, Helikopter* helikopter) {
+	bool flag = false;
+	for (int i=0; i<!flag && alienController->getSize(); ) {
+		Point BRP(helikopter->getTopLeftPosition().getAbsis() + helikopter->getWidth(), 
+				helikopter->getTopLeftPosition().getOrdinat() + helikopter->getHeight());
+		flag = alienController->crashDelete(helikopter->getTopLeftPosition(), BRP);
+		if (flag) {
+			helikopter->brokeBody();
+		}
+		else i++;
+	}
+	return flag;
 }

@@ -13,6 +13,11 @@ class BulletController {
 		void garbageCollector();
 		void draw(Canvas *canvas, uint32_t color);
 		void move(int dx, int dy);
+		void deleteBullet(int idx);
+		Bullet getBullet(int idx);
+		int getSize();
+		
+		vector<Bullet> getBullets();
 		
 	private :
 		vector<Bullet> bullets;
