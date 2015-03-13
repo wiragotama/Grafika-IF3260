@@ -8,9 +8,11 @@
 #include "../perang-perangan/animation.h"
 #include "../perang-perangan/projectile.h"
 #include "../transformasi/TerjunPayung.h"
+#include "../cimbelSpace/bulletController.h"
 
 void gameIntroduction(Helikopter* helikopter, Canvas* canvas);
 void showRainbowPalette(Helikopter* helikopter, Canvas* canvas);
+void gamePlay(Helikopter* helikopter, Canvas *canvas);
 
 
 int main() {
@@ -18,7 +20,8 @@ int main() {
 	Point topLeftPosition(540,400);
 	Helikopter helikopter(topLeftPosition);
 	
-	gameIntroduction(&helikopter, &canvas);
+	//gameIntroduction(&helikopter, &canvas);
+	gamePlay(&helikopter, &canvas);
 	return 0;
 }
 
@@ -74,4 +77,40 @@ void gameIntroduction(Helikopter* helikopter, Canvas* canvas) {
 	getchar();
 	showRainbowPalette(helikopter, canvas);
 	canvas->clearScreen();
+}
+
+void gamePlay(Helikopter* helikopter, Canvas *canvas) {
+	
+	BulletController bulletController;
+	GraphicsIO graphicsIO;
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
+	
+	char c;
+	do {
+		bulletController.draw(canvas, canvas->pixel_color(0,0,255));
+		helikopter->draw(canvas, helikopter->getColor());
+		
+		canvas->flush();
+		
+		int i = GraphicsIO::kbhit();
+		if (i!=0) {
+			c = fgetc(stdin);
+			if (c=='f') {
+				Point TLP(helikopter->getTopLeftPosition().getAbsis(), helikopter->getTopLeftPosition().getOrdinat()-11);
+				bulletController.addBullet(TLP, 1);
+			}
+			else if (c == 97 && helikopter->getTopLeftPosition().getAbsis() > 0) { //left gradient
+				helikopter->move(-2, 0);
+			}
+			else if (c == 100 && helikopter->getTopLeftPosition().getAbsis() + helikopter->getWidth() < 640) { //right gradient
+				helikopter->move(2, 0);
+			}
+		}
+		bulletController.move(0, -2);
+		bulletController.garbageCollector();
+		//Point BRP(helikopter->getTopLeftPosition().getAbsis()+helikopter->getWidth(), helikopter->getTopLeftPosition().getOrdinat()+helikopter->getHeight());
+		//bulletController.crashCheck(helikopter->getTopLeftPosition(), BRP);
+		
+	} while (c!='\n');
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_DISABLE);
 }
