@@ -35,6 +35,10 @@ void Point::printInfo() {
     printf("(%d, %d)", getAbsis(), getOrdinat());
 }
 
+bool Point::isOrigin() const {
+	return (this->getAbsis() == 0) && (this->getOrdinat() == 0);
+}
+
 void Point::rotate(double angle, int rx, int ry) {
     int x1 = cos(angle)*(x-rx)-sin(angle)*(y-ry)+rx,
         y1 = sin(angle)*(x-rx)+cos(angle)*(y-ry)+ry;

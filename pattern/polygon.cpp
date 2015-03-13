@@ -1,14 +1,18 @@
-#include "../pattern/polygon.h" 
+#include "../pattern/polygon.h"
 
 const int MAXINT = 0x7FFFFFFF;
 
-Polygon::Polygon() {}
+Polygon::Polygon() {
+    init();
+}
 
 Polygon::Polygon(Point topLeftPosition) {
+    init();
 	this->topLeftPosition = topLeftPosition;
 }
 
 Polygon::Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint, Pattern pattern_t) : pattern(pattern_t) {
+    init();
     this->topLeftPosition = topLeftPosition;
     points = nodes;
     this->firePoint = firePoint;
@@ -21,6 +25,7 @@ Polygon::~Polygon() {
 }
 
 Polygon::Polygon(const Polygon& ply) : pattern(ply.getPattern()) {
+    init();
 	points = ply.getPoints();
 	firePoint = ply.getFirePoint();
 	originFirePoint = ply.getOriginFirePoint();
@@ -34,6 +39,74 @@ const Polygon& Polygon::operator=(const Polygon& ply) {
 	originFirePoint = ply.getOriginFirePoint();
 	topLeftPosition = ply.getTopLeftPosition();
 	return *this;
+}
+
+void Polygon::init() {
+	min_x = max_x = min_y = max_y = -1;
+}
+
+int Polygon::getMaxY() const {
+    // if (max_y == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        max_y = it->getOrdinat(); it++;
+
+        while (it != points.end()) {
+            int y = it->getOrdinat();
+            if (y > max_y)
+                max_y = y;
+            it++;
+        }
+    // }
+    return max_y + topLeftPosition.getOrdinat();
+}
+
+int Polygon::getMinY() const {
+    // if (min_y == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        min_y = it->getOrdinat(); it++;
+
+        while (it != points.end()) {
+            int y = it->getOrdinat();
+            if (y < min_y)
+                min_y = y;
+            it++;
+        }
+    // }
+    return min_y + topLeftPosition.getOrdinat();
+}
+
+int Polygon::getMinX() const {
+    // if (min_x == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        min_x = it->getAbsis(); it++;
+
+        while (it != points.end()) {
+            int x = it->getAbsis();
+            if (x < min_x)
+                min_x = x;
+            it++;
+        }
+    // }
+    return min_x + topLeftPosition.getAbsis();
+}
+
+int Polygon::getMaxX() const {
+    // if (max_x == -1) { // haven't computed yet
+        vector<Point>::const_iterator it = points.begin();
+        // it must have at least a point right?
+        max_x = it->getAbsis(); it++;
+
+        while (it != points.end()) {
+            int x = it->getAbsis();
+            if (x > max_x)
+                max_x = x;
+            it++;
+        }
+    // }
+    return max_x + topLeftPosition.getAbsis();
 }
 
 Point Polygon::getOriginFirePoint() const {
@@ -56,6 +129,8 @@ void Polygon::printInfo() {
     }
     printf("\nFirePoint: ");
     firePoint.printInfo();
+    printf("\ntopleftPosition");
+    topLeftPosition.printInfo();
     printf("\n");
 }
 
@@ -102,7 +177,8 @@ void Polygon::erasePoints() {
 }
 
 void Polygon::draw(Canvas* canvas, uint32_t color) {
-
+	// printf("ini %d %d\n",topLeftPosition.getAbsis(),topLeftPosition.getOrdinat());
+	// getchar();
 	for (int i=1; i<points.size(); i++) {
 		Line line(points[i], points[i-1]);
 		line.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
@@ -177,11 +253,12 @@ void Polygon::floodFillBackground(Canvas* canvas, int x, int y, uint32_t color) 
 }
 
 void Polygon::move(int dx, int dy) {
-	for (int i=0; i<points.size(); i++) {
-		points[i].move(dx, dy);
-	}
+	// for (int i=0; i<points.size(); i++) {
+	// 	points[i].move(dx, dy);
+	// }
 
 	firePoint.move(dx, dy);
+	topLeftPosition.move(dx, dy);
 }
 
 void Polygon::loadPolygon(const char* filename) {
@@ -230,6 +307,10 @@ void Polygon::setFirePoint(Point P) {
 void Polygon::setTopLeftPosition(int x, int y) {
 	topLeftPosition.setAbsis(x);
 	topLeftPosition.setOrdinat(y);
+}
+
+void Polygon::setTopLeftPosition(Point p) {
+	topLeftPosition = p;
 }
 
 Point Polygon::getPoint(int idx) {
@@ -295,6 +376,50 @@ Point Polygon::getMostUpperPoint() const {
 int Polygon::getWidth() const {
 	return getMostRightPoint().getAbsis() - getMostLeftPoint().getAbsis();
 }
+
 int Polygon::getHeight() const {
 	return getMostBottomPoint().getAbsis() - getMostUpperPoint().getAbsis();
+}
+
+Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
+	vector<Point> transformed = points;
+	transformed.push_back(Point(0, 0));
+     
+    // Pindahkan titik tengah ke point(0,0);
+    for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
+    int awal_x = it->getAbsis();
+    int awal_y = it->getOrdinat();
+    it->setAbsis(awal_x - pivot_x);
+    it->setOrdinat(awal_y - pivot_y);
+    }
+     
+    // transformasi ubah ukuran
+    for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
+    int awal_x = it->getAbsis();
+    int awal_y = it->getOrdinat();
+    it->setAbsis((int) (awal_x * scale));
+    it->setOrdinat((int) (awal_y *scale));
+    }
+     
+     
+    //Kembalikan ke posisi semula
+    for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
+		int awal_x = it->getAbsis();
+		int awal_y = it->getOrdinat();
+		it->setAbsis((int) (awal_x + pivot_x));
+		it->setOrdinat((int) (awal_y + pivot_y));
+    }
+     
+    //Ambil kembali firepoint dan topleftposition
+    Point newTopLeft = transformed[transformed.size()-1];
+	int dx = newTopLeft.getAbsis();
+	int dy = newTopLeft.getOrdinat();
+	newTopLeft.setAbsis(newTopLeft.getAbsis() + topLeftPosition.getAbsis());
+	newTopLeft.setOrdinat(newTopLeft.getOrdinat() + topLeftPosition.getOrdinat());
+	transformed.pop_back();
+	for (vector<Point>::iterator it = transformed.begin() ;it != transformed.end(); ++it) {
+		it->setAbsis(it->getAbsis() - dx);
+		it->setOrdinat(it->getOrdinat() - dy); 
+	}
+	return Polygon(newTopLeft, transformed, firePoint, pattern);
 }

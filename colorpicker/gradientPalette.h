@@ -28,12 +28,14 @@ class GradientPalette {
 		int getCursorY(); //mendapatkan posisi kursor pada gradient palette (lokal)
 		int getScreenX(); //mendapatkan posisi kursor pada pixel di layar (global)
 		int getScreenY(); //mendapatkan posisi kursor pada pixel di layar (global)
+		uint32_t getColorTable(int pos_width, int pos_height);
 		
 	private :
 		int x_offset;
 		int y_offset;
 		int cursor_x;
 		int cursor_y;
+		uint32_t color_table[GRADIENTPALETTE_WIDTH][GRADIENTPALETTE_HEIGHT];
 };
 
 #endif

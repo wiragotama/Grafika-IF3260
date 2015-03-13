@@ -48,9 +48,11 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 		rainbowPalette.drawCursor(canvas);
 		gradientPalette.drawColorGradient(canvas->getColor(rainbowPalette.getScreenX(),rainbowPalette.getScreenY()), canvas);
 		gradientPalette.drawCursor(canvas);
-		canvas->flush();
 		
-		helikopter->setColor(canvas->getColor(gradientPalette.getScreenX(), gradientPalette.getScreenY()));
+		helikopter->setColor(gradientPalette.getColorTable(gradientPalette.getCursorX(), gradientPalette.getCursorY()));
+		//helikopter->setColor(canvas->getColor(gradientPalette.getScreenX(), gradientPalette.getScreenY()));
+		helikopter->draw(canvas, helikopter->getColor());
+		canvas->flush();
 		
 		canvas->putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		canvas->putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
@@ -72,11 +74,4 @@ void gameIntroduction(Helikopter* helikopter, Canvas* canvas) {
 	getchar();
 	showRainbowPalette(helikopter, canvas);
 	canvas->clearScreen();
-	char c; 
-	GraphicsIO graphicsIO;
-	while (c!='\n') {
-		helikopter->draw(canvas, helikopter->getColor());
-		canvas->flush();
-		c = graphicsIO.getch();
-	}
 }

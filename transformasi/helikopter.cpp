@@ -15,6 +15,13 @@ Helikopter::Helikopter(Point topLeftPosition) : kincir(topLeftPosition), body(to
 Helikopter::~Helikopter() {
 }
 
+vector<Polygon> Helikopter::getAllPolygons() const {
+    vector<Polygon> result = body.getPolygons();
+    vector<Polygon> result2 = kincir.getPolygons();
+    result.insert(result.end(), result2.begin(), result2.end());
+    return result;
+}
+
 Point Helikopter::getTopLeftPosition() {
 	return topLeftPosition;
 }
