@@ -27,3 +27,6 @@ kincir:
 
 view:
 	g++ core/canvas.cpp core/graphicsio.cpp core/line.cpp core/point.cpp pattern/polygon.cpp pattern/pattern.cpp w2v/peta.cpp w2v/driver.cpp -o bin/w2v
+
+space:
+	g++ core/canvas.cpp core/graphicsio.cpp core/line.cpp core/point.cpp pattern/polygon.cpp pattern/pattern.cpp colorpicker/rainbowPalette.cpp colorpicker/gradientPalette.cpp transformasi/TerjunPayung.cpp core/circle.cpp transformasi/kincir.cpp transformasi/tire.cpp transformasi/body.cpp transformasi/helikopter.cpp cimbelSpace/driver.cpp  -o bin/cimbelSpace

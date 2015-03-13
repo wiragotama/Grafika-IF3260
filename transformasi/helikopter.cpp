@@ -32,6 +32,14 @@ void Helikopter::move(int dx, int dy) {
 	kincir.move(dx, dy);
 }
 
+void Helikopter::setColor(uint32_t color) {
+	this->color = color;
+}
+
+uint32_t Helikopter::getColor() {
+	return color;
+}
+
 int Helikopter::getWidth() {
 	return body.getWidth();
 }
@@ -60,7 +68,7 @@ Body Helikopter::getBody() {
 void Helikopter::draw(Canvas *canvas, uint32_t color) {
 	body.draw(canvas, color);
 	tire.draw(canvas, color);
-	kincir.draw(canvas, canvas->pixel_color(0,0,255));
+	kincir.draw(canvas, color);
 	double thirtyDegree = 0.03490658503989;
 	kincir.rotate(thirtyDegree);
 }

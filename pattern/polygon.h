@@ -49,8 +49,8 @@ class Polygon {
 		
 	private :
 		uint32_t getColor(int x, int y);
-		void floodFill(Canvas*, int screen_x, int screen_y);
-		void floodFillBackground(Canvas*, int screen_x, int screen_y);
+		void floodFill(Canvas*, int screen_x, int screen_y, uint32_t color);
+		void floodFillBackground(Canvas*, int screen_x, int screen_y, uint32_t color);
 		
 	private :
 		vector<Point> points;
