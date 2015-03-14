@@ -52,6 +52,7 @@ class Polygon {
 
 		Pattern getPattern() const;
 		Polygon resizing(double scale, int pivot_x, int pivot_y);
+		bool isPointInside(const Point p) const; //belum diimplementasi
 	private :
         void init();
 		uint32_t getColor(int x, int y);

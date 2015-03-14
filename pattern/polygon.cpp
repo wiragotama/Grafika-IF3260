@@ -422,3 +422,7 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 	}
 	return Polygon(newTopLeft, transformed, firePoint, pattern);
 }
+
+bool Polygon::isPointInside(const Point p) const {
+	return true; //dummy
+}

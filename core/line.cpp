@@ -197,3 +197,23 @@ void Line::move(int dx, int dy) {
 	point[0].move(dx, dy);
 	point[1].move(dx, dy);
 }
+
+float Line::getLength() const {
+	int x0 = this->point[0].getAbsis();
+	int x1 = this->point[1].getAbsis();
+	int y0 = this->point[0].getOrdinat();
+	int y1 = this->point[1].getOrdinat();
+	return sqrt((x0 - x1)*(x0 - x1) + (y0 - y1) * (y0 - y1));
+}
+
+int Line::getDifXInVector() const {
+	int x0 = this->point[0].getAbsis();
+	int x1 = this->point[1].getAbsis();
+	return x0-x1;
+}
+
+int Line::getDifYInVector() const {
+	int y0 = this->point[0].getOrdinat();
+	int y1 = this->point[1].getOrdinat();
+	return y0-y1;
+}

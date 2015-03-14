@@ -32,7 +32,9 @@ class Line {
 		void moveUp(int d);
 		void moveDown(int d);
 		void move(int dx, int dy);
-
+		float getLength() const;
+		int getDifXInVector() const;
+		int getDifYInVector() const;
 	private :
 		Point point[2];
 };
