@@ -30,3 +30,6 @@ view:
 
 space:
 	g++ core/canvas.cpp core/graphicsio.cpp core/line.cpp core/point.cpp pattern/polygon.cpp pattern/pattern.cpp colorpicker/rainbowPalette.cpp colorpicker/gradientPalette.cpp transformasi/TerjunPayung.cpp core/circle.cpp  transformasi/kincir.cpp transformasi/tire.cpp transformasi/body.cpp transformasi/helikopter.cpp cimbelSpace/bulletController.cpp cimbelSpace/bullet.cpp cimbelSpace/alienController.cpp cimbelSpace/driver.cpp  -g -o bin/cimbelSpace
+
+pointnpoly:
+	g++ core/canvas.cpp core/line.cpp core/point.cpp pattern/polygon.cpp pattern/pattern.cpp pattern/driver.cpp -o bin/pointnpoly
