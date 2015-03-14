@@ -422,3 +422,13 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 	}
 	return Polygon(newTopLeft, transformed, firePoint, pattern);
 }
+
+bool Polygon::sortTopLeft(const Polygon& lhs, const Polygon& rhs) {
+	Point TLP = lhs.getTopLeftPosition();
+	Point TLP2 = rhs.getTopLeftPosition();
+	
+	if (TLP.getAbsis() == TLP2.getAbsis()) {
+		return (TLP.getOrdinat() < TLP2.getOrdinat());
+	}
+	else return (TLP.getAbsis() < TLP2.getAbsis());
+}
