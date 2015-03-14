@@ -432,3 +432,25 @@ bool Polygon::sortTopLeft(const Polygon& lhs, const Polygon& rhs) {
 	}
 	else return (TLP.getAbsis() < TLP2.getAbsis());
 }
+
+Point Polygon::getBottomRightPoint() const {
+	return Point(getMostRightPoint().getAbsis(), getMostBottomPoint().getOrdinat());
+}
+
+Point Polygon::getSuitableFirePoint(Canvas* canvas) {
+	//left for winson
+	return val;
+}
+
+void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP) {
+	
+	if ((x>=TLP.getAbsis() && x<=BRP.getAbsis()) && (y>=TLP.getOrdinat() && y<=BRP.getOrdinat()) && 
+		(matrix[y][x]==0)	
+	) {
+		matrix[y][x] = 2345678;
+		simulateFloodFill(x-1, y, matrix, TLP, BRP);
+		simulateFloodFill(x+1, y, matrix, TLP, BRP);
+		simulateFloodFill(x, y-1, matrix, TLP, BRP);
+		simulateFloodFill(x, y+1, matrix, TLP, BRP);
+	}
+}
