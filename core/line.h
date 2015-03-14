@@ -11,6 +11,8 @@
 #define STRAIGHT_LINE 0
 #define DASHED_LINE 1
 
+#define EPS 1e-5
+
 class Line {
 	public :
 		Line(Point P1, Point P2);
@@ -35,6 +37,9 @@ class Line {
 		Point* getIntersectionPointWith(Line);
 		int getDifXInVector() const;
 		int getDifYInVector() const;
+		double getLength() const;
+		
+		static double angle(Point a, Point o, Point b);
 	private :
 		bool isIntersectWith(Line);
 		bool onSegment(Point);

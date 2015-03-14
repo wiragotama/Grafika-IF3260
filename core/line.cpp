@@ -282,3 +282,27 @@ int Line::getDifYInVector() const {
 	int y1 = this->point[1].getOrdinat();
 	return y0-y1;
 }
+
+double Line::getLength() const {
+	double a = this->getDifXInVector();
+	double b = this->getDifYInVector();
+	return sqrt(a*a + b*b);
+}
+
+double Line::angle(Point a, Point o, Point b) {
+	 Line l1(a,o);
+	 Line l2(o,b);
+	 double length1 = l1.getLength();
+	 double length2 = l2.getLength();
+	 int tmp = l1.getDifXInVector() * l2.getDifXInVector() + l1.getDifYInVector() * l2.getDifYInVector();
+
+	 double haha = 0;
+	 if (length1 < EPS || length2 < EPS) { //berarti point tersebut sama
+	 	haha = 1; //biar di acos jadi 0;
+	 } else {
+	 	haha = (double)tmp/(length1 * length2);
+	 	if (haha > 1.0) haha = 1.0;
+	 	else if (haha < -1.0) haha = -1.0;
+	 }
+	 return acos(haha); //return dalam radian
+}

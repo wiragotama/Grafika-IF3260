@@ -456,17 +456,21 @@ void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Poin
 }
 bool Polygon::isPointInside(Point point) const {
 	vector<Point> edges = this->getPoints();
+	if(edges.size()>0)
+		edges.push_back(edges[0]);
 	double sum = 0;
 	for (int p = 0; p < edges.size()-1; ++p){ //ingat ganti p
 		float temp = 0.0f;
 		if (Point::ccw(edges[p], edges[p+1], point)) {
-			temp = Point::angle(edges[p], point, edges[p+1]);
+			temp = Line::angle(edges[p], point, edges[p+1]);
 			sum += temp;
 		} else {
-			temp -= Point::angle(edges[p], point, edges[p+1]);
+			temp -= Line::angle(edges[p], point, edges[p+1]);
 			sum -= temp;
 		}
+		printf("%f ",temp);
 	}
+	printf("%lf\n", fabs(fabs(sum) - 2*M_PI));
 	bool inPolygon = (fabs(fabs(sum) - 2*M_PI) < 0.000001);
 	return inPolygon;
 }

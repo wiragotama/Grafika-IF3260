@@ -39,6 +39,10 @@ bool Point::isOrigin() const {
 	return (this->getAbsis() == 0) && (this->getOrdinat() == 0);
 }
 
+bool Point::isEqual(Point p) const{
+	return (this->getAbsis() == p.getAbsis()) && (this->getOrdinat() == p.getOrdinat());
+}
+
 void Point::rotate(double angle, int rx, int ry) {
     int x1 = cos(angle)*(x-rx)-sin(angle)*(y-ry)+rx,
         y1 = sin(angle)*(x-rx)+cos(angle)*(y-ry)+ry;
@@ -109,24 +113,4 @@ bool Point::sortUpperLeft(const Point& lhs, const Point& rhs) {
 
 bool Point::ccw (Point p, Point q, Point r) {
 	return (Point::orientation(p,q,r) == 2);
-}
-
-double Point::angle(Point a, Point o, Point b) {
-	// return 0;
-	// Line l1(a,o);
-	// Line l2(o,b);
-	return 0;
-	// float length1 = l1.getLength();
-	// float length2 = l2.getLength();
-	// int tmp = l1.getDifXInVector() * l2.getDifXInVector() + l1.getDifYInVector() * l2.getDifYInVector();
-	// // cout << tmp << " " << length1 << " " << length2 << " haha" << endl;
-	// double haha = 0;
-	// if (length1 == 0 || length2 == 0) { //berarti point tersebut sama
-	// 	haha = 1; //biar di acos jadi 0;
-	// } else {
-	// 	haha = (double)tmp/(length1 * length2);
-	// 	if (haha > 1.0) haha = 1.0;
-	// 	else if (haha < -1.0) haha = -1.0;
-	// }
-	// return acos(haha); //return dalam radian
 }

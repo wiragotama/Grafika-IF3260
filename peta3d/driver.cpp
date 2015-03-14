@@ -36,9 +36,7 @@ int main() {
 			Line ltemp(poly[i], poly[i+1]);
 			Point* p;
 			p = garis.getIntersectionPointWith(ltemp);
-			//~ if (garis.isIntersectWith(ltemp)) {
-				//~ p = garis.getIntersectionPointWith(ltemp);
-			//~ }
+
 			if (p) {
 				daftar.push_back(*p);
 				free(p);
@@ -51,19 +49,25 @@ int main() {
 	sort(daftar.begin(), daftar.end(), Point::pointGreaterThan);
 	
 	vector<Line> peta3d;
-	for(int i=0; i<daftar.size(); i+=2){
-		peta3d.push_back(Line(daftar[i], daftar[i+1]));
+	for(int i=0; i<daftar.size()-1; i++){
+		if(! daftar[i].isEqual(daftar[i+1])){
+			Point midPoint = Point((daftar[i].getAbsis()+ daftar[i+1].getAbsis())/2 , 
+				(daftar[i].getOrdinat()+ daftar[i+1].getOrdinat())/2);
+			printf("Titik mid point: %d %d\n",midPoint.getAbsis(), midPoint.getOrdinat());
+			if(! gambar.isPointInside(midPoint) )
+				peta3d.push_back(Line(daftar[i], daftar[i+1]));
+		}
 	}
 	
 	for(int i=0; i<daftar.size(); i++){
 		printf("%d %d\n", daftar[i].getAbsis(), daftar[i].getOrdinat());
 	}
 	
-	gambar.draw(&canvas, 0x00FFFFFF);
-	for(int i=0; i<peta3d.size(); i++)
-		peta3d[i].draw(&canvas, 1, 0x00FFFFFF);
+	//gambar.draw(&canvas, 0x00FFFFFF);
+	//for(int i=0; i<peta3d.size(); i++)
+		//peta3d[i].draw(&canvas, 1, 0x00FFFFFF);
 	
-	canvas.flush();
+	//canvas.flush();
 		
 	return 0;
 }
