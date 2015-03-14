@@ -290,12 +290,14 @@ double Line::getLength() const {
 }
 
 double Line::angle(Point a, Point o, Point b) {
+	// printf("sekarang masuk angle "); a.printInfo(); o.printInfo(); b.printInfo();cout<<endl;
 	 Line l1(a,o);
-	 Line l2(o,b);
+	 Line l2(b,o);
 	 double length1 = l1.getLength();
 	 double length2 = l2.getLength();
-	 int tmp = l1.getDifXInVector() * l2.getDifXInVector() + l1.getDifYInVector() * l2.getDifYInVector();
-
+	 double tmp = l1.getDifXInVector() * l2.getDifXInVector() + l1.getDifYInVector() * l2.getDifYInVector();
+	 // cout << l1.getDifXInVector() << " " << l2.getDifXInVector() << " " << l1.getDifYInVector() << " " << l2.getDifYInVector() << endl;
+	 // cout << length1 << " " << length2 << " " << tmp << endl;
 	 double haha = 0;
 	 if (length1 < EPS || length2 < EPS) { //berarti point tersebut sama
 	 	haha = 1; //biar di acos jadi 0;

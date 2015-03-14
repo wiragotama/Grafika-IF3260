@@ -459,18 +459,21 @@ bool Polygon::isPointInside(Point point) const {
 	if(edges.size()>0)
 		edges.push_back(edges[0]);
 	double sum = 0;
-	for (int p = 0; p < edges.size()-1; ++p){ //ingat ganti p
+	for (int p = 0; p < edges.size()-1; ++p){
 		float temp = 0.0f;
 		if (Point::ccw(edges[p], edges[p+1], point)) {
 			temp = Line::angle(edges[p], point, edges[p+1]);
 			sum += temp;
+			// printf("%s\n", "ccw");
 		} else {
 			temp -= Line::angle(edges[p], point, edges[p+1]);
 			sum -= temp;
+			// printf("%s\n", "cw");
 		}
-		printf("%f ",temp);
+		// edges[p].printInfo();edges[p+1].printInfo();point.printInfo();
+		// printf("nilai sudut %f ",temp*180/M_PI);
 	}
-	printf("%lf\n", fabs(fabs(sum) - 2*M_PI));
+	// printf("\n%lf\n", fabs(fabs(sum) - 2*M_PI));
 	bool inPolygon = (fabs(fabs(sum) - 2*M_PI) < 0.000001);
 	return inPolygon;
 }

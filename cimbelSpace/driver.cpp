@@ -28,7 +28,9 @@ int main() {
 	// poly.addPoint(Point(0,0));
 	// poly.draw(&canvas, canvas.pixel_color(255,0,0));
 	// canvas.flush();
-	// bool x = poly.isPointInside(Point(50,50));
+	// int x1,y;
+	// cin >> x1 >> y;
+	// bool x = poly.isPointInside(Point(x1,y));
 	// cout << "di dalam polygon ga? " << x << endl; //coy ini blm bisa jalan soalnya masalah di include2
 	Canvas canvas;
 	Point topLeftPosition(540,400);

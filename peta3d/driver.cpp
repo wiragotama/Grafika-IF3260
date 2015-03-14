@@ -54,8 +54,14 @@ int main() {
 			Point midPoint = Point((daftar[i].getAbsis()+ daftar[i+1].getAbsis())/2 , 
 				(daftar[i].getOrdinat()+ daftar[i+1].getOrdinat())/2);
 			printf("Titik mid point: %d %d\n",midPoint.getAbsis(), midPoint.getOrdinat());
-			if(! gambar.isPointInside(midPoint) )
+			// gambar.printInfo();
+			if(!gambar.isPointInside(midPoint)) {
+				// printf("bukan di dalam\n");
 				peta3d.push_back(Line(daftar[i], daftar[i+1]));
+			} else {
+				// printf("di dalam\n");
+			}
+			// getchar();
 		}
 	}
 	
