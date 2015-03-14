@@ -3,7 +3,7 @@
 
 #include "point.h"
 #include "canvas.h"
-#include "../core/header.h"
+#include "header.h"
 #include <vector>
 #include <cmath>
 #include <cassert>
@@ -33,6 +33,8 @@ class Line {
 		void moveDown(int d);
 		void move(int dx, int dy);
 		Point* getIntersectionPointWith(Line);
+		int getDifXInVector() const;
+		int getDifYInVector() const;
 	private :
 		bool isIntersectWith(Line);
 		bool onSegment(Point);

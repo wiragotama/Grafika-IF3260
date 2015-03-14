@@ -20,6 +20,16 @@ void cleanUp(BulletController* bulletController, AlienController *alienControlle
 bool planeCrash(AlienController *alienController, Helikopter* helikopter);
 
 int main() {
+	// Polygon poly;
+	// poly.addPoint(Point(0,0));
+	// poly.addPoint(Point(100,0));
+	// poly.addPoint(Point(100,100));
+	// poly.addPoint(Point(0,100));
+	// poly.addPoint(Point(0,0));
+	// poly.draw(&canvas, canvas.pixel_color(255,0,0));
+	// canvas.flush();
+	// bool x = poly.isPointInside(Point(50,50));
+	// cout << "di dalam polygon ga? " << x << endl; //coy ini blm bisa jalan soalnya masalah di include2
 	Canvas canvas;
 	Point topLeftPosition(540,400);
 	Helikopter helikopter(topLeftPosition);

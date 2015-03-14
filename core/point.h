@@ -26,7 +26,8 @@ class Point {
         static int orientation(Point p, Point q, Point r);
 		static bool pointGreaterThan(Point a, Point b);
 		static bool sortUpperLeft(const Point& lhs, const Point& rhs);
-		
+		static bool ccw (Point p, Point q, Point r);
+		static double angle(Point a, Point o, Point b);
 	private :
 		int x;
 		int y;

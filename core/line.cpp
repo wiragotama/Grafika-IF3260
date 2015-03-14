@@ -270,3 +270,15 @@ Point* Line::getIntersectionPointWith(Line line) {
 	Point *ret = new Point(x,y);
 	return ret;
 }
+
+int Line::getDifXInVector() const {
+	int x0 = this->point[0].getAbsis();
+	int x1 = this->point[1].getAbsis();
+	return x0-x1;
+}
+
+int Line::getDifYInVector() const {
+	int y0 = this->point[0].getOrdinat();
+	int y1 = this->point[1].getOrdinat();
+	return y0-y1;
+}

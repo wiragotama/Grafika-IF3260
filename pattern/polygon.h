@@ -56,9 +56,8 @@ class Polygon {
 		
 		Point getSuitableFirePoint(Canvas* canvas);
 		void simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP);
-		
-	public :
 		static bool sortTopLeft(const Polygon& lhs, const Polygon& rhs);
+		bool isPointInside(Point p) const;
 		
 	private :
         void init();

@@ -439,7 +439,7 @@ Point Polygon::getBottomRightPoint() const {
 
 Point Polygon::getSuitableFirePoint(Canvas* canvas) {
 	//left for winson
-	return val;
+	return Point(0,0);
 }
 
 void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP) {
@@ -453,4 +453,20 @@ void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Poin
 		simulateFloodFill(x, y-1, matrix, TLP, BRP);
 		simulateFloodFill(x, y+1, matrix, TLP, BRP);
 	}
+}
+bool Polygon::isPointInside(Point point) const {
+	vector<Point> edges = this->getPoints();
+	double sum = 0;
+	for (int p = 0; p < edges.size()-1; ++p){ //ingat ganti p
+		float temp = 0.0f;
+		if (Point::ccw(edges[p], edges[p+1], point)) {
+			temp = Point::angle(edges[p], point, edges[p+1]);
+			sum += temp;
+		} else {
+			temp -= Point::angle(edges[p], point, edges[p+1]);
+			sum -= temp;
+		}
+	}
+	bool inPolygon = (fabs(fabs(sum) - 2*M_PI) < 0.000001);
+	return inPolygon;
 }
