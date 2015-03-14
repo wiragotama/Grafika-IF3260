@@ -23,7 +23,10 @@ class Point {
 		void moveDown(int d);
 		void move(int dx, int dy);
         void rotate(double angle, int rx, int ry);
-
+        
+        static int orientation(Point p, Point q, Point r);
+		static bool pointGreaterThan(Point a, Point b);
+	
 	private :
 		int x;
 		int y;

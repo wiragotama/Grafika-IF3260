@@ -32,8 +32,11 @@ class Line {
 		void moveUp(int d);
 		void moveDown(int d);
 		void move(int dx, int dy);
-
+		Point* getIntersectionPointWith(Line);
 	private :
+		bool isIntersectWith(Line);
+		bool onSegment(Point);
+			
 		Point point[2];
 };
 

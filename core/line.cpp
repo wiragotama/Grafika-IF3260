@@ -197,3 +197,76 @@ void Line::move(int dx, int dy) {
 	point[0].move(dx, dy);
 	point[1].move(dx, dy);
 }
+
+bool Line::onSegment(Point q){
+	Point p = this->point[0];
+	Point r = this->point[1];
+    if (q.getAbsis() <= max(p.getAbsis(), r.getAbsis()) && q.getAbsis() >= min(p.getAbsis(), r.getAbsis()) &&
+        q.getOrdinat() <= max(p.getOrdinat(), r.getOrdinat()) && q.getOrdinat() >= min(p.getOrdinat(), r.getOrdinat()))
+       return true;
+ 
+    return false;
+}
+
+bool Line::isIntersectWith(Line l2) {
+    // Find the four orientations needed for general and
+    // special cases
+    Point p1 = this->point[0];
+    Point q1 = this->point[1];
+    Point p2 = l2.getPointOne();
+    Point q2 = l2.getPointTwo();
+    int o1 = Point::orientation(p1, q1, p2);
+    int o2 = Point::orientation(p1, q1, q2);
+    int o3 = Point::orientation(p2, q2, p1);
+    int o4 = Point::orientation(p2, q2, q1);
+ 
+    // General case
+    if (o1 != o2 && o3 != o4)
+        return true;
+ 
+    // Special Cases
+    // p1, q1 and p2 are colinear and p2 lies on segment p1q1
+    if (o1 == 0 && this->onSegment(p2)) return true;
+ 
+    // p1, q1 and p2 are colinear and q2 lies on segment p1q1
+    if (o2 == 0 && this->onSegment(q2)) return true;
+ 
+    // p2, q2 and p1 are colinear and p1 lies on segment p2q2
+    if (o3 == 0 && l2.onSegment(p1)) return true;
+ 
+     // p2, q2 and q1 are colinear and q1 lies on segment p2q2
+    if (o4 == 0 && l2.onSegment(q1)) return true;
+ 
+    return false; // Doesn't fall in any of the above cases
+}
+
+
+Point* Line::getIntersectionPointWith(Line line) {
+	if (!this->isIntersectWith(line)) return NULL;
+	Point p1 = this->point[0];
+	Point p2 = this->point[1];
+	Point p3 = line.getPointOne();
+	Point p4 = line.getPointTwo();
+	// menjamin pasti telah intersection dengan line tersebut
+	// Store the values for fast access and easy
+	// equations-to-code conversion
+	float x1 = p1.getAbsis(), x2 = p2.getAbsis(), x3 = p3.getAbsis(), x4 = p4.getAbsis();
+	float y1 = p1.getOrdinat(), y2 = p2.getOrdinat(), y3 = p3.getOrdinat(), y4 = p4.getOrdinat();
+	float d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
+	// If d is zero, there is no intersection
+	//~ if (d == 0) 
+		//~ return NULL;
+	 
+	// Get the x and y
+	float pre = (x1*y2 - y1*x2), post = (x3*y4 - y3*x4);
+	float x = ( pre * (x3 - x4) - (x1 - x2) * post ) / d;
+	float y = ( pre * (y3 - y4) - (y1 - y2) * post ) / d;
+	// Check if the x and y coordinates are within both lines
+	//~ if ( x < min(x1, x2) || x > max(x1, x2) ||
+	//~ x < min(x3, x4) || x > max(x3, x4) ) return NULL;
+	//~ if ( y < min(y1, y2) || y > max(y1, y2) ||
+	//~ y < min(y3, y4) || y > max(y3, y4) ) return NULL;
+	// Return the point of intersection
+	Point *ret = new Point(x,y);
+	return ret;
+}

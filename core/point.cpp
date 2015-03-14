@@ -83,3 +83,20 @@ void Point::move(int dx, int dy) {
 	y+=dy;
 }
 
+int Point::orientation(Point p, Point q, Point r) {
+    // See 10th slides from following link for derivation of the formula
+    // http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf
+    int val = (q.getOrdinat() - p.getOrdinat()) * (r.getAbsis() - q.getAbsis()) -
+              (q.getAbsis() - p.getAbsis()) * (r.getOrdinat() - q.getOrdinat()); // cross products
+ 
+    if (val == 0) return 0;  // colinear
+ 
+    return (val > 0)? 1: 2; // clock or counterclock wise // jadi intinya terbalik 
+}
+
+bool Point::pointGreaterThan(Point a, Point b){
+	if(b.getAbsis() != a.getAbsis())
+		return a.getAbsis() < b.getAbsis();
+	else
+		return a.getOrdinat() > b.getOrdinat();
+}
