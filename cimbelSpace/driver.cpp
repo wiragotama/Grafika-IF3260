@@ -23,51 +23,47 @@ int main() {
 	Canvas canvas;
 	Point topLeftPosition(540,400);
 	Helikopter helikopter(topLeftPosition);
-	
+
 	gameIntroduction(&helikopter, &canvas);
 	gamePlay(&helikopter, &canvas);
 	return 0;
 }
 
 void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
-	
+
 	char c;
 	string msgPalette = "Rainbow palette";
-	string msgGradient = "Gradient palette (your choise)";
-	
+	string msgGradient = "Gradient palette (your choice)";
+
 	GraphicsIO graphicsIO;
-	
+
 	int x_offset = (canvas->get_vinfo().xres - COLORTABLE_WIDTH*COLORTABLE_CELLSIZE)/5;
 	int x_offset0 = x_offset + COLORTABLE_WIDTH*COLORTABLE_CELLSIZE + 100;
 	int y_offset = (canvas->get_vinfo().yres - COLORTABLE_HEIGHT*COLORTABLE_CELLSIZE)/2 - 50;
-	
+
 	RainbowPalette rainbowPalette(x_offset, y_offset);
 	GradientPalette gradientPalette(x_offset0, y_offset);
-	
+
 	rainbowPalette.initRainbowColor(canvas);
 	do {
-		system("clear");
-		rainbowPalette.drawPalette(canvas);
-		rainbowPalette.drawCursor(canvas);
-		
-		canvas->flush();
+
 		rainbowPalette.drawPalette(canvas);
 		rainbowPalette.drawCursor(canvas);
 		gradientPalette.drawColorGradient(canvas->getColor(rainbowPalette.getScreenX(),rainbowPalette.getScreenY()), canvas);
 		gradientPalette.drawCursor(canvas);
-		
+
 		helikopter->setColor(gradientPalette.getColorTable(gradientPalette.getCursorX(), gradientPalette.getCursorY()));
 		//helikopter->setColor(canvas->getColor(gradientPalette.getScreenX(), gradientPalette.getScreenY()));
 		helikopter->draw(canvas, helikopter->getColor());
 		canvas->flush();
-		
+
 		canvas->putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		canvas->putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
-		
+
 		c = graphicsIO.getch();
 		rainbowPalette.moveCursor(c);
 		gradientPalette.moveCursor(c);
-		
+
 	} while (c!='\n');
 }
 
@@ -84,13 +80,13 @@ void gameIntroduction(Helikopter* helikopter, Canvas* canvas) {
 }
 
 void gamePlay(Helikopter* helikopter, Canvas *canvas) {
-	
+
 	BulletController bulletController;
 	AlienController alienController;
-	
+
 	GraphicsIO graphicsIO;
 	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
-	
+
 	char c;
 	int timeCounter = 0;
 	bool planeBroke = false;
@@ -103,13 +99,13 @@ void gamePlay(Helikopter* helikopter, Canvas *canvas) {
 			alienController.addAlien(ATLP);
 			timeCounter = 0;
 		}
-		
+
 		bulletController.draw(canvas, canvas->pixel_color(0,0,255));
 		alienController.draw(canvas, canvas->pixel_color(218,165,32));
 		helikopter->draw(canvas, helikopter->getColor());
-		
+
 		canvas->flush();
-		
+
 		int i = GraphicsIO::kbhit();
 		if (i!=0) {
 			c = fgetc(stdin);
@@ -121,7 +117,7 @@ void gamePlay(Helikopter* helikopter, Canvas *canvas) {
 		planeBroke = planeCrash(&alienController, helikopter);
 		cleanUp(&bulletController, &alienController);
 		timeCounter++;
-		
+
 	} while (c!='\n' && !planeBroke);
 	helikopter->draw(canvas, helikopter->getColor());
 	canvas->flush();
@@ -144,7 +140,7 @@ void keyHandle(char c, BulletController* bulletController, Helikopter *helikopte
 void cleanUp(BulletController* bulletController, AlienController *alienController) {
 	if (alienController->getSize() > 0) {
 		for (int i=0; i<bulletController->getSize();) {
-			Point BRP(bulletController->getBullet(i).getTopLeftPosition().getAbsis() + bulletController->getBullet(i).getWidth(), 
+			Point BRP(bulletController->getBullet(i).getTopLeftPosition().getAbsis() + bulletController->getBullet(i).getWidth(),
 					bulletController->getBullet(i).getTopLeftPosition().getOrdinat() + bulletController->getBullet(i).getHeight());
 			bool flag = alienController->crashDelete(bulletController->getBullet(i).getTopLeftPosition(), BRP);
 			if (flag) {
@@ -160,7 +156,7 @@ void cleanUp(BulletController* bulletController, AlienController *alienControlle
 bool planeCrash(AlienController *alienController, Helikopter* helikopter) {
 	bool flag = false;
 	for (int i=0; i<!flag && alienController->getSize(); ) {
-		Point BRP(helikopter->getTopLeftPosition().getAbsis() + helikopter->getWidth(), 
+		Point BRP(helikopter->getTopLeftPosition().getAbsis() + helikopter->getWidth(),
 				helikopter->getTopLeftPosition().getOrdinat() + helikopter->getHeight());
 		flag = alienController->crashDelete(helikopter->getTopLeftPosition(), BRP);
 		if (flag) {
