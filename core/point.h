@@ -23,7 +23,10 @@ class Point {
 		void moveDown(int d);
 		void move(int dx, int dy);
         void rotate(double angle, int rx, int ry);
-
+	
+	public :
+		static bool sortUpperLeft(const Point& lhs, const Point& rhs);
+		
 	private :
 		int x;
 		int y;
