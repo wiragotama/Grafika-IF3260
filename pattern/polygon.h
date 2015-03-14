@@ -51,6 +51,10 @@ class Polygon {
 
 		Pattern getPattern() const;
 		Polygon resizing(double scale, int pivot_x, int pivot_y);
+		
+	public :
+		static bool sortTopLeft(const Polygon& lhs, const Polygon& rhs);
+		
 	private :
         void init();
 		uint32_t getColor(int x, int y);

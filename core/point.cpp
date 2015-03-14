@@ -83,3 +83,9 @@ void Point::move(int dx, int dy) {
 	y+=dy;
 }
 
+bool Point::sortUpperLeft(const Point& lhs, const Point& rhs) {
+	if (lhs.getOrdinat() == rhs.getOrdinat())
+		return (lhs.getAbsis() < rhs.getAbsis());
+	else return (lhs.getOrdinat() < rhs.getOrdinat());
+}
+
