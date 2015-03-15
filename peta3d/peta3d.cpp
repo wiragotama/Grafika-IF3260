@@ -327,14 +327,14 @@ void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
 	getchar();
 	if (dx < 0) {
 		dx = abs(dx);
-		cout << " m " << endl;
+		// cout << " m " << endl;
 		if (min_x - dx >= 0) { 
 			highlightedArea.move(dx,0);
 		} else {
-			if (min_x != 0) highlightedArea.move(min_x,0);
+			highlightedArea.move(min_x,0);
 		}		
 	} else if (dx > 0) {
-		cout << " n " << endl;
+		// cout << " n " << endl;
 		if (max_x + dx < canvasX) {
 			highlightedArea.move(dx, 0);
 		} else {
@@ -344,14 +344,14 @@ void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
 
 	if (dy < 0) {
 		dy = abs(dy);
-		cout << " o " << endl;
+		// cout << " o " << endl;
 		if (min_y - dy >= 0) {
 			highlightedArea.move(0,dy);
 		} else {
-		 	if (min_y != 0) highlightedArea.move(0, min_y);
+		 	highlightedArea.move(0, min_y);
 		}
 	} else if (dy > 0) {
-		cout << " p " << endl;
+		// cout << " p " << endl;
 		if (min_y + dy < canvasY) {
 			highlightedArea.move(0, dy);
 		} else {
