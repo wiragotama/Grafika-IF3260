@@ -47,7 +47,11 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 
 	rainbowPalette.initRainbowColor(canvas);
 	do {
+		system("clear");
+		rainbowPalette.drawPalette(canvas);
+		rainbowPalette.drawCursor(canvas);
 
+		canvas->flush();
 		rainbowPalette.drawPalette(canvas);
 		rainbowPalette.drawCursor(canvas);
 		gradientPalette.drawColorGradient(canvas->getColor(rainbowPalette.getScreenX(),rainbowPalette.getScreenY()), canvas);
@@ -57,6 +61,7 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 		//helikopter->setColor(canvas->getColor(gradientPalette.getScreenX(), gradientPalette.getScreenY()));
 		helikopter->draw(canvas, helikopter->getColor());
 		canvas->flush();
+
 
 		canvas->putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		canvas->putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
