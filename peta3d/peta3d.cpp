@@ -89,7 +89,7 @@ void Peta3D::drawPetaClipping(Canvas *canvas) {
 	tmp.addPoint(p3a);
 	tmp.addPoint(p4a);
 	viewFrame = tmp;
-	viewFrame.draw(canvas, canvas->pixel_color(255,0,0));
+	viewFrame.draw(canvas, canvas->pixel_color(0,255,255));
 	for(vector<Line>::iterator it = peta3d.begin(); it != peta3d.end(); ++it) {
 		CohenSutherlandLineClipAndDraw(it->getPointOne(), it->getPointTwo(), canvas);
 	}
