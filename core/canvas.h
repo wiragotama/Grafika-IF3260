@@ -25,6 +25,8 @@ class Canvas {
 		struct fb_var_screeninfo get_vinfo();
 		int get_fbfd();
 		long getScreensize();
+		
+		uint32_t** getScreenMatrix();
 	
 	private :
 		struct fb_fix_screeninfo finfo;

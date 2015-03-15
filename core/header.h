@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <vector>
 #include <cstring>
+#include <algorithm>
 using namespace std;
 
 #define MOUSE_RADIUS 3

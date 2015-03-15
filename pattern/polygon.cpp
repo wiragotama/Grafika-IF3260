@@ -117,6 +117,17 @@ vector<Point> Polygon::getPoints() const {
 	return points;
 }
 
+vector<Line> Polygon::getLines() const {
+	vector<Point> tempPoints = getPoints();
+	vector<Line> polygonLines;
+	if(tempPoints.size()>0)
+		tempPoints.push_back(tempPoints[0]);
+	for(int i=0; i<tempPoints.size()-1; i++){
+		polygonLines.push_back( Line(tempPoints[i], tempPoints[i+1]) );
+	}
+	return polygonLines;
+}
+
 Pattern Polygon::getPattern() const {
 	return pattern;
 }
@@ -424,11 +435,57 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 }
 
 bool Polygon::sortTopLeft(const Polygon& lhs, const Polygon& rhs) {
-	Point TLP = lhs.getTopLeftPosition();
-	Point TLP2 = rhs.getTopLeftPosition();
+	Point TLP = Point(lhs.getMinX(), lhs.getMinY());
+	Point TLP2 = Point(rhs.getMinX(), rhs.getMinY());
 	
-	if (TLP.getAbsis() == TLP2.getAbsis()) {
+	if (TLP.getOrdinat() != TLP2.getOrdinat()) {
 		return (TLP.getOrdinat() < TLP2.getOrdinat());
 	}
 	else return (TLP.getAbsis() < TLP2.getAbsis());
 }
+
+Point Polygon::getBottomRightPoint() const {
+	return Point(getMostRightPoint().getAbsis(), getMostBottomPoint().getOrdinat());
+}
+
+Point Polygon::getSuitableFirePoint(Canvas* canvas) {
+	//left for winson
+	return Point(0,0);
+}
+
+void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP) {
+	
+	if ((x>=TLP.getAbsis() && x<=BRP.getAbsis()) && (y>=TLP.getOrdinat() && y<=BRP.getOrdinat()) && 
+		(matrix[y][x]==0)	
+	) {
+		matrix[y][x] = 2345678;
+		simulateFloodFill(x-1, y, matrix, TLP, BRP);
+		simulateFloodFill(x+1, y, matrix, TLP, BRP);
+		simulateFloodFill(x, y-1, matrix, TLP, BRP);
+		simulateFloodFill(x, y+1, matrix, TLP, BRP);
+	}
+}
+bool Polygon::isPointInside(Point point) const {
+	vector<Point> edges = this->getPoints();
+	if(edges.size()>0)
+		edges.push_back(edges[0]);
+	double sum = 0;
+	for (int p = 0; p < edges.size()-1; ++p){
+		float temp = 0.0f;
+		if (Point::ccw(edges[p], edges[p+1], point)) {
+			temp = Line::angle(edges[p], point, edges[p+1]);
+			sum += temp;
+			// printf("%s\n", "ccw");
+		} else {
+			temp = Line::angle(edges[p], point, edges[p+1]);
+			sum -= temp;
+			// printf("%s\n", "cw");
+		}
+		// edges[p].printInfo();edges[p+1].printInfo();point.printInfo();
+		// printf("nilai sudut %f ",temp*180/M_PI);
+	}
+	// printf("\n%lf\n", fabs(fabs(sum) - 2*M_PI));
+	bool inPolygon = (fabs(fabs(sum) - 2*M_PI) < 0.000001);
+	return inPolygon;
+}
+

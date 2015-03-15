@@ -3,13 +3,15 @@
 
 #include "point.h"
 #include "canvas.h"
-#include "../core/header.h"
+#include "header.h"
 #include <vector>
 #include <cmath>
 #include <cassert>
 
 #define STRAIGHT_LINE 0
 #define DASHED_LINE 1
+
+#define EPS 1e-5
 
 class Line {
 	public :
@@ -32,8 +34,16 @@ class Line {
 		void moveUp(int d);
 		void moveDown(int d);
 		void move(int dx, int dy);
+		Point* getIntersectionPointWith(Line);
+		int getDifXInVector() const;
+		int getDifYInVector() const;
+		double getLength() const;
 
+		static double angle(Point a, Point o, Point b);
 	private :
+		bool isIntersectWith(Line);
+		bool onSegmentIfColinear(Point);
+
 		Point point[2];
 };
 

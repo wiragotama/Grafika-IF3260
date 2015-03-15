@@ -16,7 +16,6 @@ class Pattern {
 		int getWidth() const;
 		int getHeight() const;
 		uint32_t** getMatrix() const;
-		
 	private :
 		uint32_t **matrix;
 		int width;

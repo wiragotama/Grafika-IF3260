@@ -166,3 +166,20 @@ void Canvas::putColorInfo(int screen_x, int screen_y, const char* message) { //m
 	long location = getCursorLocation(screen_x,screen_y);
 	printf("Warna %s: %#08x\n",message,*((uint32_t*)(fbp + location)));
 }
+
+uint32_t** Canvas::getScreenMatrix() {
+
+	//[height][width];
+	uint32_t** screenMatrix = (uint32_t**) malloc(sizeof(uint32_t*) * vinfo.yres_virtual);
+	for (int i=0; i<=vinfo.yres_virtual; i++) {
+		screenMatrix[i] = (uint32_t*) malloc(sizeof(uint32_t) * vinfo.xres_virtual);
+	}
+	int i=0;
+	int j=0;
+	for (int j=0; j<=vinfo.yres_virtual; j++) {
+		for (int i=0; i<=vinfo.xres_virtual; i++) {
+			screenMatrix[j][i] = *((uint32_t*)(backbuffer + getCursorLocation(i, j)));
+		}
+	}
+	return screenMatrix;
+}
