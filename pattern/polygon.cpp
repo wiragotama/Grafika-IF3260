@@ -117,6 +117,17 @@ vector<Point> Polygon::getPoints() const {
 	return points;
 }
 
+vector<Line> Polygon::getLines() const {
+	vector<Point> tempPoints = getPoints();
+	vector<Line> polygonLines;
+	if(tempPoints.size()>0)
+		tempPoints.push_back(tempPoints[0]);
+	for(int i=0; i<tempPoints.size()-1; i++){
+		polygonLines.push_back( Line(tempPoints[i], tempPoints[i+1]) );
+	}
+	return polygonLines;
+}
+
 Pattern Polygon::getPattern() const {
 	return pattern;
 }
@@ -424,8 +435,8 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 }
 
 bool Polygon::sortTopLeft(const Polygon& lhs, const Polygon& rhs) {
-	Point TLP = lhs.getTopLeftPosition();
-	Point TLP2 = rhs.getTopLeftPosition();
+	Point TLP = Point(lhs.getMinX(), lhs.getMinY());
+	Point TLP2 = Point(rhs.getMinX(), rhs.getMinY());
 	
 	if (TLP.getAbsis() == TLP2.getAbsis()) {
 		return (TLP.getOrdinat() < TLP2.getOrdinat());
@@ -477,3 +488,4 @@ bool Polygon::isPointInside(Point point) const {
 	bool inPolygon = (fabs(fabs(sum) - 2*M_PI) < 0.000001);
 	return inPolygon;
 }
+

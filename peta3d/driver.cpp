@@ -54,7 +54,7 @@ int main() {
 		if(! daftar[i].isEqual(daftar[i+1])){
 			Point midPoint = Point((daftar[i].getAbsis()+ daftar[i+1].getAbsis())/2 , 
 				(daftar[i].getOrdinat()+ daftar[i+1].getOrdinat())/2);
-			printf("Titik mid point: %d %d\n",midPoint.getAbsis(), midPoint.getOrdinat());
+			//printf("Titik mid point: %d %d\n",midPoint.getAbsis(), midPoint.getOrdinat());
 			// gambar.printInfo();
 			if(!gambar.isPointInside(midPoint)) {
 				// printf("bukan di dalam\n");
@@ -66,15 +66,15 @@ int main() {
 		}
 	}
 	
-	for(int i=0; i<daftar.size(); i++){
-		printf("%d %d\n", daftar[i].getAbsis(), daftar[i].getOrdinat());
-	}
+	//for(int i=0; i<daftar.size(); i++){
+	//	printf("%d %d\n", daftar[i].getAbsis(), daftar[i].getOrdinat());
+	//}
 	
 	gambar.draw(&canvas, 0x00FFFFFF);
 	for(int i=0; i<peta3d.size(); i++)
 		peta3d[i].draw(&canvas, 1, 0x00FFFFFF);
 		
-	petaIndonesia.drawPeta(&canvas);
+	petaIndonesia.drawPeta3d(&canvas);
 	
 	canvas.flush();
 		
