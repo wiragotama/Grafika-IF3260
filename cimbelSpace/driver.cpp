@@ -22,8 +22,8 @@ bool planeCrash(AlienController *alienController, Helikopter* helikopter);
 
 // Eric method
 const string nama_pulau[] = {"Jawa", "Kalimantan", "Papua", "Sulawesi", "Sumatera"};
-const int x_rect[] = {185-10, 372+10, 141-10, 314+10, 449-10, 639+10, 340-10, 426+10, 14-10, 159+10}; // posisi x_min, x_max
-const int y_rect[] = {365-10, 424+10, 59-10, 263+10, 60-10, 227+10, 65-10, 276+10, 78-10, 402+10}; // posisi y_min, y_max
+int x_rect[] = {185-10, 372+10, 141-10, 314+10, 449-10, 639+10, 340-10, 426+10, 14-10, 159+10}; // posisi x_min, x_max
+int y_rect[] = {365-10, 424+10, 59-10, 263+10, 60-10, 227+10, 65-10, 276+10, 78-10, 402+10}; // posisi y_min, y_max
 
 void drawSelector(Canvas& canvas, int kode_pulau);
 void selectPulau(Canvas& canvas, GraphicsIO& graphicsIO);
@@ -90,6 +90,8 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 
 void selectPulau(Canvas& canvas, GraphicsIO& graphicsIO) {
 	Peta3D petaIndonesia;
+
+	petaIndonesia.findTheShit(x_rect, y_rect);
 
 	int current_selection = 0; // jawa
 	const int byk_pulau = sizeof(x_rect)/sizeof(int)/2;
