@@ -26,7 +26,7 @@ Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlighted
 
 void Peta3D::findTheShit(int* x_rect, int* y_rect) {
 	int counter = 0;
-	for (vector<Polygon>::iterator it = peta2d.begin(); it != peta2d.end(); it++, counter++) {
+	for (vector<Polygon>::iterator it = peta2d.begin(); it != peta2d.begin()+5; it++, counter++) {
 		int x_min = it->getMostLeftPoint().getAbsis(),
 			x_max = it->getMostRightPoint().getAbsis(),
 			y_min = it->getMostUpperPoint().getOrdinat(),
@@ -323,7 +323,7 @@ void Peta3D::scaleAndDraw(Canvas* canvas, Point p0, Point p1) {
 	int y1new = (int) (yfactor * (y1 - highlightedArea.getMinY())) + viewFrame.getMinY();
 
 	Line l(Point(x0new,y0new), Point(x1new,y1new));
-	l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
+	l.drawBackground(canvas, 1, canvas->pixel_color(255,255,255));
 }
 
 void Peta3D::move(int dx, int dy){
@@ -352,6 +352,9 @@ void Peta3D::zoomOut(Canvas* canvas) {
 	}
 }
 
+void Peta3D::setHighlightedArea(Polygon rekt) {
+	highlightedArea = rekt;
+}
 
 void Peta3D::zoomIn() {
 	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();

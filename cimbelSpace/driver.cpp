@@ -15,7 +15,7 @@
 
 void gameIntroduction(Helikopter* helikopter, Canvas* canvas);
 void showRainbowPalette(Helikopter* helikopter, Canvas* canvas);
-void gamePlay(Helikopter* helikopter, Canvas *canvas);
+void gamePlay(Helikopter* helikopter, Canvas *canvas, Peta3D& petaIndonesia);
 void keyHandle(char c, BulletController* bulletController, Helikopter *helikopter);
 void cleanUp(BulletController* bulletController, AlienController *alienController);
 bool planeCrash(AlienController *alienController, Helikopter* helikopter);
@@ -26,17 +26,30 @@ int x_rect[] = {185-10, 372+10, 141-10, 314+10, 449-10, 639+10, 340-10, 426+10, 
 int y_rect[] = {365-10, 424+10, 59-10, 263+10, 60-10, 227+10, 65-10, 276+10, 78-10, 402+10}; // posisi y_min, y_max
 
 void drawSelector(Canvas& canvas, int kode_pulau);
-void selectPulau(Canvas& canvas, GraphicsIO& graphicsIO);
+void animatePulau(Canvas& canvas, Peta3D& petaIndonesia, int kode_pulau);
+int selectPulau(Canvas& canvas, GraphicsIO& graphicsIO, Peta3D& petaIndonesia);
 
 int main() {
 	Canvas canvas;
 	GraphicsIO graphicsIO;
 	Point topLeftPosition(540,400);
 	Helikopter helikopter(topLeftPosition);
+	Peta3D petaIndonesia;
 
-	selectPulau(canvas, graphicsIO);
-	/*gameIntroduction(&helikopter, &canvas);
-	gamePlay(&helikopter, &canvas);*/
+	petaIndonesia.findTheShit(x_rect, y_rect);
+
+	bool game_not_end = true;
+
+	gameIntroduction(&helikopter, &canvas);
+	while (true) {
+		int selected = selectPulau(canvas, graphicsIO, petaIndonesia);
+		if (selected == -1) break;
+		animatePulau(canvas, petaIndonesia, selected);
+		showRainbowPalette(&helikopter, &canvas);
+		canvas.clearScreen();
+		gamePlay(&helikopter, &canvas, petaIndonesia);
+	}
+
 	return 0;
 }
 
@@ -88,11 +101,7 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 
 
 
-void selectPulau(Canvas& canvas, GraphicsIO& graphicsIO) {
-	Peta3D petaIndonesia;
-
-	petaIndonesia.findTheShit(x_rect, y_rect);
-
+int selectPulau(Canvas& canvas, GraphicsIO& graphicsIO, Peta3D& petaIndonesia) {
 	int current_selection = 0; // jawa
 	const int byk_pulau = sizeof(x_rect)/sizeof(int)/2;
 
@@ -118,8 +127,12 @@ void selectPulau(Canvas& canvas, GraphicsIO& graphicsIO) {
 				if (current_selection == byk_pulau)
 					current_selection = 0;
 				break;
+			case 'q':
+				return -1;
 		}
 	} while (c!='\n');
+
+	return current_selection;
 }
 
 void drawSelector(Canvas& canvas, int kode_pulau) {
@@ -132,6 +145,43 @@ void drawSelector(Canvas& canvas, int kode_pulau) {
 	poly.draw(&canvas, cyan);
 }
 
+void animatePulau(Canvas& canvas, Peta3D& petaIndonesia, int kode_pulau) {
+	const int animate_time = 2000; // 2 detik
+	const int num_frame = 20;
+	const int MAX_X = 640, MAX_Y = 480;
+	const double time_per_frame = (double)animate_time/num_frame;
+
+	const int i1 = 2*kode_pulau, i2 = i1+1;
+
+	const double dxl = ((double)-x_rect[i1]) / num_frame,
+		dxr = ( MAX_X - (double)x_rect[i2] ) / num_frame,
+		dyt = ((double)-y_rect[i1]) / num_frame,
+		dyb = ( MAX_Y - (double)y_rect[i2] ) / num_frame;
+
+	for (int i = num_frame-1; i >= 0; --i) {
+		clock_t before = clock(), current;
+
+		const int x_min = round(x_rect[i1] + dxl*i),
+			x_max = round(x_rect[i2] + dxr*i),
+			y_min = round(y_rect[i1] + dyt*i),
+			y_max = round(y_rect[i2] + dyb*i);
+
+		Polygon poly( Point(x_min, y_min) ,
+			          Point(x_max, y_max) );
+
+		petaIndonesia.setHighlightedArea(poly);
+		petaIndonesia.drawPetaClipping(&canvas);
+		canvas.flush();
+
+		// busy wait until time passes
+		while (i > 0) {
+			current = clock();
+			double est = (current-before)*1000/CLOCKS_PER_SEC;
+			if (est >= time_per_frame)
+				break;
+		}
+	}
+}
 
 
 
@@ -145,11 +195,9 @@ void gameIntroduction(Helikopter* helikopter, Canvas* canvas) {
 	printf("menciptakan pesawat terhebat untuk menangkan perang tersebut...\n");
 	printf("Anda TERPILIH untuk menjadi pilot dari pesawat hebat tersebut...\n");
 	getchar();
-	showRainbowPalette(helikopter, canvas);
-	canvas->clearScreen();
 }
 
-void gamePlay(Helikopter* helikopter, Canvas *canvas) {
+void gamePlay(Helikopter* helikopter, Canvas *canvas, Peta3D& petaIndonesia) {
 
 	BulletController bulletController;
 	AlienController alienController;
@@ -170,6 +218,7 @@ void gamePlay(Helikopter* helikopter, Canvas *canvas) {
 			timeCounter = 0;
 		}
 
+		petaIndonesia.drawPetaClipping(canvas);
 		bulletController.draw(canvas, canvas->pixel_color(0,0,255));
 		alienController.draw(canvas, canvas->pixel_color(218,165,32));
 		helikopter->draw(canvas, helikopter->getColor());
@@ -189,9 +238,11 @@ void gamePlay(Helikopter* helikopter, Canvas *canvas) {
 		timeCounter++;
 
 	} while (c!='\n' && !planeBroke);
+	petaIndonesia.drawPetaClipping(canvas);
 	helikopter->draw(canvas, helikopter->getColor());
 	canvas->flush();
 	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_DISABLE);
+	getchar();
 }
 
 void keyHandle(char c, BulletController* bulletController, Helikopter *helikopter) {
