@@ -13,11 +13,10 @@ class Bullet {
 		Bullet(int direction, Point topLeftPosition);
 		~Bullet();
 		void draw(Canvas *canvas, uint32_t color);
-        void update(double timeElapsed, Canvas *p_canvas);
+        void update(double timeElapsed, Canvas *p_canvas); //melakukan perubahan ketebalan canvas sesuai dengan waktu
         void setTopLeftPosition(Point p);
         
-        void explode();
-        bool getFlag();
+        bool getFlag(); //mengembalikan flag, true bila objek sudah berada di ujung layar
         void move(int dx, int dy);
         Point getTopLeftPosition();
         
@@ -28,7 +27,7 @@ class Bullet {
         int getHeight();
     
     private : 
-		void checkFlag();
+		void checkFlag(); //mengecek apakah objek berada di ujung layar
     
 	private :
 		Point topLeftPosition;
@@ -38,7 +37,7 @@ class Bullet {
         int width;
         int height;
         static const double speed_x = .1;
-        bool flag; //ni buat resolve masalah segmentation fault pas projectile dah nyampe ujung layar. flag=true pas nyampe di ujung layar
+        bool flag; //ni buat resolve masalah segmentation fault pas bullet dah nyampe ujung layar. flag=true pas nyampe di ujung layar
 };
 
 #endif

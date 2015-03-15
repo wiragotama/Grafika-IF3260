@@ -24,11 +24,11 @@ class Body {
 		
 		void draw(Canvas *canvas, uint32_t color);
 		void move(int dx, int dy);
-		void broke();
+		void broke(); //memecah body (hancur)
 		void setTopLeftPosition(Point topLeftPosition);
 		Point getTopLeftPosition();
 		
-		bool getBrokenFlag() const;
+		bool getBrokenFlag() const; //mendapatkan petanda apakah body terpecah atau tidak
 		void separateBrokenParts(int dx, int dy);
 		int getWidth() const;
 		int getHeight() const;

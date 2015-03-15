@@ -7,6 +7,8 @@ BulletController::~BulletController() {
 }
 
 bool BulletController::crashCheck(Point objTopLeft, Point objBottomRight) {
+//menghapus objek bullet ketika ada tumbukan dengan objek lain
+
 	bool crash = false;
 	for (int i=0; i<bullets.size() && !crash; i++) {
 		Point tl_a = bullets[i].getTopLeftPosition();
@@ -25,11 +27,15 @@ bool BulletController::crashCheck(Point objTopLeft, Point objBottomRight) {
 }
 
 void BulletController::addBullet(Point topLeftPosition, int direction) {
+//menambahkan objek bullet baru
+
 	Bullet temp(direction, topLeftPosition);
 	bullets.push_back(temp);
 }
 
 void BulletController::garbageCollector() {
+//melakukan bersih-bersih di memory untuk objek bullet yang sudah melewati layar
+
 	int idx = 0;
 	while (idx < bullets.size()) {
 		if (bullets[idx].getFlag()==true) {
@@ -61,5 +67,7 @@ Bullet BulletController::getBullet(int idx) {
 }
 
 int BulletController::getSize() {
+//mendapatkan jumlah bullet yang ada
+
 	return bullets.size();
 }

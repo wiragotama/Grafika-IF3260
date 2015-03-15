@@ -25,6 +25,8 @@ void Bullet::draw(Canvas *canvas, uint32_t color) {
 }
 
 void Bullet::update(double timeElapsed, Canvas *p_canvas) {
+//melakukan perubahan ketebalan canvas sesuai dengan waktu
+
 	double distance = speed_x*timeElapsed;
 	Point now = getTopLeftPosition();
 	if (direction==1) { //up
@@ -57,6 +59,8 @@ void Bullet::update(double timeElapsed, Canvas *p_canvas) {
 }
 
 void Bullet::checkFlag() {
+//mengecek apakah objek berada di ujung layar
+
 	if (direction<=1) { //up
 		if (topLeftPosition.getOrdinat()<= 1) {
 			//matikan objek?
@@ -83,9 +87,9 @@ void Bullet::setTopLeftPosition(Point p) {
 	topLeftPosition = p;
 }
 
-void Bullet::explode() {}
-
 bool Bullet::getFlag() {
+//mengembalikan flag, true bila objek sudah berada di ujung layar
+
 	return flag;
 }
 

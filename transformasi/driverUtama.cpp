@@ -26,7 +26,6 @@ int main() {
 	int c = 0;
 	
 	while(!kenaPeluru) {
-        //printf("c = %d\n", c);
 		helikopter.draw(&canvas, canvas.pixel_color(255,0,0));
 		kapal.draw(&canvas, canvas.pixel_color(0,255,0));	
 		if (c>1050) p.draw();

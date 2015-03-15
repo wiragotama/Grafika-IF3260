@@ -36,6 +36,8 @@ void Body::move(int dx, int dy) {
 }
 
 void Body::broke() {
+//memecah body (hancur)
+
 	broken = true;
 	string ply1 = leftBody;
 	string ply2 = rightBody;
@@ -61,6 +63,8 @@ Point Body::getTopLeftPosition() {
 }
 
 bool Body::getBrokenFlag() const {
+//mendapatkan petanda apakah body terpecah atau tidak
+
 	return broken;
 }
 
