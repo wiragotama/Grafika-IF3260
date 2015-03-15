@@ -4,7 +4,6 @@
 #include "../core/header.h"
 #include "../core/canvas.h"
 #include "../core/point.h"
-#include "../core/header.h"
 #include "../core/line.h"
 #include "../pattern/pattern.h"
 

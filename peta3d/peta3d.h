@@ -21,6 +21,9 @@ public:
 	void move(int, int);
 
 	void findTheShit();
+	void zoomOut(Canvas* canvas);
+	void zoomIn();
+	void moveHighlightedArea(int dx, int dy, Canvas *canvas);
 
 private:
 	void loadPeta2d(const char*);
