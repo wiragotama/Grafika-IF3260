@@ -207,8 +207,6 @@ void Polygon::erasePoints() {
 }
 
 void Polygon::draw(Canvas* canvas, uint32_t color) {
-	// printf("ini %d %d\n",topLeftPosition.getAbsis(),topLeftPosition.getOrdinat());
-	// getchar();
 	for (int i=1; i<points.size(); i++) {
 		Line line(points[i], points[i-1]);
 		line.move(topLeftPosition.getAbsis(), topLeftPosition.getOrdinat());
@@ -416,18 +414,18 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 
     // Pindahkan titik tengah ke point(0,0);
     for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
-    int awal_x = it->getAbsis();
-    int awal_y = it->getOrdinat();
-    it->setAbsis(awal_x - pivot_x);
-    it->setOrdinat(awal_y - pivot_y);
+	    int awal_x = it->getAbsis();
+	    int awal_y = it->getOrdinat();
+	    it->setAbsis(awal_x - pivot_x);
+	    it->setOrdinat(awal_y - pivot_y);
     }
 
     // transformasi ubah ukuran
     for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
-    int awal_x = it->getAbsis();
-    int awal_y = it->getOrdinat();
-    it->setAbsis((int) (awal_x * scale));
-    it->setOrdinat((int) (awal_y *scale));
+	    int awal_x = it->getAbsis();
+	    int awal_y = it->getOrdinat();
+	    it->setAbsis((int) (awal_x * scale));
+	    it->setOrdinat((int) (awal_y *scale));
     }
 
 

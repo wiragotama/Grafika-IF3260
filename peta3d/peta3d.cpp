@@ -40,9 +40,32 @@ void Peta3D::findTheShit(int* x_rect, int* y_rect) {
 }
 
 void Peta3D::drawPeta(Canvas* canvas) {
+	int x = canvas->get_vinfo().xres;
+	int y = canvas->get_vinfo().yres;
+	// printf("%d %d\n",x,y);
+	x--;y--;
+	Polygon tmp;
+	Point p1a(0,0);
+	Point p2a(x,0);
+	Point p3a(x,y);
+	Point p4a(0,y);
+	tmp.addPoint(p1a);
+	tmp.addPoint(p2a);
+	tmp.addPoint(p3a);
+	tmp.addPoint(p4a);
+	viewFrame = tmp;
+	viewFrame.draw(canvas, canvas->pixel_color(255,0,0));
 	for(vector<Polygon>::iterator it = petaSurface.begin(); it != petaSurface.end(); ++it) {
-		it->drawBackground(canvas, canvas->pixel_color(255,0,0));
+		vector<Point> points = it->getPoints();
+		for (vector<Point>::iterator it1 = points.begin(); it1 != points.end(); ++it1) {
+			if (it1+1 != points.end()) {
+				CohenSutherlandLineClipAndDraw(*it1, *(it1+1), canvas);
+			} else {
+				CohenSutherlandLineClipAndDraw(*it1, points.front(), canvas);
+			}
+		}
 	}
+
 }
 
 void Peta3D::drawPeta3d(Canvas* canvas){
@@ -128,6 +151,10 @@ void Peta3D::generetePeta3dSurfaces(){
 }
 
 void Peta3D::generetePeta3dFromSurface(){
+	for(int i=0; i<petaSurface.size(); i++) {
+		petaSurface[i] = petaSurface[i].resizing(10,0,0);
+		// vector<Point> poly = petaSurface[i].getPoints();
+	}
 	for(int i=0; i<petaSurface.size(); i++){
 		vector<Line> hiddenLineRemoved;
 		vector<Point> poly = petaSurface[i].getPoints();
@@ -158,17 +185,16 @@ void Peta3D::generetePeta3dFromSurface(){
 			}
 
 			sort(daftar.begin(), daftar.end(), Point::pointGreaterThan);
-
 			for(int k=0; k+1<daftar.size(); k++){
-				int midX = (daftar[k].getAbsis()+ daftar[k+1].getAbsis())/2;
-				int midY = (daftar[k].getOrdinat()+ daftar[k+1].getOrdinat())/2;
+				if (!daftar[k].isEqual(daftar[k+1])) {
+					int midX = (daftar[k].getAbsis()+ daftar[k+1].getAbsis())/2;
+					int midY = (daftar[k].getOrdinat()+ daftar[k+1].getOrdinat())/2;
 
-
-				Point midPoint = Point(midX , midY);
-				if(!petaSurface[i].isPointInside(midPoint)) {
-					hiddenLineRemoved.push_back(Line(daftar[k], daftar[k+1]));
+					Point midPoint = Point(midX , midY);
+					if(!petaSurface[i].isPointInside(midPoint)) {
+						hiddenLineRemoved.push_back(Line(daftar[k], daftar[k+1]));
+					}
 				}
-
 			}
 
 		}
@@ -176,6 +202,16 @@ void Peta3D::generetePeta3dFromSurface(){
 		peta3d = hiddenLineRemoved;
 		vector<Line> newLines = petaSurface[i].getLines();
 		peta3d.insert(peta3d.end(), newLines.begin(), newLines.end());
+	}
+
+	for(int i=0; i<petaSurface.size(); i++) {
+		petaSurface[i] = petaSurface[i].resizing(0.1,0,0);
+	}
+
+	for(int i=0; i<peta3d.size();i++){
+		Point pOne = peta3d[i].getPointOne();
+		Point pTwo = peta3d[i].getPointTwo();
+		peta3d[i] = Line(Point(round(pOne.getAbsis()/10.0), round(pOne.getOrdinat()/10.0)),Point(round(pTwo.getAbsis()/10.0), round(pTwo.getOrdinat()/10.0)));
 	}
 }
 
@@ -186,7 +222,6 @@ OutCode Peta3D::ComputeOutCode(int x, int y, int xmin, int ymin, int xmax, int y
 	OutCode code;
 
 	code = INSIDE;          // initialised as being inside of clip window
- 	// printf("Code gw jing %d\n", code);
 
 	if (x < xmin)           // to the left of clip window
 		code |= LEFT;
@@ -343,19 +378,13 @@ void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
 		min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
 	int canvasX = canvas->get_vinfo().xres;
 	int canvasY = canvas->get_vinfo().yres;
-	// cout << min_x << " " << min_y << " " << max_x << " " << max_y << endl;
-	// cout << canvasX << " " << canvasY << endl;
-	// getchar();
 	if (dx < 0) {
-		// dx = abs(dx);
-		// cout << " m " << endl;
 		if (min_x + dx >= 0) {
 			highlightedArea.move(dx,0);
 		} else {
 			highlightedArea.move(-1*min_x,0);
 		}
 	} else if (dx > 0) {
-		// cout << " n " << endl;
 		if (max_x + dx < canvasX) {
 			highlightedArea.move(dx, 0);
 		} else {
@@ -364,15 +393,12 @@ void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
 	}
 
 	if (dy < 0) {
-		// dy = abs(dy);
-		// cout << " o " << endl;
 		if (min_y + dy >= 0) {
 			highlightedArea.move(0, dy);
 		} else {
 		 	highlightedArea.move(0, -1*min_y);
 		}
 	} else if (dy > 0) {
-		// cout << " p " << endl;
 		if (max_y + dy < canvasY) {
 			highlightedArea.move(0, dy);
 		} else {

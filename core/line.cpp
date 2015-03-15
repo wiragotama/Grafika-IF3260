@@ -250,7 +250,7 @@ Point* Line::getIntersectionPointWith(Line line) {
 	double x = ( pre * (x3 - x4) - (x1 - x2) * post ) / d;
 	double y = ( pre * (y3 - y4) - (y1 - y2) * post ) / d;
 
-	Point *ret = new Point(x,y);
+	Point *ret = new Point(round(x),round(y));
 	return ret;
 }
 
