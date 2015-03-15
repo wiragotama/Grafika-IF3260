@@ -12,6 +12,7 @@ class Polygon {
 	public :
 		Polygon();
 		Polygon(Point topLeftPosition);
+		Polygon(Point topLeft, Point botRight);
         Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint, Pattern pattern_t);
         Polygon(const Polygon& ply);
         const Polygon& operator=(const Polygon&);
@@ -54,18 +55,18 @@ class Polygon {
 
 		Pattern getPattern() const;
 		Polygon resizing(double scale, int pivot_x, int pivot_y);
-		
+
 		Point getSuitableFirePoint(Canvas* canvas);
 		void simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP);
 		static bool sortTopLeft(const Polygon& lhs, const Polygon& rhs);
 		bool isPointInside(Point p) const;
-		
+
 	private :
         void init();
 		uint32_t getColor(int x, int y);
 		void floodFill(Canvas*, int screen_x, int screen_y, uint32_t color);
 		void floodFillBackground(Canvas*, int screen_x, int screen_y, uint32_t color);
-		
+
 		/*
 		void floodFill(Canvas*, int screen_x, int screen_y);
 		void floodFillBackground(Canvas*, int screen_x, int screen_y);*/

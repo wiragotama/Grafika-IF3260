@@ -20,13 +20,23 @@ void keyHandle(char c, BulletController* bulletController, Helikopter *helikopte
 void cleanUp(BulletController* bulletController, AlienController *alienController);
 bool planeCrash(AlienController *alienController, Helikopter* helikopter);
 
+// Eric method
+const string nama_pulau[] = {"Jawa", "Kalimantan", "Papua", "Sulawesi", "Sumatera"};
+const int x_rect[] = {185-10, 372+10, 141-10, 314+10, 449-10, 639+10, 340-10, 426+10, 14-10, 159+10}; // posisi x_min, x_max
+const int y_rect[] = {365-10, 424+10, 59-10, 263+10, 60-10, 227+10, 65-10, 276+10, 78-10, 402+10}; // posisi y_min, y_max
+
+void drawSelector(Canvas& canvas, int kode_pulau);
+void selectPulau(Canvas& canvas, GraphicsIO& graphicsIO);
+
 int main() {
 	Canvas canvas;
+	GraphicsIO graphicsIO;
 	Point topLeftPosition(540,400);
 	Helikopter helikopter(topLeftPosition);
 
-	gameIntroduction(&helikopter, &canvas);
-	gamePlay(&helikopter, &canvas);
+	selectPulau(canvas, graphicsIO);
+	/*gameIntroduction(&helikopter, &canvas);
+	gamePlay(&helikopter, &canvas);*/
 	return 0;
 }
 
@@ -72,6 +82,58 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 
 	} while (c!='\n');
 }
+
+
+
+
+
+
+void selectPulau(Canvas& canvas, GraphicsIO& graphicsIO) {
+	Peta3D petaIndonesia;
+
+	int current_selection = 0; // jawa
+	const int byk_pulau = sizeof(x_rect)/sizeof(int)/2;
+
+	char c;
+
+	do {
+		system("clear"); // reset the printf printing position
+		petaIndonesia.drawPeta3d(&canvas);
+		drawSelector(canvas, current_selection);
+		canvas.flush();
+		cout << nama_pulau[current_selection] << endl;
+		cout.flush();
+
+		c = graphicsIO.getch();
+		switch (c) {
+			case 'w':
+				current_selection--;
+				if (current_selection == -1)
+					current_selection = byk_pulau-1;
+				break;
+			case 's':
+				current_selection++;
+				if (current_selection == byk_pulau)
+					current_selection = 0;
+				break;
+		}
+	} while (c!='\n');
+}
+
+void drawSelector(Canvas& canvas, int kode_pulau) {
+	int i1 = 2*kode_pulau, i2 = i1+1;
+
+	Polygon poly( Point(x_rect[i1], y_rect[i1]) ,
+				  Point(x_rect[i2], y_rect[i2]) );
+
+	uint32_t cyan = canvas.pixel_color(0, 255, 255);
+	poly.draw(&canvas, cyan);
+}
+
+
+
+
+
 
 void gameIntroduction(Helikopter* helikopter, Canvas* canvas) {
 	system("clear");
