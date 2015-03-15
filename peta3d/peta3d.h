@@ -19,7 +19,10 @@ public:
 	void drawPeta3d(Canvas* canvas);
 	void drawPetaClipping(Canvas* canvas);
 	void move(int, int);
-	
+	void zoomOut(Canvas* canvas);
+	void zoomIn();
+	void moveHighlightedArea(int dx, int dy, Canvas *canvas);
+
 private:
 	void loadPeta2d(const char*);
 	vector<Polygon> polygonTo3D(Polygon*, int);

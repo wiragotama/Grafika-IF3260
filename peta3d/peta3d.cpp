@@ -3,7 +3,7 @@
 Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(Point(0,0)) {
 	this->loadPeta2d("pulau/jawa.info");
 	this->loadPeta2d("pulau/kalimantan.info");
-	this->loadPeta2d("pulau/papua.info");
+	// this->loadPeta2d("pulau/papuaRevA.info");
 	this->loadPeta2d("pulau/sulawesi.info");
 	this->loadPeta2d("pulau/sumatera.info");
 	Point p1(0,0);
@@ -283,4 +283,80 @@ void Peta3D::move(int dx, int dy){
 			peta3d[i].move(dx, dy);
 		}
 	}
+}
+
+void Peta3D::zoomOut(Canvas* canvas) {
+	int canvasX = canvas->get_vinfo().xres;
+	int canvasY = canvas->get_vinfo().yres;
+	
+	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();
+	int highlightedAreaHeighth = highlightedArea.getMaxY() - highlightedArea.getMinY();
+	Polygon newhighlightedArea = highlightedArea.resizing (1.10, highlightedAreaWidth/2, highlightedAreaHeighth/2);
+	int minX = newhighlightedArea.getMinX();
+	int minY = newhighlightedArea.getMinY();
+	int maxX = newhighlightedArea.getMaxX();
+	int maxY = newhighlightedArea.getMaxY();
+	if (minX > 0 && minY > 0 && maxX < canvasX && maxY < canvasY) {
+		highlightedArea = newhighlightedArea;
+	}
+}
+
+
+void Peta3D::zoomIn() {
+	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();
+	int highlightedAreaHeighth = highlightedArea.getMaxY() - highlightedArea.getMinY();
+	Polygon newhighlightedArea = highlightedArea.resizing (0.90, highlightedAreaWidth/2, highlightedAreaHeighth/2);
+	int minX = newhighlightedArea.getMinX();
+	int minY = newhighlightedArea.getMinY();
+	int maxX = newhighlightedArea.getMaxX();
+	int maxY = newhighlightedArea.getMaxY();
+	int newhighlightedAreaWidth = maxX - minX;
+	int newhighlightedAreaHeight = maxY - minY;
+	if (newhighlightedAreaHeight >= 50 && newhighlightedAreaWidth >= 50) {
+		highlightedArea = newhighlightedArea;
+	}
+}
+
+void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
+	highlightedArea.move(dx,dy);
+	// int min_x = highlightedArea.getMinX(), max_x = highlightedArea.getMaxX(),
+	// 	min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
+	// int canvasX = canvas->get_vinfo().xres;
+	// int canvasY = canvas->get_vinfo().yres;
+	// cout << min_x << " " << min_y << " " << max_x << " " << max_y << endl;
+	// cout << canvasX << " " << canvasY << endl;
+	// getchar();
+	// if (dx < 0) {
+	// 	dx = abs(dx);
+	// 	// cout << " m " << endl;
+	// 	if (min_x - dx >= 0) { 
+	// 		highlightedArea.move(dx,0);
+	// 	} else {
+	// 		highlightedArea.move(min_x,0);
+	// 	}		
+	// } else if (dx > 0) {
+	// 	// cout << " n " << endl;
+	// 	if (max_x + dx < canvasX) {
+	// 		highlightedArea.move(dx, 0);
+	// 	} else {
+	// 		highlightedArea.move(dx - (max_x + dx - canvasX), 0);
+	// 	}
+	// }
+
+	// if (dy < 0) {
+	// 	dy = abs(dy);
+	// 	// cout << " o " << endl;
+	// 	if (min_y - dy >= 0) {
+	// 		highlightedArea.move(0,dy);
+	// 	} else {
+	// 	 	highlightedArea.move(0, min_y);
+	// 	}
+	// } else if (dy > 0) {
+	// 	// cout << " p " << endl;
+	// 	if (min_y + dy < canvasY) {
+	// 		highlightedArea.move(0, dy);
+	// 	} else {
+	// 		highlightedArea.move(0, dy - (max_y + dy - canvasX));
+	// 	}
+	// }
 }
