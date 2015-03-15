@@ -15,10 +15,10 @@ Peta::Peta() : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(
 	highlightedArea.addPoint(p3);
 	highlightedArea.addPoint(p4);
 
-	Point p1a(500,350);
-	Point p2a(600,350);
-	Point p3a(600,450);
-	Point p4a(500,450);
+	Point p1a(0,0);
+	Point p2a(680,0);
+	Point p3a(680,480);
+	Point p4a(0,480);
 	viewFrame.addPoint(p1a);
 	viewFrame.addPoint(p2a);
 	viewFrame.addPoint(p3a);

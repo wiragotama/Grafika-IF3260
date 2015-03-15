@@ -1,14 +1,24 @@
 #include "peta3d.h"
 
-Peta3D::Peta3D() {
+Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(Point(0,0)) {
 	this->loadPeta2d("pulau/jawa.info");
 	this->loadPeta2d("pulau/kalimantan.info");
 	this->loadPeta2d("pulau/papuaRevA.info");
 	this->loadPeta2d("pulau/sulawesi.info");
 	this->loadPeta2d("pulau/sumatera.info");
-	
+	Point p1(0,0);
+	Point p2(100,0);
+	Point p3(100,100);
+	Point p4(0,100);
+	highlightedArea.addPoint(p1);
+	highlightedArea.addPoint(p2);
+	highlightedArea.addPoint(p3);
+	highlightedArea.addPoint(p4);
 	generetePeta3dSurfaces();
 	generetePeta3dFromSurface();
+	
+	relativePositionX = 0;
+	relativePositionY = 0;
 }
 
 void Peta3D::drawPeta(Canvas* canvas) {
@@ -20,6 +30,27 @@ void Peta3D::drawPeta(Canvas* canvas) {
 void Peta3D::drawPeta3d(Canvas* canvas){
 	for(vector<Line>::iterator it = peta3d.begin(); it != peta3d.end(); ++it) {
 		it->draw(canvas, 1, canvas->pixel_color(255,255,255));
+	}
+}
+
+void Peta3D::drawPetaClipping(Canvas *canvas) {
+	int x = canvas->get_vinfo().xres;
+	int y = canvas->get_vinfo().yres;
+	// printf("%d %d\n",x,y);
+	x--;y--;
+	Polygon tmp;
+	Point p1a(0,0);
+	Point p2a(x,0);
+	Point p3a(x,y);
+	Point p4a(0,y);
+	tmp.addPoint(p1a);
+	tmp.addPoint(p2a);
+	tmp.addPoint(p3a);
+	tmp.addPoint(p4a);
+	viewFrame = tmp;
+	viewFrame.draw(canvas, canvas->pixel_color(255,0,0));
+	for(vector<Line>::iterator it = peta3d.begin(); it != peta3d.end(); ++it) {
+		CohenSutherlandLineClipAndDraw(it->getPointOne(), it->getPointTwo(), canvas);
 	}
 }
 
@@ -127,5 +158,129 @@ void Peta3D::generetePeta3dFromSurface(){
 		peta3d = hiddenLineRemoved;
 		vector<Line> newLines = petaSurface[i].getLines();
 		peta3d.insert(peta3d.end(), newLines.begin(), newLines.end());
+	}
+}
+
+// Compute the bit code for a point (x, y) using the clip rectangle
+// bounded diagonally by (xmin, ymin), and (xmax, ymax)
+
+OutCode Peta3D::ComputeOutCode(int x, int y, int xmin, int ymin, int xmax, int ymax) {
+	OutCode code;
+
+	code = INSIDE;          // initialised as being inside of clip window
+ 	// printf("Code gw jing %d\n", code);
+
+	if (x < xmin)           // to the left of clip window
+		code |= LEFT;
+	else if (x > xmax)      // to the right of clip window
+		code |= RIGHT;
+
+	if (y < ymin)           // below the clip window
+		code |= BOTTOM;
+	else if (y > ymax)      // above the clip window
+		code |= TOP;
+
+	return code;
+}
+
+// Cohen–Sutherland clipping algorithm clips a line from
+// P0 = (x0, y0) to P1 = (x1, y1) against a rectangle with
+// diagonal from (xmin, ymin) to (xmax, ymax).
+void Peta3D::CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas) {
+	// compute outcodes for P0, P1, and whatever point lies outside the clip rectangle
+
+	int x0 = p0.getAbsis();
+	int y0 = p0.getOrdinat();
+	int x1 = p1.getAbsis();
+	int y1 = p1.getOrdinat();
+
+	int xmin = highlightedArea.getMinX();
+	int ymin = highlightedArea.getMinY();
+	int xmax = highlightedArea.getMaxX();
+	int ymax = highlightedArea.getMaxY();
+
+	OutCode outcode0 = ComputeOutCode(x0, y0, xmin, ymin, xmax, ymax);
+	OutCode outcode1 = ComputeOutCode(x1, y1, xmin, ymin, xmax, ymax);
+
+	bool accept = false;
+
+	while (true) {
+		if (!(outcode0 | outcode1)) { // Bitwise OR is 0. Trivially accept and get out of loop
+			accept = true;
+			break;
+		} else if (outcode0 & outcode1) { // Bitwise AND is not 0. Trivially reject and get out of loop
+			break;
+		} else {
+			// failed both tests, so calculate the line segment to clip
+			// from an outside point to an intersection with clip edge
+			int x, y;
+
+			// At least one endpoint is outside the clip rectangle; pick it.
+			OutCode outcodeOut = outcode0 ? outcode0 : outcode1;
+
+			// Now find the intersection point;
+			// use formulas y = y0 + slope * (x - x0), x = x0 + (1 / slope) * (y - y0)
+			if (outcodeOut & TOP) {           // point is above the clip rectangle
+				x = x0 + (x1 - x0) * (ymax - y0) / (y1 - y0);
+				y = ymax;
+			} else if (outcodeOut & BOTTOM) { // point is below the clip rectangle
+				x = x0 + (x1 - x0) * (ymin - y0) / (y1 - y0);
+				y = ymin;
+			} else if (outcodeOut & RIGHT) {  // point is to the right of clip rectangle
+				y = y0 + (y1 - y0) * (xmax - x0) / (x1 - x0);
+				x = xmax;
+			} else if (outcodeOut & LEFT) {   // point is to the left of clip rectangle
+				y = y0 + (y1 - y0) * (xmin - x0) / (x1 - x0);
+				x = xmin;
+			}
+
+			// Now we move outside point to intersection point to clip
+			// and get ready for next pass.
+			if (outcodeOut == outcode0) {
+				x0 = x;
+				y0 = y;
+				outcode0 = ComputeOutCode(x0, y0, xmin, ymin, xmax, ymax);
+			} else { // outcodeOut == outcode1
+				x1 = x;
+				y1 = y;
+				outcode1 = ComputeOutCode(x1, y1, xmin, ymin, xmax, ymax);
+			}
+		}
+	}
+
+
+	if (accept) {
+		//jadi dapat (x0,y0) dan (x1,y1), yaitu point hasil clipping ke highlighted area
+		//setelah itu, scaling ke view frame
+		scaleAndDraw(canvas, Point(x0,y0), Point(x1,y1));
+	}
+}
+
+void Peta3D::scaleAndDraw(Canvas* canvas, Point p0, Point p1) {
+	int x0 = p0.getAbsis();
+	int y0 = p0.getOrdinat();
+
+	int x1 = p1.getAbsis();
+	int y1 = p1.getOrdinat();
+
+	float xfactor = (float)(viewFrame.getMaxX() - viewFrame.getMinX())/(highlightedArea.getMaxX() - highlightedArea.getMinX());
+	float yfactor = (float)(viewFrame.getMaxY() - viewFrame.getMinY())/(highlightedArea.getMaxY() - highlightedArea.getMinY());
+
+	int x0new = (int) (xfactor * (x0 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+	int y0new = (int) (yfactor * (y0 - highlightedArea.getMinY())) + viewFrame.getMinY();
+	int x1new = (int) (xfactor * (x1 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+	int y1new = (int) (yfactor * (y1 - highlightedArea.getMinY())) + viewFrame.getMinY();
+
+	Line l(Point(x0new,y0new), Point(x1new,y1new));
+	l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
+}
+
+void Peta3D::move(int dx, int dy){
+	if(abs(relativePositionX+dx) <100 && abs(relativePositionY+dy) <100){
+		relativePositionX += dx;
+		relativePositionY += dy;
+		for(int i=0; i<peta3d.size(); i++){
+			peta3d[i].move(dx, dy);
+		}
 	}
 }
