@@ -284,3 +284,32 @@ void Peta3D::move(int dx, int dy){
 		}
 	}
 }
+
+void Peta3D::zoomOut() {
+	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();
+	int highlightedAreaHeighth = highlightedArea.getMaxY() - highlightedArea.getMinY();
+	Polygon newhighlightedArea = highlightedArea.resizing (1.10, highlightedAreaWidth/2, highlightedAreaHeighth/2);
+	int minX = newhighlightedArea.getMinX();
+	int minY = newhighlightedArea.getMinY();
+	int maxX = newhighlightedArea.getMaxX();
+	int maxY = newhighlightedArea.getMaxY();
+	if (minX > 0 && minY > 0 && maxX < 640 && maxY<480) {
+		highlightedArea = newhighlightedArea;
+	}
+}
+
+
+void Peta3D::zoomIn() {
+	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();
+	int highlightedAreaHeighth = highlightedArea.getMaxY() - highlightedArea.getMinY();
+	Polygon newhighlightedArea = highlightedArea.resizing (0.90, highlightedAreaWidth/2, highlightedAreaHeighth/2);
+	int minX = newhighlightedArea.getMinX();
+	int minY = newhighlightedArea.getMinY();
+	int maxX = newhighlightedArea.getMaxX();
+	int maxY = newhighlightedArea.getMaxY();
+	int newhighlightedAreaWidth = maxX - minX;
+	int newhighlightedAreaHeight = maxY - minY;
+	if (newhighlightedAreaHeight >= 50 && newhighlightedAreaWidth >= 50) {
+		highlightedArea = newhighlightedArea;
+	}
+}
