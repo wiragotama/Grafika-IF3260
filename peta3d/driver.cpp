@@ -15,9 +15,12 @@ int main() {
 	Peta3D petaIndonesia;
 
 	Polygon gambar;
-	gambar.addPoint(Point(100,400));
-	gambar.addPoint(Point(200,400));
-	gambar.addPoint(Point(150,50));
+	gambar.addPoint(Point(266,125));
+	gambar.addPoint(Point(310,169));
+	gambar.addPoint(Point(373,139));
+	gambar.addPoint(Point(339,243));
+	gambar.addPoint(Point(211,190));
+	
 	
 	vector<Point> poly = gambar.getPoints();
 	poly.push_back(poly[0]);
@@ -44,8 +47,6 @@ int main() {
 			}
 		}
 	}
-	
-	printf("%d\n", daftar.size());
 	
 	sort(daftar.begin(), daftar.end(), Point::pointGreaterThan);
 	

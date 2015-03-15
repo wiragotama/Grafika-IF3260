@@ -2,10 +2,10 @@
 
 Peta3D::Peta3D() {
 	this->loadPeta2d("pulau/jawa.info");
-	this->loadPeta2d("pulau/kalimantan.info");
-	this->loadPeta2d("pulau/papua.info");
-	this->loadPeta2d("pulau/sulawesi.info");
-	this->loadPeta2d("pulau/sumatera.info");
+	//this->loadPeta2d("pulau/kalimantan.info");
+	//this->loadPeta2d("pulau/papua.info");
+	//this->loadPeta2d("pulau/sulawesi.info");
+	//this->loadPeta2d("pulau/sumatera.info");
 	
 	generetePeta3dSurfaces();
 	generetePeta3dFromSurface();
@@ -79,7 +79,7 @@ void Peta3D::generetePeta3dSurfaces(){
 }
 
 void Peta3D::generetePeta3dFromSurface(){
-	for(int i=0; i<petaSurface.size(); i++){
+	for(int i=9; i<petaSurface.size(); i++){
 		vector<Line> hiddenLineRemoved;
 		vector<Point> poly = petaSurface[i].getPoints();
 		if(poly.size()>0)
@@ -113,7 +113,9 @@ void Peta3D::generetePeta3dFromSurface(){
 			for(int k=0; k+1<daftar.size(); k++){
 				int midX = (daftar[k].getAbsis()+ daftar[k+1].getAbsis())/2;
 				int midY = (daftar[k].getOrdinat()+ daftar[k+1].getOrdinat())/2;
-
+				
+				//printf("Titik mid: %d %d\n", midX, midY);
+				
 				Point midPoint = Point(midX , midY);
 				if(!petaSurface[i].isPointInside(midPoint)) {
 					hiddenLineRemoved.push_back(Line(daftar[k], daftar[k+1]));
