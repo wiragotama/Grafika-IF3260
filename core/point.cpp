@@ -39,6 +39,10 @@ bool Point::isOrigin() const {
 	return (this->getAbsis() == 0) && (this->getOrdinat() == 0);
 }
 
+bool Point::isEqual(Point p) const{
+	return (this->getAbsis() == p.getAbsis()) && (this->getOrdinat() == p.getOrdinat());
+}
+
 void Point::rotate(double angle, int rx, int ry) {
     int x1 = cos(angle)*(x-rx)-sin(angle)*(y-ry)+rx,
         y1 = sin(angle)*(x-rx)+cos(angle)*(y-ry)+ry;
@@ -83,3 +87,33 @@ void Point::move(int dx, int dy) {
 	y+=dy;
 }
 
+int Point::orientation(Point p, Point q, Point r) {
+    // See 10th slides from following link for derivation of the formula
+    // http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf
+    // compute the orientation of r viewed from pq
+
+    // PQ cross QR
+    int val = (q.getOrdinat() - p.getOrdinat()) * (r.getAbsis() - q.getAbsis()) -
+              (q.getAbsis() - p.getAbsis()) * (r.getOrdinat() - q.getOrdinat());
+
+    if (val == 0) return 0;  // colinear
+
+    return (val > 0)? 1: 2; // clock or counterclock wise
+}
+
+bool Point::pointGreaterThan(Point a, Point b){
+	if(b.getAbsis() != a.getAbsis())
+		return a.getAbsis() < b.getAbsis();
+	else
+		return a.getOrdinat() > b.getOrdinat();
+}
+
+bool Point::sortUpperLeft(const Point& lhs, const Point& rhs) {
+	if (lhs.getOrdinat() == rhs.getOrdinat())
+		return (lhs.getAbsis() < rhs.getAbsis());
+	else return (lhs.getOrdinat() < rhs.getOrdinat());
+}
+
+bool Point::ccw (Point p, Point q, Point r) {
+	return (Point::orientation(p,q,r) == 1); //cw ccw di kartesian dan grafika beda
+}

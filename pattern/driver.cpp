@@ -5,9 +5,9 @@ int main() {
 	Canvas canvas;
 	Point topLeftPosition(100,100);
 	
-	Polygon polygon(&canvas, topLeftPosition);
+	Polygon polygon(topLeftPosition);
 	string polygonFile = "polygon.info"; //nama file jgn sampe salah ya... nanti kena segfault
-	string patternFile = "ikan.info";
+	string patternFile = "pattern/ikan.info";
 	
 	polygon.loadPolygon(polygonFile.c_str());
 	//printf("load polygon ok");
@@ -21,7 +21,7 @@ int main() {
 		else if (polygon.getMostRightPoint().getAbsis()+polygon.getTopLeftPosition().getAbsis()>=canvas.get_vinfo().xres) {
 			direction = false;
 		}
-		polygon.draw(canvas.pixel_color(255,0,0));
+		polygon.draw(&canvas, canvas.pixel_color(255,0,0));
 		if (direction)
 			polygon.move(1,0);
 		else 

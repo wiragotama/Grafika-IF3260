@@ -20,6 +20,7 @@ void GradientPalette::drawColorGradient(uint32_t color, Canvas *canvas) {
 			r = (y * (255-x) + rr * x * y / 255)/255;
 			g = (y * (255-x) + gg * x * y / 255)/255;
 			b = (y * (255-x) + bb * x * y / 255)/255;
+			this->color_table[y][x] = canvas->pixel_color(r,g,b);
 			canvas->putPixelColor(x_offset+x, y_offset+y, canvas->pixel_color(r,g,b));
 		}
 	}
@@ -91,4 +92,8 @@ int GradientPalette::getScreenX() { //mendapatkan posisi kursor pada pixel di la
 
 int GradientPalette::getScreenY() { //mendapatkan posisi kursor pada pixel di layar (global)
 	return y_offset + (cursor_y*CELLSIZE);
+}
+
+uint32_t GradientPalette::getColorTable(int pos_width, int pos_height) {
+	return color_table[pos_height][pos_width];
 }

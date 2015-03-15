@@ -6,7 +6,6 @@
 #define COLORTABLE_WIDTH 35
 #define COLORTABLE_HEIGHT 256
 #define COLORTABLE_CELLSIZE 1
-#define radius MOUSE_RADIUS
 
 class RainbowPalette {
 	public :

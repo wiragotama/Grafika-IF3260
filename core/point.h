@@ -16,6 +16,7 @@ class Point {
 		void setOrdinat(int y);
         void printInfo();
         bool isOrigin() const;
+        bool isEqual(Point p) const;
 		/* Move on screen */
 		void moveRight(int d);
 		void moveLeft(int d);
@@ -23,7 +24,11 @@ class Point {
 		void moveDown(int d);
 		void move(int dx, int dy);
         void rotate(double angle, int rx, int ry);
-
+        static int orientation(Point p, Point q, Point r);
+		static bool pointGreaterThan(Point a, Point b);
+		static bool sortUpperLeft(const Point& lhs, const Point& rhs);
+		static bool ccw (Point p, Point q, Point r);
+		
 	private :
 		int x;
 		int y;

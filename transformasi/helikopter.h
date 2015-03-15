@@ -20,6 +20,9 @@ class Helikopter : public Drawable {
 		void setTopLeftPosition(Point P);
 		void move(int dx, int dy);
 		
+		void setColor(uint32_t color);
+		uint32_t getColor();
+		
 		int getWidth();
 		int getHeight();
 		
@@ -35,6 +38,7 @@ class Helikopter : public Drawable {
 		void kincirDestroy();
 		
 	private :
+		uint32_t color;
 		Body body;
 		Tire tire;
 		Kincir kincir;

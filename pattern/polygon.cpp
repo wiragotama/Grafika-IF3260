@@ -117,6 +117,17 @@ vector<Point> Polygon::getPoints() const {
 	return points;
 }
 
+vector<Line> Polygon::getLines() const {
+	vector<Point> tempPoints = getPoints();
+	vector<Line> polygonLines;
+	if(tempPoints.size()>0)
+		tempPoints.push_back(tempPoints[0]);
+	for(int i=0; i<tempPoints.size()-1; i++){
+		polygonLines.push_back( Line(tempPoints[i], tempPoints[i+1]) );
+	}
+	return polygonLines;
+}
+
 Pattern Polygon::getPattern() const {
 	return pattern;
 }
@@ -190,7 +201,7 @@ void Polygon::draw(Canvas* canvas, uint32_t color) {
 
 	//flood fill
 	if (pattern.getMatrix()!=NULL)
-		floodFill(canvas, firePoint.getAbsis(), firePoint.getOrdinat());
+		floodFill(canvas, firePoint.getAbsis(), firePoint.getOrdinat(), color);
 
 	int x = topLeftPosition.getAbsis();
 	int y = topLeftPosition.getOrdinat();
@@ -211,10 +222,10 @@ void Polygon::drawBackground(Canvas *canvas, uint32_t color) {
 
 	//flood fill
 	if (pattern.getMatrix()!=NULL)
-		floodFillBackground(canvas, firePoint.getAbsis(), firePoint.getOrdinat());
+		floodFillBackground(canvas, firePoint.getAbsis(), firePoint.getOrdinat(), color);
 }
 
-void Polygon::floodFill(Canvas* canvas, int x, int y) {
+void Polygon::floodFill(Canvas* canvas, int x, int y, uint32_t color) {
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
 	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
 
@@ -222,15 +233,18 @@ void Polygon::floodFill(Canvas* canvas, int x, int y) {
 	int screen_y = y + topLeftPosition.getOrdinat();
 
 	if ((screen_x>=0 && screen_x<canvas->get_vinfo().xres) && (screen_y>=0 && screen_y<canvas->get_vinfo().yres) && (canvas->getColor(location) >>24!=0xff)) {
-		canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
-		floodFill(canvas, x-1, y);
-		floodFill(canvas, x+1, y);
-		floodFill(canvas, x, y-1);
-		floodFill(canvas, x, y+1);
+		if (getColor(x+dx, y+dy)!=0)
+			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), color);
+		else 
+			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
+		floodFill(canvas, x-1, y, color);
+		floodFill(canvas, x+1, y, color);
+		floodFill(canvas, x, y-1, color);
+		floodFill(canvas, x, y+1, color);
 	}
 }
 
-void Polygon::floodFillBackground(Canvas* canvas, int x, int y) {
+void Polygon::floodFillBackground(Canvas* canvas, int x, int y, uint32_t color) {
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
 	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
 
@@ -238,20 +252,19 @@ void Polygon::floodFillBackground(Canvas* canvas, int x, int y) {
 	int screen_y = y + topLeftPosition.getOrdinat();
 
 	if ((screen_x>=0 && screen_x<canvas->get_vinfo().xres) && (screen_y>=0 && screen_y<canvas->get_vinfo().yres)) {
-		canvas->putBackgroundPixel(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
-		floodFillBackground(canvas, x-1, y);
-		floodFillBackground(canvas, x+1, y);
-		floodFillBackground(canvas, x, y-1);
-		floodFillBackground(canvas, x, y+1);
+		if (getColor(x+dx, y+dy)!=0)
+			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), color);
+		else 
+			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
+		floodFillBackground(canvas, x-1, y, color);
+		floodFillBackground(canvas, x+1, y, color);
+		floodFillBackground(canvas, x, y-1, color);
+		floodFillBackground(canvas, x, y+1, color);
 	}
 }
 
 void Polygon::move(int dx, int dy) {
-	// for (int i=0; i<points.size(); i++) {
-	// 	points[i].move(dx, dy);
-	// }
-
-	firePoint.move(dx, dy);
+	//firePoint.move(dx, dy);
 	topLeftPosition.move(dx, dy);
 }
 
@@ -262,11 +275,14 @@ void Polygon::loadPolygon(const char* filename) {
 
 	fscanf(matrix_file, "%d", &numPoints);
 
+	int max_x, min_x, max_y, min_y;
 	for (int i=0; i<numPoints; i++) {
 		fscanf(matrix_file, "%d %d", &x, &y);
+		
 		Point P(x,y);
 		points.push_back(P);
 	}
+	
 
 	fscanf(matrix_file,"%d %d",&x, &y);
 	firePoint = Point(x,y);
@@ -372,7 +388,7 @@ int Polygon::getWidth() const {
 }
 
 int Polygon::getHeight() const {
-	return getMostBottomPoint().getAbsis() - getMostUpperPoint().getAbsis();
+	return getMostBottomPoint().getOrdinat() - getMostUpperPoint().getOrdinat();
 }
 
 Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
@@ -417,3 +433,59 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 	}
 	return Polygon(newTopLeft, transformed, firePoint, pattern);
 }
+
+bool Polygon::sortTopLeft(const Polygon& lhs, const Polygon& rhs) {
+	Point TLP = Point(lhs.getMinX(), lhs.getMinY());
+	Point TLP2 = Point(rhs.getMinX(), rhs.getMinY());
+	
+	if (TLP.getOrdinat() != TLP2.getOrdinat()) {
+		return (TLP.getOrdinat() < TLP2.getOrdinat());
+	}
+	else return (TLP.getAbsis() < TLP2.getAbsis());
+}
+
+Point Polygon::getBottomRightPoint() const {
+	return Point(getMostRightPoint().getAbsis(), getMostBottomPoint().getOrdinat());
+}
+
+Point Polygon::getSuitableFirePoint(Canvas* canvas) {
+	//left for winson
+	return Point(0,0);
+}
+
+void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP) {
+	
+	if ((x>=TLP.getAbsis() && x<=BRP.getAbsis()) && (y>=TLP.getOrdinat() && y<=BRP.getOrdinat()) && 
+		(matrix[y][x]==0)	
+	) {
+		matrix[y][x] = 2345678;
+		simulateFloodFill(x-1, y, matrix, TLP, BRP);
+		simulateFloodFill(x+1, y, matrix, TLP, BRP);
+		simulateFloodFill(x, y-1, matrix, TLP, BRP);
+		simulateFloodFill(x, y+1, matrix, TLP, BRP);
+	}
+}
+bool Polygon::isPointInside(Point point) const {
+	vector<Point> edges = this->getPoints();
+	if(edges.size()>0)
+		edges.push_back(edges[0]);
+	double sum = 0;
+	for (int p = 0; p < edges.size()-1; ++p){
+		float temp = 0.0f;
+		if (Point::ccw(edges[p], edges[p+1], point)) {
+			temp = Line::angle(edges[p], point, edges[p+1]);
+			sum += temp;
+			// printf("%s\n", "ccw");
+		} else {
+			temp = Line::angle(edges[p], point, edges[p+1]);
+			sum -= temp;
+			// printf("%s\n", "cw");
+		}
+		// edges[p].printInfo();edges[p+1].printInfo();point.printInfo();
+		// printf("nilai sudut %f ",temp*180/M_PI);
+	}
+	// printf("\n%lf\n", fabs(fabs(sum) - 2*M_PI));
+	bool inPolygon = (fabs(fabs(sum) - 2*M_PI) < 0.000001);
+	return inPolygon;
+}
+

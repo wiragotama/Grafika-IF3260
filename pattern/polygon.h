@@ -33,6 +33,7 @@ class Polygon {
 		void setTopLeftPosition(Point p);
 		Point getPoint(int idx);
 		vector<Point> getPoints() const;
+		vector<Line> getLines() const;
 		Point getFirePoint() const;
 		Point getOriginFirePoint() const;
 		Point getTopLeftPosition() const;
@@ -40,6 +41,7 @@ class Polygon {
 		Point getMostLeftPoint() const;
 		Point getMostBottomPoint() const;
 		Point getMostUpperPoint() const;
+		Point getBottomRightPoint() const;
         int getMaxY() const;
         int getMinY() const;
         int getMinX() const;
@@ -52,12 +54,21 @@ class Polygon {
 
 		Pattern getPattern() const;
 		Polygon resizing(double scale, int pivot_x, int pivot_y);
+		
+		Point getSuitableFirePoint(Canvas* canvas);
+		void simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP);
+		static bool sortTopLeft(const Polygon& lhs, const Polygon& rhs);
+		bool isPointInside(Point p) const;
+		
 	private :
         void init();
 		uint32_t getColor(int x, int y);
+		void floodFill(Canvas*, int screen_x, int screen_y, uint32_t color);
+		void floodFillBackground(Canvas*, int screen_x, int screen_y, uint32_t color);
+		
+		/*
 		void floodFill(Canvas*, int screen_x, int screen_y);
-		void floodFillBackground(Canvas*, int screen_x, int screen_y);
-
+		void floodFillBackground(Canvas*, int screen_x, int screen_y);*/
 	private :
 		vector<Point> points;
 		Pattern pattern;
