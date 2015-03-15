@@ -9,12 +9,12 @@ Canvas::Canvas() {
 	vinfo.bits_per_pixel=32;
 	ioctl(fbfd, FBIOPUT_VSCREENINFO, &vinfo);
 	ioctl(fbfd, FBIOGET_VSCREENINFO, &vinfo);
-	
+
      //Get fix screen information
 	ioctl(fbfd, FBIOGET_FSCREENINFO, &finfo);
 
 	screensize = vinfo.yres_virtual * finfo.line_length;
-	
+
 	backbuffer = new uint8_t[screensize];
 	fbp = (uint8_t*) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, (off_t)0);
 }
@@ -91,7 +91,7 @@ void Canvas::putPixelColor(int screen_x, int screen_y, uint32_t color) { //letak
 	long location = getCursorLocation(screen_x,screen_y);
 	if(location >= getScreensize() || location < 0);
 		//nothing
-	else { 
+	else {
 		*((uint32_t*)(backbuffer + location)) = color | 0xff000000; //dirty bit untuk menandakan sudah pernah menulis di tempat itu
 	}
 }
@@ -100,7 +100,7 @@ void Canvas::putBackgroundPixel(int screen_x, int screen_y, uint32_t color) {
 	long location = getCursorLocation(screen_x,screen_y);
 	if(location >= getScreensize() || location < 0);
 		//nothing
-	else { 
+	else {
 		*((uint32_t*)(backbuffer + location)) = color; //dirty bit untuk menandakan sudah pernah menulis di tempat itu
 	}
 }
@@ -111,7 +111,7 @@ void Canvas::resetDirtyBit(int screen_x, int screen_y, int screen_x2, int screen
 			long location = getCursorLocation(i,j);
 			if(location >= getScreensize() || location < 0);
 				//nothing
-			else { 
+			else {
 				*((uint32_t*)(backbuffer + location)) &= 0xFFFFFF;  //dirty bit untuk menandakan sudah pernah menulis di tempat itu
 			}
 	}
@@ -131,7 +131,7 @@ uint32_t Canvas::getColor(int screen_x, int screen_y) { //mendapatkan warna yang
 uint32_t Canvas::getColor(long location) { //mendapatkan warna yang ditunjuk pada location
 	if (location >=getScreensize() || location <0)
 		return -1;
-	else 
+	else
 		return *((uint32_t*)(backbuffer+location));
 }
 
@@ -162,7 +162,8 @@ long Canvas::getScreensize() {
 	return screensize;
 }
 
-void Canvas::putColorInfo(int screen_x, int screen_y, const char* message) { //mengeluarkan nomor warna rgb pada koordinat screen_x,screen_y di layar
+void Canvas::putColorInfo(int screen_x, int screen_y, const char* message) {
+	//mengeluarkan nomor warna rgb pada koordinat screen_x,screen_y di layar
 	long location = getCursorLocation(screen_x,screen_y);
 	printf("Warna %s: %#08x\n",message,*((uint32_t*)(fbp + location)));
 }

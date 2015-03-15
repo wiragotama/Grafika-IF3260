@@ -10,6 +10,7 @@
 #include "../transformasi/TerjunPayung.h"
 #include "../cimbelSpace/bulletController.h"
 #include "../cimbelSpace/alienController.h"
+#include "../peta3d/peta3d.h"
 #include <ctime>
 
 void gameIntroduction(Helikopter* helikopter, Canvas* canvas);
@@ -20,18 +21,6 @@ void cleanUp(BulletController* bulletController, AlienController *alienControlle
 bool planeCrash(AlienController *alienController, Helikopter* helikopter);
 
 int main() {
-	// Polygon poly;
-	// poly.addPoint(Point(0,0));
-	// poly.addPoint(Point(100,0));
-	// poly.addPoint(Point(100,100));
-	// poly.addPoint(Point(0,100));
-	// poly.addPoint(Point(0,0));
-	// poly.draw(&canvas, canvas.pixel_color(255,0,0));
-	// canvas.flush();
-	// int x1,y;
-	// cin >> x1 >> y;
-	// bool x = poly.isPointInside(Point(x1,y));
-	// cout << "di dalam polygon ga? " << x << endl; //coy ini blm bisa jalan soalnya masalah di include2
 	Canvas canvas;
 	Point topLeftPosition(540,400);
 	Helikopter helikopter(topLeftPosition);
@@ -58,7 +47,11 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 
 	rainbowPalette.initRainbowColor(canvas);
 	do {
+		system("clear");
+		rainbowPalette.drawPalette(canvas);
+		rainbowPalette.drawCursor(canvas);
 
+		canvas->flush();
 		rainbowPalette.drawPalette(canvas);
 		rainbowPalette.drawCursor(canvas);
 		gradientPalette.drawColorGradient(canvas->getColor(rainbowPalette.getScreenX(),rainbowPalette.getScreenY()), canvas);
@@ -68,6 +61,7 @@ void showRainbowPalette(Helikopter* helikopter, Canvas* canvas) {
 		//helikopter->setColor(canvas->getColor(gradientPalette.getScreenX(), gradientPalette.getScreenY()));
 		helikopter->draw(canvas, helikopter->getColor());
 		canvas->flush();
+
 
 		canvas->putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
 		canvas->putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
