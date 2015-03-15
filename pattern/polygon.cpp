@@ -11,6 +11,25 @@ Polygon::Polygon(Point topLeftPosition) {
 	this->topLeftPosition = topLeftPosition;
 }
 
+Polygon::Polygon(Point topLeft, Point botRight) {
+	// automatically construct a rectangle
+	init();
+
+	int x_min = 0,
+		x_max = botRight.getAbsis()-topLeft.getAbsis(),
+		y_min = 0,
+		y_max = botRight.getOrdinat()-topLeft.getOrdinat();
+
+	points.push_back( Point(x_min, y_min)  );
+	points.push_back( Point(x_max, y_min)  );
+	points.push_back( Point(x_max, y_max)   );
+	points.push_back( Point(x_min, y_max) );
+
+	topLeftPosition = topLeft;
+	firePoint = Point(    (x_min+x_max)/2    ,   (y_min+y_max)/2    );
+	originFirePoint = firePoint;
+}
+
 Polygon::Polygon(Point topLeftPosition, vector<Point> nodes, Point firePoint, Pattern pattern_t) : pattern(pattern_t) {
     init();
     this->topLeftPosition = topLeftPosition;
@@ -235,7 +254,7 @@ void Polygon::floodFill(Canvas* canvas, int x, int y, uint32_t color) {
 	if ((screen_x>=0 && screen_x<canvas->get_vinfo().xres) && (screen_y>=0 && screen_y<canvas->get_vinfo().yres) && (canvas->getColor(location) >>24!=0xff)) {
 		if (getColor(x+dx, y+dy)!=0)
 			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), color);
-		else 
+		else
 			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
 		floodFill(canvas, x-1, y, color);
 		floodFill(canvas, x+1, y, color);
@@ -254,7 +273,7 @@ void Polygon::floodFillBackground(Canvas* canvas, int x, int y, uint32_t color) 
 	if ((screen_x>=0 && screen_x<canvas->get_vinfo().xres) && (screen_y>=0 && screen_y<canvas->get_vinfo().yres)) {
 		if (getColor(x+dx, y+dy)!=0)
 			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), color);
-		else 
+		else
 			canvas->putPixelColor(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat(), getColor(x+dx, y+dy));
 		floodFillBackground(canvas, x-1, y, color);
 		floodFillBackground(canvas, x+1, y, color);
@@ -278,11 +297,11 @@ void Polygon::loadPolygon(const char* filename) {
 	int max_x, min_x, max_y, min_y;
 	for (int i=0; i<numPoints; i++) {
 		fscanf(matrix_file, "%d %d", &x, &y);
-		
+
 		Point P(x,y);
 		points.push_back(P);
 	}
-	
+
 
 	fscanf(matrix_file,"%d %d",&x, &y);
 	firePoint = Point(x,y);
@@ -394,7 +413,7 @@ int Polygon::getHeight() const {
 Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 	vector<Point> transformed = points;
 	transformed.push_back(Point(0, 0));
-     
+
     // Pindahkan titik tengah ke point(0,0);
     for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
     int awal_x = it->getAbsis();
@@ -402,7 +421,7 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
     it->setAbsis(awal_x - pivot_x);
     it->setOrdinat(awal_y - pivot_y);
     }
-     
+
     // transformasi ubah ukuran
     for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
     int awal_x = it->getAbsis();
@@ -410,8 +429,8 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
     it->setAbsis((int) (awal_x * scale));
     it->setOrdinat((int) (awal_y *scale));
     }
-     
-     
+
+
     //Kembalikan ke posisi semula
     for (vector<Point>::iterator it = transformed.begin(); it != transformed.end(); it++) {
 		int awal_x = it->getAbsis();
@@ -419,7 +438,7 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 		it->setAbsis((int) (awal_x + pivot_x));
 		it->setOrdinat((int) (awal_y + pivot_y));
     }
-     
+
     //Ambil kembali firepoint dan topleftposition
     Point newTopLeft = transformed[transformed.size()-1];
 	int dx = newTopLeft.getAbsis();
@@ -429,7 +448,7 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 	transformed.pop_back();
 	for (vector<Point>::iterator it = transformed.begin() ;it != transformed.end(); ++it) {
 		it->setAbsis(it->getAbsis() - dx);
-		it->setOrdinat(it->getOrdinat() - dy); 
+		it->setOrdinat(it->getOrdinat() - dy);
 	}
 	return Polygon(newTopLeft, transformed, firePoint, pattern);
 }
@@ -437,7 +456,7 @@ Polygon Polygon::resizing(double scale, int pivot_x, int pivot_y){
 bool Polygon::sortTopLeft(const Polygon& lhs, const Polygon& rhs) {
 	Point TLP = Point(lhs.getMinX(), lhs.getMinY());
 	Point TLP2 = Point(rhs.getMinX(), rhs.getMinY());
-	
+
 	if (TLP.getOrdinat() != TLP2.getOrdinat()) {
 		return (TLP.getOrdinat() < TLP2.getOrdinat());
 	}
@@ -454,9 +473,9 @@ Point Polygon::getSuitableFirePoint(Canvas* canvas) {
 }
 
 void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP) {
-	
-	if ((x>=TLP.getAbsis() && x<=BRP.getAbsis()) && (y>=TLP.getOrdinat() && y<=BRP.getOrdinat()) && 
-		(matrix[y][x]==0)	
+
+	if ((x>=TLP.getAbsis() && x<=BRP.getAbsis()) && (y>=TLP.getOrdinat() && y<=BRP.getOrdinat()) &&
+		(matrix[y][x]==0)
 	) {
 		matrix[y][x] = 2345678;
 		simulateFloodFill(x-1, y, matrix, TLP, BRP);

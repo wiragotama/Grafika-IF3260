@@ -3,9 +3,9 @@
 Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(Point(0,0)) {
 	this->loadPeta2d("pulau/jawa.info");
 	this->loadPeta2d("pulau/kalimantan.info");
-	// this->loadPeta2d("pulau/papuaRevA.info");
+	this->loadPeta2d("pulau/papuaRevB.info");
 	this->loadPeta2d("pulau/sulawesi.info");
-	this->loadPeta2d("pulau/sumatera.info");
+	this->loadPeta2d("pulau/sumatra.info");
 	Point p1(0,0);
 	Point p2(100,0);
 	Point p3(100,100);
@@ -16,9 +16,28 @@ Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlighted
 	highlightedArea.addPoint(p4);
 	generetePeta3dSurfaces();
 	generetePeta3dFromSurface();
-	
+
 	relativePositionX = 0;
 	relativePositionY = 0;
+}
+
+void Peta3D::findTheShit() {
+	const string nama_pulau[] = {"jawa", "kalimantan", "papua", "sulawesi", "sumatera"};
+
+	int counter = 0;
+	for (vector<Polygon>::iterator it = peta2d.begin(); it != peta2d.end(); it++, counter++) {
+		cout << nama_pulau[counter] << endl;
+
+		int x_min = it->getMostLeftPoint().getAbsis(),
+			x_max = it->getMostRightPoint().getAbsis(),
+			y_min = it->getMostUpperPoint().getOrdinat(),
+			y_max = it->getMostBottomPoint().getOrdinat();
+
+		cout << "(" << x_min << ", " << y_min << "), ";
+		cout << "(" << x_max << ", " << y_max << ")" << endl;
+
+		cout << endl;
+	}
 }
 
 void Peta3D::drawPeta(Canvas* canvas) {
@@ -74,11 +93,11 @@ void Peta3D::loadPeta2d(const char* filename) {
 vector<Polygon> Peta3D::polygonTo3D(Polygon* polygon, int dy) {
 	vector<Point> bottomPoints = polygon->getPoints();
 	vector<Point> upperPoints = polygon->getPoints();
-	
+
 	for (int i=0; i<bottomPoints.size(); i++) {
 		bottomPoints[i].move(0, dy);
 	}
-	
+
 	vector<Polygon> retPol;
 	for (int i=1; i<bottomPoints.size(); i++) {
 		Polygon temp(Point(0,0));
@@ -94,11 +113,11 @@ vector<Polygon> Peta3D::polygonTo3D(Polygon* polygon, int dy) {
 	temp.addPoint(bottomPoints[bottomPoints.size()-1]);
 	temp.addPoint(upperPoints[bottomPoints.size()-1]);
 	retPol.push_back(temp);
-		
+
 	//sort polygon
 	sort(retPol.begin(), retPol.end(), Polygon::sortTopLeft);
-	retPol.push_back(*polygon);	
-	
+	retPol.push_back(*polygon);
+
 	return retPol;
 }
 
@@ -115,14 +134,14 @@ void Peta3D::generetePeta3dFromSurface(){
 		vector<Point> poly = petaSurface[i].getPoints();
 		if(poly.size()>0)
 			poly.push_back(poly[0]);
-				
+
 		//Untuk setiap garis yang telah ada, cek hiddenLineRemoval dengan surface baru
 		for(int j=0; j<peta3d.size(); j++){
 			vector<Point> daftar;
-			
+
 			daftar.push_back(peta3d[j].getPointOne());
 			daftar.push_back(peta3d[j].getPointTwo());
-			
+
 			//Cek perpotongan garis dengan setiap sisi poligon
 			for(int k=0; k<poly.size()-1; k++) {
 				if((Point::orientation(peta3d[j].getPointOne(), peta3d[j].getPointTwo(), poly[k]) < 2 && Point::orientation(peta3d[j].getPointOne(), peta3d[j].getPointTwo(), poly[k+1]) == 2) ||
@@ -138,23 +157,23 @@ void Peta3D::generetePeta3dFromSurface(){
 					}
 				}
 			}
-			
+
 			sort(daftar.begin(), daftar.end(), Point::pointGreaterThan);
-			
+
 			for(int k=0; k+1<daftar.size(); k++){
 				int midX = (daftar[k].getAbsis()+ daftar[k+1].getAbsis())/2;
 				int midY = (daftar[k].getOrdinat()+ daftar[k+1].getOrdinat())/2;
-				
-				
+
+
 				Point midPoint = Point(midX , midY);
 				if(!petaSurface[i].isPointInside(midPoint)) {
 					hiddenLineRemoved.push_back(Line(daftar[k], daftar[k+1]));
-				} 
+				}
 
 			}
-			
+
 		}
-		
+
 		peta3d = hiddenLineRemoved;
 		vector<Line> newLines = petaSurface[i].getLines();
 		peta3d.insert(peta3d.end(), newLines.begin(), newLines.end());
@@ -266,9 +285,9 @@ void Peta3D::scaleAndDraw(Canvas* canvas, Point p0, Point p1) {
 	float xfactor = (float)(viewFrame.getMaxX() - viewFrame.getMinX())/(highlightedArea.getMaxX() - highlightedArea.getMinX());
 	float yfactor = (float)(viewFrame.getMaxY() - viewFrame.getMinY())/(highlightedArea.getMaxY() - highlightedArea.getMinY());
 
-	int x0new = (int) (xfactor * (x0 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+	int x0new = (int) (xfactor * (x0 - highlightedArea.getMinX())) + viewFrame.getMinX();
 	int y0new = (int) (yfactor * (y0 - highlightedArea.getMinY())) + viewFrame.getMinY();
-	int x1new = (int) (xfactor * (x1 - highlightedArea.getMinX())) + viewFrame.getMinX(); 
+	int x1new = (int) (xfactor * (x1 - highlightedArea.getMinX())) + viewFrame.getMinX();
 	int y1new = (int) (yfactor * (y1 - highlightedArea.getMinY())) + viewFrame.getMinY();
 
 	Line l(Point(x0new,y0new), Point(x1new,y1new));
@@ -318,45 +337,44 @@ void Peta3D::zoomIn() {
 }
 
 void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
-	highlightedArea.move(dx,dy);
-	// int min_x = highlightedArea.getMinX(), max_x = highlightedArea.getMaxX(),
-	// 	min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
-	// int canvasX = canvas->get_vinfo().xres;
-	// int canvasY = canvas->get_vinfo().yres;
+	int min_x = highlightedArea.getMinX(), max_x = highlightedArea.getMaxX(),
+		min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
+	int canvasX = canvas->get_vinfo().xres;
+	int canvasY = canvas->get_vinfo().yres;
 	// cout << min_x << " " << min_y << " " << max_x << " " << max_y << endl;
 	// cout << canvasX << " " << canvasY << endl;
 	// getchar();
-	// if (dx < 0) {
-	// 	dx = abs(dx);
-	// 	// cout << " m " << endl;
-	// 	if (min_x - dx >= 0) { 
-	// 		highlightedArea.move(dx,0);
-	// 	} else {
-	// 		highlightedArea.move(min_x,0);
-	// 	}		
-	// } else if (dx > 0) {
-	// 	// cout << " n " << endl;
-	// 	if (max_x + dx < canvasX) {
-	// 		highlightedArea.move(dx, 0);
-	// 	} else {
-	// 		highlightedArea.move(dx - (max_x + dx - canvasX), 0);
-	// 	}
-	// }
+	if (dx < 0) {
+		// dx = abs(dx);
+		// cout << " m " << endl;
+		if (min_x + dx >= 0) { 
+			highlightedArea.move(dx,0);
+		} else {
+			highlightedArea.move(-1*min_x,0);
+		}
+	} else if (dx > 0) {
+		// cout << " n " << endl;
+		if (max_x + dx < canvasX) {
+			highlightedArea.move(dx, 0);
+		} else {
+			highlightedArea.move(canvasX - max_x, 0);
+		}
+	}
 
-	// if (dy < 0) {
-	// 	dy = abs(dy);
-	// 	// cout << " o " << endl;
-	// 	if (min_y - dy >= 0) {
-	// 		highlightedArea.move(0,dy);
-	// 	} else {
-	// 	 	highlightedArea.move(0, min_y);
-	// 	}
-	// } else if (dy > 0) {
-	// 	// cout << " p " << endl;
-	// 	if (min_y + dy < canvasY) {
-	// 		highlightedArea.move(0, dy);
-	// 	} else {
-	// 		highlightedArea.move(0, dy - (max_y + dy - canvasX));
-	// 	}
-	// }
+	if (dy < 0) {
+		// dy = abs(dy);
+		// cout << " o " << endl;
+		if (min_y + dy >= 0) {
+			highlightedArea.move(0, dy);
+		} else {
+		 	highlightedArea.move(0, -1*min_y);
+		}
+	} else if (dy > 0) {
+		// cout << " p " << endl;
+		if (max_y + dy < canvasY) {
+			highlightedArea.move(0, dy);
+		} else {
+			highlightedArea.move(0, canvasY - max_y);
+		}
+	}
 }
