@@ -18,10 +18,11 @@ public:
 	void drawPeta(Canvas*);
 	void drawPeta3d(Canvas* canvas);
 	void drawPetaClipping(Canvas* canvas);
-
+	void move(int, int);
+	
 private:
 	void loadPeta2d(const char*);
-	vector<Polygon> polygonTo3D(Polygon* polygon, int dy);
+	vector<Polygon> polygonTo3D(Polygon*, int);
 	void generetePeta3dSurfaces();
 	void generetePeta3dFromSurface();
 	void CohenSutherlandLineClipAndDraw(Point p0, Point p1, Canvas* canvas);
@@ -39,5 +40,7 @@ private:
 	const int RIGHT;  // 0010
 	const int BOTTOM; // 0100
 	const int TOP;    // 1000
+	int relativePositionX;
+	int relativePositionY;
 };
 #endif

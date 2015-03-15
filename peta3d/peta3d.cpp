@@ -16,6 +16,9 @@ Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlighted
 	highlightedArea.addPoint(p4);
 	generetePeta3dSurfaces();
 	generetePeta3dFromSurface();
+	
+	relativePositionX = 0;
+	relativePositionY = 0;
 }
 
 void Peta3D::drawPeta(Canvas* canvas) {
@@ -270,4 +273,14 @@ void Peta3D::scaleAndDraw(Canvas* canvas, Point p0, Point p1) {
 
 	Line l(Point(x0new,y0new), Point(x1new,y1new));
 	l.drawBackground(canvas, 1, canvas->pixel_color(255,0,0));
+}
+
+void Peta3D::move(int dx, int dy){
+	if(abs(relativePositionX+dx) <100 && abs(relativePositionY+dy) <100){
+		relativePositionX += dx;
+		relativePositionY += dy;
+		for(int i=0; i<peta3d.size(); i++){
+			peta3d[i].move(dx, dy);
+		}
+	}
 }
