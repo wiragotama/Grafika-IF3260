@@ -7,12 +7,18 @@
 #include "../core/point.h"
 #include "../pattern/polygon.h"
 #include "../transformasi/helikopter.h"
+#include <vector>
+#include <algorithm>
 
 class Peta3D {
 public:
 	Peta3D();
-	void drawPeta(Canvas);
+	void drawPeta(Canvas*);
+	
+private:
 	void loadPeta2d(const char*);
+	vector<Polygon> polygonTo3D(Polygon* polygon, int dy);
+	void generetePeta3dSurfaces();
 	
 private:
 	vector<Polygon> peta2d;

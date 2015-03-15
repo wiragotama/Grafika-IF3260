@@ -12,6 +12,7 @@ int main() {
 	char c;
 	Canvas canvas;
 	GraphicsIO graphicsIO;
+	Peta3D petaIndonesia;
 
 	Polygon gambar;
 	gambar.addPoint(Point(100,400));
@@ -69,11 +70,13 @@ int main() {
 		printf("%d %d\n", daftar[i].getAbsis(), daftar[i].getOrdinat());
 	}
 	
-	//gambar.draw(&canvas, 0x00FFFFFF);
-	//for(int i=0; i<peta3d.size(); i++)
-		//peta3d[i].draw(&canvas, 1, 0x00FFFFFF);
+	gambar.draw(&canvas, 0x00FFFFFF);
+	for(int i=0; i<peta3d.size(); i++)
+		peta3d[i].draw(&canvas, 1, 0x00FFFFFF);
+		
+	petaIndonesia.drawPeta(&canvas);
 	
-	//canvas.flush();
+	canvas.flush();
 		
 	return 0;
 }
