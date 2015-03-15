@@ -9,6 +9,9 @@ Peta3D::Peta3D() {
 	
 	generetePeta3dSurfaces();
 	generetePeta3dFromSurface();
+	
+	relativePositionX = 0;
+	relativePositionY = 0;
 }
 
 void Peta3D::drawPeta(Canvas* canvas) {
@@ -127,5 +130,15 @@ void Peta3D::generetePeta3dFromSurface(){
 		peta3d = hiddenLineRemoved;
 		vector<Line> newLines = petaSurface[i].getLines();
 		peta3d.insert(peta3d.end(), newLines.begin(), newLines.end());
+	}
+}
+
+void Peta3D::move(int dx, int dy){
+	if(abs(relativePositionX+dx) <100 && abs(relativePositionY+dy) <100){
+		relativePositionX += dx;
+		relativePositionY += dy;
+		for(int i=0; i<peta3d.size(); i++){
+			peta3d[i].move(dx, dy);
+		}
 	}
 }

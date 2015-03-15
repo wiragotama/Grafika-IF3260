@@ -13,10 +13,36 @@ int main() {
 	Canvas canvas;
 	GraphicsIO graphicsIO;
 	Peta3D petaIndonesia;
-		
-	petaIndonesia.drawPeta3d(&canvas);
 	
-	canvas.flush();
+	//Membuat input nonblocking
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
+	
+	do {
+		petaIndonesia.drawPeta3d(&canvas);
+		
+		canvas.flush();
+		
+		int i = GraphicsIO::kbhit();
+		if(i != 0){
+			c=fgetc(stdin);
+			if (c == 97) { //left arrow
+				petaIndonesia.move(1,0);
+			}
+			else if (c == 119) { //up arrow
+				petaIndonesia.move(0,1);
+			}
+			else if (c == 100) { //right arrow
+				petaIndonesia.move(-1,0);
+			}
+			else if (c == 115) { //down arrow
+				petaIndonesia.move(0,-1);
+			}
+		}
+		
+	} while (c != '\n');
+	
+	//Membuat input kembali blocking
+	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_DISABLE);
 		
 	return 0;
 }
