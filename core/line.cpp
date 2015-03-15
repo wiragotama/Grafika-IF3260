@@ -231,31 +231,25 @@ bool Line::isIntersectWith(Line l2) {
 
 
 Point* Line::getIntersectionPointWith(Line line) {
+	// menjamin pasti telah intersection dengan line tersebut
 	if (!this->isIntersectWith(line)) return NULL;
+
 	Point p1 = this->point[0];
 	Point p2 = this->point[1];
 	Point p3 = line.getPointOne();
 	Point p4 = line.getPointTwo();
-	// menjamin pasti telah intersection dengan line tersebut
+
 	// Store the values for fast access and easy
 	// equations-to-code conversion
-	float x1 = p1.getAbsis(), x2 = p2.getAbsis(), x3 = p3.getAbsis(), x4 = p4.getAbsis();
-	float y1 = p1.getOrdinat(), y2 = p2.getOrdinat(), y3 = p3.getOrdinat(), y4 = p4.getOrdinat();
-	float d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
-	// If d is zero, there is no intersection
-	//~ if (d == 0)
-		//~ return NULL;
+	double x1 = p1.getAbsis(), x2 = p2.getAbsis(), x3 = p3.getAbsis(), x4 = p4.getAbsis();
+	double y1 = p1.getOrdinat(), y2 = p2.getOrdinat(), y3 = p3.getOrdinat(), y4 = p4.getOrdinat();
+	double d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 
 	// Get the x and y
-	float pre = (x1*y2 - y1*x2), post = (x3*y4 - y3*x4);
-	float x = ( pre * (x3 - x4) - (x1 - x2) * post ) / d;
-	float y = ( pre * (y3 - y4) - (y1 - y2) * post ) / d;
-	// Check if the x and y coordinates are within both lines
-	//~ if ( x < min(x1, x2) || x > max(x1, x2) ||
-	//~ x < min(x3, x4) || x > max(x3, x4) ) return NULL;
-	//~ if ( y < min(y1, y2) || y > max(y1, y2) ||
-	//~ y < min(y3, y4) || y > max(y3, y4) ) return NULL;
-	// Return the point of intersection
+	double pre = (x1*y2 - y1*x2), post = (x3*y4 - y3*x4);
+	double x = ( pre * (x3 - x4) - (x1 - x2) * post ) / d;
+	double y = ( pre * (y3 - y4) - (y1 - y2) * post ) / d;
+
 	Point *ret = new Point(x,y);
 	return ret;
 }
