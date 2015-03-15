@@ -3,7 +3,7 @@
 Peta3D::Peta3D() {
 	this->loadPeta2d("pulau/jawa.info");
 	this->loadPeta2d("pulau/kalimantan.info");
-	this->loadPeta2d("pulau/papua.info");
+	this->loadPeta2d("pulau/papuaRevA.info");
 	this->loadPeta2d("pulau/sulawesi.info");
 	this->loadPeta2d("pulau/sumatera.info");
 	
