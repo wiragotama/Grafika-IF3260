@@ -3,9 +3,9 @@
 Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlightedArea(Point(0,0)) {
 	this->loadPeta2d("pulau/jawa.info");
 	this->loadPeta2d("pulau/kalimantan.info");
-	// this->loadPeta2d("pulau/papuaRevA.info");
+	this->loadPeta2d("pulau/papuaRevB.info");
 	this->loadPeta2d("pulau/sulawesi.info");
-	this->loadPeta2d("pulau/sumatera.info");
+	this->loadPeta2d("pulau/sumatra.info");
 	Point p1(0,0);
 	Point p2(100,0);
 	Point p3(100,100);
