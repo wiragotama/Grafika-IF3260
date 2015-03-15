@@ -20,7 +20,7 @@ public:
 	void drawPetaClipping(Canvas* canvas);
 	void move(int, int);
 
-	void findTheShit();
+	void findTheShit(int* x_rect, int* y_rect);
 	void zoomOut(Canvas* canvas);
 	void zoomIn();
 	void moveHighlightedArea(int dx, int dy, Canvas *canvas);

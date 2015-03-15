@@ -4,8 +4,11 @@ Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlighted
 	this->loadPeta2d("pulau/jawa.info");
 	this->loadPeta2d("pulau/kalimantan.info");
 	this->loadPeta2d("pulau/papuaRevB.info");
-	this->loadPeta2d("pulau/sulawesi.info");
+	this->loadPeta2d("pulau/sulawesiRevA.info");
 	this->loadPeta2d("pulau/sumatra.info");
+	this->loadPeta2d("pulau/bali.info");
+	this->loadPeta2d("pulau/malukuUtara.info");
+	this->loadPeta2d("pulau/malukuSelatan.info");
 	Point p1(0,0);
 	Point p2(100,0);
 	Point p3(100,100);
@@ -21,22 +24,18 @@ Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlighted
 	relativePositionY = 0;
 }
 
-void Peta3D::findTheShit() {
-	const string nama_pulau[] = {"jawa", "kalimantan", "papua", "sulawesi", "sumatera"};
-
+void Peta3D::findTheShit(int* x_rect, int* y_rect) {
 	int counter = 0;
 	for (vector<Polygon>::iterator it = peta2d.begin(); it != peta2d.end(); it++, counter++) {
-		cout << nama_pulau[counter] << endl;
-
 		int x_min = it->getMostLeftPoint().getAbsis(),
 			x_max = it->getMostRightPoint().getAbsis(),
 			y_min = it->getMostUpperPoint().getOrdinat(),
 			y_max = it->getMostBottomPoint().getOrdinat();
 
-		cout << "(" << x_min << ", " << y_min << "), ";
-		cout << "(" << x_max << ", " << y_max << ")" << endl;
-
-		cout << endl;
+		x_rect[2*counter] = x_min - 10;
+		y_rect[2*counter] = y_min - 10;
+		x_rect[2*counter+1] = x_max + 10;
+		y_rect[2*counter+1] = y_max + 20;
 	}
 }
 
@@ -342,7 +341,7 @@ void Peta3D::move(int dx, int dy){
 void Peta3D::zoomOut(Canvas* canvas) {
 	int canvasX = canvas->get_vinfo().xres;
 	int canvasY = canvas->get_vinfo().yres;
-	
+
 	int highlightedAreaWidth = highlightedArea.getMaxX() - highlightedArea.getMinX();
 	int highlightedAreaHeighth = highlightedArea.getMaxY() - highlightedArea.getMinY();
 	Polygon newhighlightedArea = highlightedArea.resizing (1.10, highlightedAreaWidth/2, highlightedAreaHeighth/2);
@@ -377,7 +376,7 @@ void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
 	int canvasX = canvas->get_vinfo().xres;
 	int canvasY = canvas->get_vinfo().yres;
 	if (dx < 0) {
-		if (min_x + dx >= 0) { 
+		if (min_x + dx >= 0) {
 			highlightedArea.move(dx,0);
 		} else {
 			highlightedArea.move(-1*min_x,0);

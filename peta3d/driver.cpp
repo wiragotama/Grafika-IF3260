@@ -18,7 +18,7 @@ int main() {
 	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
 	
 	do {
-		petaIndonesia.drawPetaClipping(&canvas);
+		petaIndonesia.drawPeta3d(&canvas);
 		
 		canvas.flush();
 
