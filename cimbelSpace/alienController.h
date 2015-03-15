@@ -9,16 +9,16 @@ class AlienController {
 		AlienController();
 		~AlienController();
 		
-		bool crashDelete(Point objTopLeft, Point objBottomRight);
-		void addAlien(Point topLeftPosition);
-		void garbageCollector();
+		bool crashDelete(Point objTopLeft, Point objBottomRight); //menghapus objek polygon ketika ada tumbukan dengan objek lain
+		void addAlien(Point topLeftPosition); //menambahkan objek alien baru
+		void garbageCollector(); //melakukan bersih-bersih di memory untuk objek alien yang sudah melewati layar
 		void draw(Canvas *canvas, uint32_t color);
 		void move(int dx, int dy);
-		void deleteAlien(int idx);
-		Polygon getAlien(int idx);
-		int getSize();
+		void deleteAlien(int idx); //menghapus alien pada index ke-idx
+		Polygon getAlien(int idx); //mengembalikan alien pada index ke-idx
+		int getSize(); //mendapatkan jumlah alien yang ada
 		
-		vector<Polygon> getAliens();
+		vector<Polygon> getAliens(); 
 		
 	private :
 		vector<Polygon> aliens;

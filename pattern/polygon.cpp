@@ -65,6 +65,8 @@ void Polygon::init() {
 }
 
 int Polygon::getMaxY() const {
+//mendapatkan batas ordiat atas polygon
+
     // if (max_y == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
@@ -81,6 +83,8 @@ int Polygon::getMaxY() const {
 }
 
 int Polygon::getMinY() const {
+//mendapatkan batas ordinat bawah polygon
+
     // if (min_y == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
@@ -97,6 +101,8 @@ int Polygon::getMinY() const {
 }
 
 int Polygon::getMinX() const {
+//mendapatkan batas absis bawah polygon
+
     // if (min_x == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
@@ -113,6 +119,8 @@ int Polygon::getMinX() const {
 }
 
 int Polygon::getMaxX() const {
+//mendapatkan batas absis atas polygon
+
     // if (max_x == -1) { // haven't computed yet
         vector<Point>::const_iterator it = points.begin();
         // it must have at least a point right?
@@ -152,6 +160,8 @@ Pattern Polygon::getPattern() const {
 }
 
 void Polygon::printInfo() {
+//print data polygon ke layar
+
     printf("Polygon:");
     for (vector<Point>::iterator it = points.begin(); it != points.end(); it++) {
         printf(" ");
@@ -243,6 +253,8 @@ void Polygon::drawBackground(Canvas *canvas, uint32_t color) {
 }
 
 void Polygon::floodFill(Canvas* canvas, int x, int y, uint32_t color) {
+//flood fill dengan bantuan dirty bit -> untuk polygon yang berada diatas objek lain di layar
+
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
 	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
 
@@ -262,6 +274,8 @@ void Polygon::floodFill(Canvas* canvas, int x, int y, uint32_t color) {
 }
 
 void Polygon::floodFillBackground(Canvas* canvas, int x, int y, uint32_t color) {
+//flood fill tanpa bantuan dirty bit -> untuk polygon yang bertindak sebagai background
+
 	long location = canvas->getCursorLocation(x+topLeftPosition.getAbsis(), y+topLeftPosition.getOrdinat());
 	int dx = originFirePoint.getAbsis()-firePoint.getAbsis(), dy = originFirePoint.getOrdinat()-firePoint.getOrdinat();
 
@@ -286,6 +300,8 @@ void Polygon::move(int dx, int dy) {
 }
 
 void Polygon::loadPolygon(const char* filename) {
+//mengambil informasi titik-titik penyusun polygon
+
 	int numPoints, x, y;
 	FILE *matrix_file;
 	matrix_file = fopen(filename,"r");
@@ -307,6 +323,7 @@ void Polygon::loadPolygon(const char* filename) {
 }
 
 void Polygon::loadPattern(const char *filename) {
+//mengambil informasi pattern yang akan digunakan untuk filling polygon
 	pattern.loadFile(filename);
 }
 
@@ -466,11 +483,14 @@ Point Polygon::getBottomRightPoint() const {
 }
 
 Point Polygon::getSuitableFirePoint(Canvas* canvas) {
-	//left for winson
+//mencari firePoint yang cocok untuk polygon, dibantu dengan simulasi flood fill dari batas absis dan ordinat polygon
+
+	//not defined
 	return Point(0,0);
 }
 
 void Polygon::simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP) {
+//mensimulasikan flood fill
 
 	if ((x>=TLP.getAbsis() && x<=BRP.getAbsis()) && (y>=TLP.getOrdinat() && y<=BRP.getOrdinat()) &&
 		(matrix[y][x]==0)

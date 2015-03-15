@@ -11,6 +11,8 @@ AlienController::~AlienController() {
 
 
 bool AlienController::crashDelete(Point objTopLeft, Point objBottomRight) {
+//menghapus objek polygon ketika ada tumbukan dengan objek lain
+
 	bool crash = false;
 	for (int i=0; i<aliens.size();) {
 		Point tl_a = aliens[i].getTopLeftPosition();
@@ -28,12 +30,16 @@ bool AlienController::crashDelete(Point objTopLeft, Point objBottomRight) {
 	return cras}
 
 void AlienController::addAlien(Point topLeftPosition) {
+//menambahkan objek alien baru
+
 	Polygon temp(topLeftPosition);
 	temp.loadPolygon(alienInfo.c_str());
 	aliens.push_back(temp);
 }
 
 void AlienController::garbageCollector() {
+//melakukan bersih-bersih di memory untuk objek alien yang sudah melewati layar
+
 	int idx = 0;
 	while (idx < aliens.size()) {
 		if (aliens[idx].getTopLeftPosition().getOrdinat()+aliens[idx].getHeight()>=640) {
@@ -54,10 +60,14 @@ void AlienController::move(int dx, int dy) {
 }
 
 vector<Polygon> AlienController::getAliens() {
+//mengembalikan alien pada index ke-idx
+
 	return aliens;
 }
 
 void AlienController::deleteAlien(int idx) {
+//menghapus alien pada index ke-idx
+
 	aliens.erase(aliens.begin()+idx);
 }
 
@@ -66,5 +76,7 @@ Polygon AlienController::getAlien(int idx) {
 }
 
 int AlienController::getSize() {
+//mendapatkan jumlah alien yang ada
+
 	return aliens.size();
 }

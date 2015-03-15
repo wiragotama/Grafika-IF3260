@@ -20,10 +20,10 @@ class Polygon {
 		void draw(Canvas*, uint32_t color);
 		void drawBackground(Canvas*, uint32_t color);
 		void move(int dx, int dy);
-		void loadPolygon(const char* filename);
-		void loadPattern(const char *filename);
+		void loadPolygon(const char* filename); //mengambil informasi titik-titik penyusun polygon
+		void loadPattern(const char *filename); //mengambil informasi pattern yang akan digunakan untuk filling polygon
         Polygon rotate(double angle, int rx, int ry);
-        void printInfo();
+        void printInfo(); //print data polygon ke layar
 		void addPoint(Point P);
 
 		/* Setter & Getter */
@@ -42,10 +42,10 @@ class Polygon {
 		Point getMostBottomPoint() const;
 		Point getMostUpperPoint() const;
 		Point getBottomRightPoint() const;
-        int getMaxY() const;
-        int getMinY() const;
-        int getMinX() const;
-        int getMaxX() const;
+        int getMaxY() const; //mendapatkan batas ordinat atas polygon
+        int getMinY() const; //mendapatkan batas ordinat bawah polygon
+        int getMinX() const; //mendapatkan batas absis bawah polygon
+        int getMaxX() const; //mendapatkan batas absis atas polygon
 
 		int getWidth() const;
 		int getHeight() const;
@@ -55,20 +55,17 @@ class Polygon {
 		Pattern getPattern() const;
 		Polygon resizing(double scale, int pivot_x, int pivot_y);
 
-		Point getSuitableFirePoint(Canvas* canvas);
-		void simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP);
+		Point getSuitableFirePoint(Canvas* canvas); //mencari firePoint yang cocok untuk polygon, dibantu dengan simulasi flood fill dari batas absis dan ordinat polygon
+		void simulateFloodFill(int x, int y, uint32_t** matrix, Point TLP, Point BRP); //mensimulasikan flood fill
 		static bool sortTopLeft(const Polygon& lhs, const Polygon& rhs);
 		bool isPointInside(Point p) const;
 
 	private :
         void init();
 		uint32_t getColor(int x, int y);
-		void floodFill(Canvas*, int screen_x, int screen_y, uint32_t color);
-		void floodFillBackground(Canvas*, int screen_x, int screen_y, uint32_t color);
+		void floodFill(Canvas*, int screen_x, int screen_y, uint32_t color); //flood fill dengan bantuan dirty bit -> untuk polygon yang berada diatas objek lain di layar
+		void floodFillBackground(Canvas*, int screen_x, int screen_y, uint32_t color); //flood fill tanpa bantuan dirty bit -> untuk polygon yang bertindak sebagai background
 
-		/*
-		void floodFill(Canvas*, int screen_x, int screen_y);
-		void floodFillBackground(Canvas*, int screen_x, int screen_y);*/
 	private :
 		vector<Point> points;
 		Pattern pattern;
