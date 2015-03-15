@@ -24,6 +24,7 @@ public:
 	void zoomOut(Canvas* canvas);
 	void zoomIn();
 	void moveHighlightedArea(int dx, int dy, Canvas *canvas);
+	void setHighlightedArea(Polygon rekt);
 
 private:
 	void loadPeta2d(const char*);
