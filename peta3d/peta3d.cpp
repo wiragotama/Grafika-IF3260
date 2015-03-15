@@ -318,45 +318,44 @@ void Peta3D::zoomIn() {
 }
 
 void Peta3D::moveHighlightedArea(int dx, int dy, Canvas *canvas) {
-	highlightedArea.move(dx,dy);
-	// int min_x = highlightedArea.getMinX(), max_x = highlightedArea.getMaxX(),
-	// 	min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
-	// int canvasX = canvas->get_vinfo().xres;
-	// int canvasY = canvas->get_vinfo().yres;
+	int min_x = highlightedArea.getMinX(), max_x = highlightedArea.getMaxX(),
+		min_y = highlightedArea.getMinY(), max_y = highlightedArea.getMaxY();
+	int canvasX = canvas->get_vinfo().xres;
+	int canvasY = canvas->get_vinfo().yres;
 	// cout << min_x << " " << min_y << " " << max_x << " " << max_y << endl;
 	// cout << canvasX << " " << canvasY << endl;
 	// getchar();
-	// if (dx < 0) {
-	// 	dx = abs(dx);
-	// 	// cout << " m " << endl;
-	// 	if (min_x - dx >= 0) { 
-	// 		highlightedArea.move(dx,0);
-	// 	} else {
-	// 		highlightedArea.move(min_x,0);
-	// 	}		
-	// } else if (dx > 0) {
-	// 	// cout << " n " << endl;
-	// 	if (max_x + dx < canvasX) {
-	// 		highlightedArea.move(dx, 0);
-	// 	} else {
-	// 		highlightedArea.move(dx - (max_x + dx - canvasX), 0);
-	// 	}
-	// }
+	if (dx < 0) {
+		// dx = abs(dx);
+		// cout << " m " << endl;
+		if (min_x + dx >= 0) { 
+			highlightedArea.move(dx,0);
+		} else {
+			highlightedArea.move(-1*min_x,0);
+		}
+	} else if (dx > 0) {
+		// cout << " n " << endl;
+		if (max_x + dx < canvasX) {
+			highlightedArea.move(dx, 0);
+		} else {
+			highlightedArea.move(canvasX - max_x, 0);
+		}
+	}
 
-	// if (dy < 0) {
-	// 	dy = abs(dy);
-	// 	// cout << " o " << endl;
-	// 	if (min_y - dy >= 0) {
-	// 		highlightedArea.move(0,dy);
-	// 	} else {
-	// 	 	highlightedArea.move(0, min_y);
-	// 	}
-	// } else if (dy > 0) {
-	// 	// cout << " p " << endl;
-	// 	if (min_y + dy < canvasY) {
-	// 		highlightedArea.move(0, dy);
-	// 	} else {
-	// 		highlightedArea.move(0, dy - (max_y + dy - canvasX));
-	// 	}
-	// }
+	if (dy < 0) {
+		// dy = abs(dy);
+		// cout << " o " << endl;
+		if (min_y + dy >= 0) {
+			highlightedArea.move(0, dy);
+		} else {
+		 	highlightedArea.move(0, -1*min_y);
+		}
+	} else if (dy > 0) {
+		// cout << " p " << endl;
+		if (max_y + dy < canvasY) {
+			highlightedArea.move(0, dy);
+		} else {
+			highlightedArea.move(0, canvasY - max_y);
+		}
+	}
 }

@@ -18,7 +18,7 @@ int main() {
 	GraphicsIO::nonblock(GraphicsIO::NONBLOCK_ENABLE);
 	
 	do {
-		petaIndonesia.drawPeta3d(&canvas);
+		petaIndonesia.drawPetaClipping(&canvas);
 		
 		canvas.flush();
 
@@ -26,16 +26,16 @@ int main() {
 		if(i != 0){
 			c=fgetc(stdin);
 				if (c == 97) { //left gradient
-					petaIndonesia.moveHighlightedArea(-1,0,&canvas);
+					petaIndonesia.moveHighlightedArea(-20,0,&canvas);
 				}
 				else if (c == 119) { //up gradient
-					petaIndonesia.moveHighlightedArea(0,-1,&canvas);
+					petaIndonesia.moveHighlightedArea(0,-20,&canvas);
 				}
 				else if (c == 100) { //right gradient
-					petaIndonesia.moveHighlightedArea(1,0,&canvas);
+					petaIndonesia.moveHighlightedArea(20,0,&canvas);
 				}
 				else if (c == 115) { //down gradient
-					petaIndonesia.moveHighlightedArea(0,1,&canvas);
+					petaIndonesia.moveHighlightedArea(0,20,&canvas);
 				} else if (c == 45) { //zoomout //tanda (-)
 					petaIndonesia.zoomOut(&canvas);
 				} else if (c == 43) {
