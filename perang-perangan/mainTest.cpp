@@ -49,7 +49,6 @@ int main() {
 				while (idx!=animations.size()-1) {
 					if (animations[idx]->getFlag() == true) {
 						animations.erase(animations.begin()+idx);
-						//printf("hapus projectile\n");
 					}
 					else idx++;
 				}

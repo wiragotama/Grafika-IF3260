@@ -42,7 +42,6 @@ void Peta3D::findTheShit(int* x_rect, int* y_rect) {
 void Peta3D::drawPeta(Canvas* canvas) {
 	int x = canvas->get_vinfo().xres;
 	int y = canvas->get_vinfo().yres;
-	// printf("%d %d\n",x,y);
 	x--;y--;
 	Polygon tmp;
 	Point p1a(0,0);
@@ -77,7 +76,6 @@ void Peta3D::drawPeta3d(Canvas* canvas){
 void Peta3D::drawPetaClipping(Canvas *canvas) {
 	int x = canvas->get_vinfo().xres;
 	int y = canvas->get_vinfo().yres;
-	// printf("%d %d\n",x,y);
 	x--;y--;
 	Polygon tmp;
 	Point p1a(0,0);

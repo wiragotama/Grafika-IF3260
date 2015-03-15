@@ -231,13 +231,10 @@ void Peta::loadFile(const char *filename) {
 // Compute the bit code for a point (x, y) using the clip rectangle
 // bounded diagonally by (xmin, ymin), and (xmax, ymax)
 
-// ASSUME THAT xmax, xmin, ymax and ymin are global constants.
-
 OutCode Peta::ComputeOutCode(int x, int y, int xmin, int ymin, int xmax, int ymax) {
 	OutCode code;
 
 	code = INSIDE;          // initialised as being inside of clip window
- 	// printf("Code gw jing %d\n", code);
 
 	if (x < xmin)           // to the left of clip window
 		code |= LEFT;

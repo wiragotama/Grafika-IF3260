@@ -36,7 +36,6 @@ void AlienController::addAlien(Point topLeftPosition) {
 
 void AlienController::garbageCollector() {
 	int idx = 0;
-	//printf("aliens size %lu\n",aliens.size());
 	printf("aliens size %d\n",aliens.size());
 	while (idx < aliens.size()) {
 		if (aliens[idx].getTopLeftPosition().getOrdinat()+aliens[idx].getHeight()>=640) {
