@@ -6,8 +6,16 @@ Peta3D::Peta3D()  : INSIDE(0), LEFT(1), RIGHT(2), BOTTOM(4), TOP(8), highlighted
 	this->loadPeta2d("pulau/papuaRevB.info");
 	this->loadPeta2d("pulau/sulawesiRevA.info");
 	this->loadPeta2d("pulau/sumatra.info");
+<<<<<<< HEAD
+	this->loadPeta2d("pulau/bali.info");
+=======
 	this->loadPeta2d("pulau/malukuUtara.info");
+<<<<<<< HEAD
 	this->loadPeta2d("pulau/malukuSelatan.info");
+=======
+	this->loadPeta2d("pulau/malukuUtara.info");
+>>>>>>> b20de9e80c28e0d916365a6e32ab460cc0be8dad
+>>>>>>> 4d1bd2161f18508dad289afaac858c64e88f257c
 	Point p1(0,0);
 	Point p2(100,0);
 	Point p3(100,100);
