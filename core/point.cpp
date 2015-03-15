@@ -90,15 +90,15 @@ void Point::move(int dx, int dy) {
 int Point::orientation(Point p, Point q, Point r) {
     // See 10th slides from following link for derivation of the formula
     // http://www.dcs.gla.ac.uk/~pat/52233/slides/Geometry1x1.pdf
-    // printf("%s ", "masuk orientation");
-    // p.printInfo();q.printInfo();r.printInfo();
-    // printf("\n");
+    // compute the orientation of r viewed from pq
+
+    // PQ cross QR
     int val = (q.getOrdinat() - p.getOrdinat()) * (r.getAbsis() - q.getAbsis()) -
-              (q.getAbsis() - p.getAbsis()) * (r.getOrdinat() - q.getOrdinat()); // cross products
-    // cout << val << endl;getchar();
+              (q.getAbsis() - p.getAbsis()) * (r.getOrdinat() - q.getOrdinat());
+
     if (val == 0) return 0;  // colinear
- 
-    return (val > 0)? 1: 2; // clock or counterclock wise // jadi intinya terbalik 
+
+    return (val > 0)? 1: 2; // clock or counterclock wise
 }
 
 bool Point::pointGreaterThan(Point a, Point b){

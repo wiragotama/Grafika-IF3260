@@ -40,7 +40,7 @@ void Line::draw(Canvas *canvas, int thickness, uint32_t color) {
 		for(int i=y0-thickness+1; i<=y0+thickness-1; i++)
 			for(int j=x0-thickness+1; j<=x0+thickness-1; j++)
 				canvas->putPixelColor(j, i, color);
-		
+
 		if (x0==x1 && y0==y1) break;
 			e2 = 2*err;
 		if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
@@ -63,7 +63,7 @@ void Line::drawBackground(Canvas *canvas, int thickness, uint32_t color) {
 		for(int i=y0-thickness+1; i<=y0+thickness-1; i++)
 			for(int j=x0-thickness+1; j<=x0+thickness-1; j++)
 				canvas->putBackgroundPixel(j, i, color);
-		
+
 		if (x0==x1 && y0==y1) break;
 			e2 = 2*err;
 		if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
@@ -71,31 +71,31 @@ void Line::drawBackground(Canvas *canvas, int thickness, uint32_t color) {
 	}
 }
 
-void Line::drawCurve(Canvas *canvas, int thickness, uint32_t color) {  
-/* based on bezier curve bresenham */ 
+void Line::drawCurve(Canvas *canvas, int thickness, uint32_t color) {
+/* based on bezier curve bresenham */
 	int x0, x1, x2, y0, y1, y2;
-							
+
 	x0 = point[0].getAbsis();
 	y0 = point[0].getOrdinat();
-	
+
 	x2 = point[1].getAbsis();
 	y2 = point[1].getOrdinat();
-	
+
 	x1 = (x0+x2)/2;
 	x1 = (x0+x1)/2;
 	y1 = (y0+y2)/2;
 	y1 = (y1+y2)/2;
-	
-	
+
+
 	int sx = x2-x1, sy = y2-y1;
 	long xx = x0-x1, yy = y0-y1, xy;         /* relative values for checks */
 	double dx, dy, err, cur = xx*sy-yy*sx;                    /* curvature */
 
 	assert(xx*sx <= 0 && yy*sy <= 0);  /* sign of gradient must not change */
 
-	if (sx*(long)sx+sy*(long)sy > xx*xx+yy*yy) { /* begin with longer part */ 
+	if (sx*(long)sx+sy*(long)sy > xx*xx+yy*yy) { /* begin with longer part */
 		x2 = x0; x0 = sx+x1; y2 = y0; y0 = sy+y1; cur = -cur;  /* swap P0 P2 */
-	}  
+	}
 	if (cur != 0) {                                    /* no straight line */
 		xx += sx; xx *= sx = x0 < x2 ? 1 : -1;           /* x step direction */
 		yy += sy; yy *= sy = y0 < y2 ? 1 : -1;           /* y step direction */
@@ -105,8 +105,8 @@ void Line::drawCurve(Canvas *canvas, int thickness, uint32_t color) {
 		}
 		dx = 4.0*sy*cur*(x1-x0)+xx-xy;             /* differences 1st degree */
 		dy = 4.0*sx*cur*(y0-y1)+yy-xy;
-		xx += xx; yy += yy; err = dx+dy+xy;                /* error 1st step */    
-		do {                              
+		xx += xx; yy += yy; err = dx+dy+xy;                /* error 1st step */
+		do {
 			//setPixel(x0,y0);                                     /* plot curve */
 			for(int i=y0-thickness+1; i<=y0+thickness-1; i++)
 				for(int j=x0-thickness+1; j<=x0+thickness-1; j++)
@@ -122,31 +122,31 @@ void Line::drawCurve(Canvas *canvas, int thickness, uint32_t color) {
 	}
 }
 
-void Line::drawCurveBackground(Canvas *canvas, int thickness, uint32_t color) {  
-/* based on bezier curve bresenham */ 
+void Line::drawCurveBackground(Canvas *canvas, int thickness, uint32_t color) {
+/* based on bezier curve bresenham */
 	int x0, x1, x2, y0, y1, y2;
-							
+
 	x0 = point[0].getAbsis();
 	y0 = point[0].getOrdinat();
-	
+
 	x2 = point[1].getAbsis();
 	y2 = point[1].getOrdinat();
-	
+
 	x1 = (x0+x2)/2;
 	x1 = (x0+x1)/2;
 	y1 = (y0+y2)/2;
 	y1 = (y1+y2)/2;
-	
-	
+
+
 	int sx = x2-x1, sy = y2-y1;
 	long xx = x0-x1, yy = y0-y1, xy;         /* relative values for checks */
 	double dx, dy, err, cur = xx*sy-yy*sx;                    /* curvature */
 
 	assert(xx*sx <= 0 && yy*sy <= 0);  /* sign of gradient must not change */
 
-	if (sx*(long)sx+sy*(long)sy > xx*xx+yy*yy) { /* begin with longer part */ 
+	if (sx*(long)sx+sy*(long)sy > xx*xx+yy*yy) { /* begin with longer part */
 		x2 = x0; x0 = sx+x1; y2 = y0; y0 = sy+y1; cur = -cur;  /* swap P0 P2 */
-	}  
+	}
 	if (cur != 0) {                                    /* no straight line */
 		xx += sx; xx *= sx = x0 < x2 ? 1 : -1;           /* x step direction */
 		yy += sy; yy *= sy = y0 < y2 ? 1 : -1;           /* y step direction */
@@ -156,8 +156,8 @@ void Line::drawCurveBackground(Canvas *canvas, int thickness, uint32_t color) {
 		}
 		dx = 4.0*sy*cur*(x1-x0)+xx-xy;             /* differences 1st degree */
 		dy = 4.0*sx*cur*(y0-y1)+yy-xy;
-		xx += xx; yy += yy; err = dx+dy+xy;                /* error 1st step */    
-		do {                              
+		xx += xx; yy += yy; err = dx+dy+xy;                /* error 1st step */
+		do {
 			//setPixel(x0,y0);                                     /* plot curve */
 			for(int i=y0-thickness+1; i<=y0+thickness-1; i++)
 				for(int j=x0-thickness+1; j<=x0+thickness-1; j++)
@@ -198,13 +198,15 @@ void Line::move(int dx, int dy) {
 	point[1].move(dx, dy);
 }
 
-bool Line::onSegment(Point q){
+bool Line::onSegmentIfColinear(Point q){
 	Point p = this->point[0];
 	Point r = this->point[1];
-    if (q.getAbsis() <= max(p.getAbsis(), r.getAbsis()) && q.getAbsis() >= min(p.getAbsis(), r.getAbsis()) &&
-        q.getOrdinat() <= max(p.getOrdinat(), r.getOrdinat()) && q.getOrdinat() >= min(p.getOrdinat(), r.getOrdinat()))
+    if (q.getAbsis() <= max(p.getAbsis(), r.getAbsis()) &&
+		q.getAbsis() >= min(p.getAbsis(), r.getAbsis()) &&
+		q.getOrdinat() <= max(p.getOrdinat(), r.getOrdinat()) &&
+		q.getOrdinat() >= min(p.getOrdinat(), r.getOrdinat())	)
        return true;
- 
+
     return false;
 }
 
@@ -219,24 +221,11 @@ bool Line::isIntersectWith(Line l2) {
     int o2 = Point::orientation(p1, q1, q2);
     int o3 = Point::orientation(p2, q2, p1);
     int o4 = Point::orientation(p2, q2, q1);
- 
+
     // General case
     if (o1 != o2 && o3 != o4)
         return true;
- 
-    // Special Cases
-    // p1, q1 and p2 are colinear and p2 lies on segment p1q1
-    if (o1 == 0 && this->onSegment(p2)) return true;
- 
-    // p1, q1 and p2 are colinear and q2 lies on segment p1q1
-    if (o2 == 0 && this->onSegment(q2)) return true;
- 
-    // p2, q2 and p1 are colinear and p1 lies on segment p2q2
-    if (o3 == 0 && l2.onSegment(p1)) return true;
- 
-     // p2, q2 and q1 are colinear and q1 lies on segment p2q2
-    if (o4 == 0 && l2.onSegment(q1)) return true;
- 
+
     return false; // Doesn't fall in any of the above cases
 }
 
@@ -254,9 +243,9 @@ Point* Line::getIntersectionPointWith(Line line) {
 	float y1 = p1.getOrdinat(), y2 = p2.getOrdinat(), y3 = p3.getOrdinat(), y4 = p4.getOrdinat();
 	float d = (x1 - x2) * (y3 - y4) - (y1 - y2) * (x3 - x4);
 	// If d is zero, there is no intersection
-	//~ if (d == 0) 
+	//~ if (d == 0)
 		//~ return NULL;
-	 
+
 	// Get the x and y
 	float pre = (x1*y2 - y1*x2), post = (x3*y4 - y3*x4);
 	float x = ( pre * (x3 - x4) - (x1 - x2) * post ) / d;

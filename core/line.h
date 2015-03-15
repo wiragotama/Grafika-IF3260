@@ -38,12 +38,12 @@ class Line {
 		int getDifXInVector() const;
 		int getDifYInVector() const;
 		double getLength() const;
-		
+
 		static double angle(Point a, Point o, Point b);
 	private :
 		bool isIntersectWith(Line);
-		bool onSegment(Point);
-			
+		bool onSegmentIfColinear(Point);
+
 		Point point[2];
 };
 
