@@ -438,7 +438,7 @@ bool Polygon::sortTopLeft(const Polygon& lhs, const Polygon& rhs) {
 	Point TLP = Point(lhs.getMinX(), lhs.getMinY());
 	Point TLP2 = Point(rhs.getMinX(), rhs.getMinY());
 	
-	if (TLP.getAbsis() == TLP2.getAbsis()) {
+	if (TLP.getOrdinat() != TLP2.getOrdinat()) {
 		return (TLP.getOrdinat() < TLP2.getOrdinat());
 	}
 	else return (TLP.getAbsis() < TLP2.getAbsis());
@@ -477,7 +477,7 @@ bool Polygon::isPointInside(Point point) const {
 			sum += temp;
 			// printf("%s\n", "ccw");
 		} else {
-			temp -= Line::angle(edges[p], point, edges[p+1]);
+			temp = Line::angle(edges[p], point, edges[p+1]);
 			sum -= temp;
 			// printf("%s\n", "cw");
 		}
