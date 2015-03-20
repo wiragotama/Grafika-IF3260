@@ -1,8 +1,8 @@
 #ifndef POINT3D_H
 #define POINT3D_H
 
-#include <cstdio>
 #include "globals.h"
+#include <cstdio>
 
 class Point3D {
 	public :
