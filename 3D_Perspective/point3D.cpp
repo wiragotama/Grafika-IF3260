@@ -18,7 +18,7 @@ Point3D::Point3D(const Point3D& p) { //copy constructor
 	this->z = p.getZ();
 }
 
-Point3D::Point3D& operator= (const Point3D& p) { //assignment
+Point3D& Point3D::operator= (const Point3D& p) { //assignment
 	this->x = p.getX();
 	this->y = p.getY();
 	this->z = p.getZ();

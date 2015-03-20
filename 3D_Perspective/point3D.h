@@ -1,6 +1,11 @@
 #ifndef POINT3D_H
 #define POINT3D_H
 
+#include <iostream>
+#include <cstdio>
+#include <vector>
+using namespace std;
+
 class Point3D {
 	public :
 		Point3D(); //constructor default tanpa parameter
