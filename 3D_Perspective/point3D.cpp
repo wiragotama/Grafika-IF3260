@@ -1,5 +1,7 @@
 #include "point3D.h"
 
+const double GRAFIKA_EPSILON = 1.0e-6;
+
 Point3D::Point3D() { //constructor default tanpa parameter
 	x = 0;
 	y = 0;
@@ -18,10 +20,12 @@ Point3D::Point3D(const Point3D& p) { //copy constructor
 	this->z = p.getZ();
 }
 
-Point3D::Point3D& operator= (const Point3D& p) { //assignment
-	this->x = p.getX();
-	this->y = p.getY();
-	this->z = p.getZ();
+Point3D& Point3D::operator= (const Point3D& p) { //assignment
+	if (this != &p) {
+		this->x = p.getX();
+		this->y = p.getY();
+		this->z = p.getZ();
+	}
 	return *this;
 }
 
@@ -53,9 +57,10 @@ void Point3D::setZ(double z) {
 }
 
 void Point3D::printInfo() {
-	printf("%.2lf %.2lf %.2lf\n", x, y, z);
+	printf("(%.2lf, %.2lf, %.2lf)\n", x, y, z);
 }
 
-bool Point3D::isEqual(Point3D p) const {
-	return (x==p.getX() && y==p.getY() && z==p.getZ());
+bool Point3D::isEqual(const Point3D& p) const {
+	return GRAFIKA_isClose(x, p.getX()) && GRAFIKA_isClose(y, p.getY())
+		&& GRAFIKA_isClose(z, p.getZ());
 }

@@ -21,13 +21,14 @@ bool AlienController::crashDelete(Point objTopLeft, Point objBottomRight) {
 		Point tl_c = Point( std::max(tl_a.getAbsis(),objTopLeft.getAbsis()), std::max(tl_a.getOrdinat(),objTopLeft.getOrdinat()) );
 		Point br_c = Point( std::min(br_a.getAbsis(),objBottomRight.getAbsis()), std::min(br_a.getOrdinat(),objBottomRight.getOrdinat()) );
 
-		if (!(br_c.getAbsis() < tl_c.getAbsis() || br_c.getOrdinat() < tl_c.getOrdinat())) {	
+		if (!(br_c.getAbsis() < tl_c.getAbsis() || br_c.getOrdinat() < tl_c.getOrdinat())) {
 			crash = true;
 			aliens.erase(aliens.begin()+i);
 		}
 		else i++;
 	}
-	return cras}
+	return crash;
+}
 
 void AlienController::addAlien(Point topLeftPosition) {
 //menambahkan objek alien baru
