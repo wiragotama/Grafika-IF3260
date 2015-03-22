@@ -1,24 +1,7 @@
 #include "polygon.h"
 
 Polygon::Polygon(vector<Point> nodes){
-	color = NULL;
 	this->nodes = nodes;
-}
-
-Polygon::~Polygon(){
-	if(color != NULL)
-		delete color;
-}
-
-Polygon::Polygon(const Polygon& poly){
-	nodes = poly.nodes;
-	*color = *(poly.color);
-}
-
-Polygon& Polygon::operator=(const Polygon& ply){
-	nodes = ply.nodes;
-	*color = *(ply.color);
-	return *this;
 }
 
 vector<Point> Polygon::getPoints() const{
@@ -34,4 +17,11 @@ vector<Line> Polygon::getLines() const {
 		polygonLines.push_back( Line(tempPoints[i], tempPoints[i+1]) );
 	}
 	return polygonLines;
+}
+
+void Polygon::draw(Canvas *canvas, uint32_t color){
+	vector<Line> lines = getLines();
+	for(int i=0; i<(int)lines.size(); i++){
+		lines[i].draw(canvas, 1, color);
+	}
 }

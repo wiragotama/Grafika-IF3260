@@ -58,7 +58,7 @@ void Canvas::clearScreen() {
 
 void Canvas::flush() {
 	memcpy(fbp, backbuffer, screensize);
-	memset(backbuffer,0,screensize);
+	memset(backbuffer,0, screensize);
 }
 
 struct fb_fix_screeninfo Canvas::get_finfo() {

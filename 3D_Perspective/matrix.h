@@ -25,7 +25,7 @@ class Matrix {
 	static Matrix get3DRotationX(double radians);
 	static Matrix get3DRotationY(double radians);
 
-	static const int DIMENSION_SET = 1, NO_SUCH_ELEMENT = 2, CANT_MULTIPLY;
+	static const int DIMENSION_SET = 1, NO_SUCH_ELEMENT = 2, CANT_MULTIPLY = 3;
 
 	private:
 	void _setDimension(int row, int col);

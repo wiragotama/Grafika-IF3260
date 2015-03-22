@@ -19,7 +19,10 @@ class Camera3D {
 
 	void setAzimuth(double);
 	void setPolar(double);
+	double getAzimuth();
+	double getPolar();
 	void recalculate_axis();
+	void printAxes();
 
 	private:
 	Point3D axes[CAMERA3D_NUM_AXES];

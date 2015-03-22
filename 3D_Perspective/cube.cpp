@@ -32,9 +32,9 @@ void Cube::_init(double side) {
 
 	vertexes.resize(8, Point3D());
 	for (int i = 0; i < 8; i++) {
-		vertexes[i].setX( -1 * ((i >> 2) & 1) * half );
-		vertexes[i].setY( -1 * ((i >> 1) & 1) * half );
-		vertexes[i].setZ( -1 * (   i     & 1) * half );
+		vertexes[i].setX( (((i >> 2) & 1) ? -1 : 1) * half );
+		vertexes[i].setY( (((i >> 1) & 1) ? -1 : 1) * half );
+		vertexes[i].setZ( ((   i     & 1) ? -1 : 1) * half );
 	}
 }
 
@@ -54,38 +54,52 @@ std::vector<Point3D> Cube::getSide(int idx) {
 
 	switch (idx) {
 	case 0:
-		for (int i = 0; i < 4; i++) {
-			result[i] = vertexes[i << 1];
-		}
+		result[0] = vertexes[0b000];
+		result[1] = vertexes[0b100];
+		result[2] = vertexes[0b110];
+		result[3] = vertexes[0b010];
 		break;
 	case 1:
-		for (int i = 0; i < 4; i++) {
-			result[i] = vertexes[1 | i << 1];
-		}
+		result[0] = vertexes[0b001];
+		result[1] = vertexes[0b101];
+		result[2] = vertexes[0b111];
+		result[3] = vertexes[0b011];
 		break;
 	case 2:
-		for (int i = 0; i < 4; i++) {
-			result[i] = vertexes[i];
-		}
+		result[0] = vertexes[0b000];
+		result[1] = vertexes[0b010];
+		result[2] = vertexes[0b011];
+		result[3] = vertexes[0b001];
 		break;
 	case 3:
-		for (int i = 0; i < 4; i++) {
-			result[i] = vertexes[4 | i];
-		}
+		result[0] = vertexes[0b100];
+		result[1] = vertexes[0b110];
+		result[2] = vertexes[0b111];
+		result[3] = vertexes[0b101];
 		break;
 	case 4:
-		for (int i = 0; i < 4; i++) {
-			result[i] = vertexes[ ((i & 2) << 1) | (i & 1) ];
-		}
+		result[0] = vertexes[0b000];
+		result[1] = vertexes[0b100];
+		result[2] = vertexes[0b101];
+		result[3] = vertexes[0b001];
 		break;
 	case 5:
-		for (int i = 0; i < 4; i++) {
-			result[i] = vertexes[ 2 | ((i & 2) << 1) | (i & 1) ];
-		}
+		result[0] = vertexes[0b010];
+		result[1] = vertexes[0b110];
+		result[2] = vertexes[0b111];
+		result[3] = vertexes[0b011];
 		break;
 	}
 
 	return result;
+}
+
+void Cube::printInfo() {
+	printf("Cube:\n");
+	for (int i = 0; i < 8; i++) {
+		vertexes[i].printInfo();
+		printf("\n");
+	}
 }
 
 std::vector< std::pair<double, std::vector<Point3D> > > Cube::project_sides(const Camera3D& camera) {

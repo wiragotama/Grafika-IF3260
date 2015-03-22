@@ -22,8 +22,8 @@ void Camera3D::recalculate_axis() {
 	Matrix T(3, 4);
 	for (int i = 0; i < 3; i++) {
 		T.setElement(i, 0, standard_axes[i].getX());
-		T.setElement(i, 0, standard_axes[i].getY());
-		T.setElement(i, 0, standard_axes[i].getZ());
+		T.setElement(i, 1, standard_axes[i].getY());
+		T.setElement(i, 2, standard_axes[i].getZ());
 		T.setElement(i, 3, 1);
 	}
 
@@ -34,14 +34,25 @@ void Camera3D::recalculate_axis() {
 		axes[i].setY(Tr.getElement(i, 1));
 		axes[i].setZ(Tr.getElement(i, 2));
 	}
+	
 }
 
 void Camera3D::setAzimuth(double radians) {
 	azimuth = radians;
+	recalculate_axis();
 }
 
 void Camera3D::setPolar(double radians) {
 	polar = radians;
+	recalculate_axis();
+}
+
+double Camera3D::getAzimuth(){
+	return azimuth;
+}
+
+double Camera3D::getPolar(){
+	return polar;
 }
 
 std::vector<Point3D> Camera3D::project_points(const std::vector<Point3D>& points,
@@ -89,4 +100,13 @@ std::vector<Point3D> Camera3D::project_points(const std::vector<Point3D>& points
 	midPoint_distance /= P.getRow();
 
 	return result;
+}
+
+void Camera3D::printAxes(){
+	printf("Axes: ");
+	for(int i=0; i<CAMERA3D_NUM_AXES; i++){
+		Point3D p = axes[i];
+		printf("(%lf %lf %lf) ", p.getX(), p.getY(), p.getZ());
+	}
+	printf("\n");
 }

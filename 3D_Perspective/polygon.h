@@ -12,16 +12,14 @@ using namespace std;
 class Polygon {
 	public:
 		Polygon(vector<Point> nodes);
-		~Polygon();
-		Polygon(const Polygon& poly);
-		Polygon& operator=(const Polygon& ply);
 		
 		vector<Point> getPoints() const;
-		vector<Line> getLines() const; 
+		vector<Line> getLines() const;
+		
+		void draw(Canvas *canvas, uint32_t color);
 		
 	private:
 		vector<Point> nodes;
-		uint32_t* color;
 };
 
 #endif

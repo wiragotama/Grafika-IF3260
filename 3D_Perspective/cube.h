@@ -18,6 +18,8 @@ class Cube {
 		std::vector<Point3D> getSide(int i);
 		std::vector< std::pair<double, std::vector<Point3D> > >
 			project_sides(const Camera3D& );
+			
+		void printInfo();
 
 		static const int NO_SUCH_SIDE = 1;
 

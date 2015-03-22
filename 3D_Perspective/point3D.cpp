@@ -1,7 +1,5 @@
 #include "point3D.h"
 
-const double GRAFIKA_EPSILON = 1.0e-6;
-
 Point3D::Point3D() { //constructor default tanpa parameter
 	x = 0;
 	y = 0;
