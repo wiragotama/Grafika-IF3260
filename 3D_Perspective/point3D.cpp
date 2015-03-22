@@ -32,6 +32,16 @@ Point3D& Point3D::operator= (const Point3D& p) { //assignment
 Point3D::~Point3D() { //destructor
 }
 
+bool Point3D::operator< (const Point3D& other) const {
+	if (GRAFIKA_isClose(x, other.x))
+		if (GRAFIKA_isClose(y, other.y))
+			return z < other.z;
+		else
+			return y < other.y;
+	else
+		return x < other.x;
+}
+
 double Point3D::getX() const {
 	return x;
 }

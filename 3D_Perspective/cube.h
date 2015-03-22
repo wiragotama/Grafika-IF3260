@@ -1,25 +1,30 @@
 #ifndef CUBE_H
 #define CUBE_H
 
-#include "line3D.h"
-#include <iostream>
+#include "camera3d.h"
+#include "point3D.h"
+#include <algorithm>
 #include <vector>
-using namespace std;
 
-class Cube{
+class Cube {
+	/* The cube is from z+ axis with x+ to the right and y+ to the top */
 	public:
 		Cube();
-		Cube(vector<Line3D> sisi);
+		Cube(double side);
 		Cube(const Cube& kubus);
 		virtual Cube& operator= (const Cube& kubus);
 		~Cube();
-		
-		vector<Point3D> getSide(int i);
-		void setSide(int i,Line3D satu_sisi);
-		vector<Line3D> getAllSide() const;
-	
+
+		std::vector<Point3D> getSide(int i);
+		std::vector< std::pair<double, std::vector<Point3D> > >
+			project_sides(const Camera3D& );
+
+		static const int NO_SUCH_SIDE = 1;
+
 	private:
-		vector<Line3D> edges;
+		void _init(double side);
+
+		std::vector<Point3D> vertexes;
 };
 
 #endif

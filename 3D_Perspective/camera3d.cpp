@@ -44,7 +44,9 @@ void Camera3D::setPolar(double radians) {
 	polar = radians;
 }
 
-std::vector<Point3D> Camera3D::project_points(const std::vector<Point3D>& points) {
+std::vector<Point3D> Camera3D::project_points(const std::vector<Point3D>& points,
+	double& midPoint_distance) const
+{
 	Matrix T(3);
 	for (int i = 0; i < 3; i++) {
 		T.setElement(0, i, axes[i].getX() );
@@ -72,6 +74,7 @@ std::vector<Point3D> Camera3D::project_points(const std::vector<Point3D>& points
 
 	double base_distance = convergent_point_distance - plane_distance;
 	int idx = 0;
+	midPoint_distance = 0;
 	for (std::vector<Point3D>::const_iterator it_point = t_points.begin();
 		it_point != t_points.end(); it_point++)
 	{
@@ -80,8 +83,10 @@ std::vector<Point3D> Camera3D::project_points(const std::vector<Point3D>& points
 		result[idx].setY( (convergent_point_distance - it_point->getZ())/
 			base_distance * it_point->getY() );
 		result[idx].setZ( plane_distance );
+		midPoint_distance += it_point->getZ();
 		idx++;
 	}
+	midPoint_distance /= P.getRow();
 
 	return result;
 }
