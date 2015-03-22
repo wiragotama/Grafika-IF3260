@@ -23,6 +23,8 @@ class Point3D {
 
         bool isEqual(const Point3D& p) const;
 
+        bool operator< (const Point3D&) const;
+
 	private :
 		double x;
 		double y;

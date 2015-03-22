@@ -15,7 +15,7 @@ class Camera3D {
 	Camera3D& operator= (const Camera3D&);
 	~Camera3D();
 
-	std::vector<Point3D> project_points(const std::vector<Point3D>&);
+	std::vector<Point3D> project_points(const std::vector<Point3D>&, double&) const;
 
 	void setAzimuth(double);
 	void setPolar(double);
