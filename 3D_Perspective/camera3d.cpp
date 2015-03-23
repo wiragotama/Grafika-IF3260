@@ -6,6 +6,8 @@ const Point3D Camera3D::standard_axes[CAMERA3D_NUM_AXES] = { Point3D(1, 0, 0),
 Camera3D::Camera3D() {
 	plane_distance = PLANE_DISTANCE_FROM_ORIGIN;
 	convergent_point_distance = 10;
+    azimuth = 0;
+    polar = M_PI/2;
 
 	for (int i = 0; i < CAMERA3D_NUM_AXES; i++) {
 		axes[i] = standard_axes[i];

@@ -14,14 +14,14 @@ using namespace std;
 int main() {
 	Cube kubus;
 	Camera3D camera3d;
-	
+
 	Canvas canvas;
 	GraphicsIO graphicsIO;
 	char c;
-	
+
 	do {
-		vector<Polygon> cubeSurfaces; 
-		
+		vector<Polygon> cubeSurfaces;
+
 		vector< std::pair<double, std::vector<Point3D> > > cube2d = kubus.project_sides(camera3d);
 		for(int i=0; i<cube2d.size(); i++){
 			//printf("%lf\n", cube2d[i].first );
@@ -33,29 +33,29 @@ int main() {
 			}
 			cubeSurfaces.push_back(Polygon(points2d));
 			//printf("\n\n");
-			
+
 		}
-		
+
 		for(int i=0; i<(int)cubeSurfaces.size(); i++){
 			cubeSurfaces[i].draw(&canvas, canvas.pixel_color(255,255,255));
 		}
-		
-		canvas.flush();		
-		
+
+		canvas.flush();
+
 		c = graphicsIO.getch();
-		
+
 		if (c == 97) { //left arrow
 			double radian = camera3d.getAzimuth();
 			radian += (M_PI)/100;
 			if(radian >= M_PI*2)
 				radian-= M_PI*2;
 			camera3d.setAzimuth(radian);
-		} 
+		}
 		else if (c == 119) { //up arrow
 			double radian = camera3d.getPolar();
 			radian += (M_PI)/100;
 			if(radian >= M_PI)
-				radian-= M_PI;
+				radian = M_PI;
 			camera3d.setPolar(radian);
 		}
 		else if (c == 100) { //right arrow
@@ -69,13 +69,13 @@ int main() {
 			double radian = camera3d.getPolar();
 			radian -= (M_PI)/100;
 			if(radian < 0.0)
-				radian+= M_PI;
+				radian = 0;
 			camera3d.setPolar(radian);
 		}
-		
+
 		//camera3d.printAxes();
-		
+
 	} while (c != '\n');
-	
+
 	return 0;
 }
