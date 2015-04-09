@@ -9,6 +9,7 @@ TriangleController::TriangleController(Canvas* canvas) : MouseListener(canvas) {
 TriangleController::TriangleController(const TriangleController& that) : MouseListener (canvas) {
 	// this actually don't make sense, but we'll let it slide for now
 	state = that.state;
+	canvas = that.canvas;
 	point[0] = that.point[0];
 	point[1] = that.point[1];
 	point[2] = that.point[2];
@@ -18,6 +19,7 @@ TriangleController& TriangleController::operator= (const TriangleController& tha
 	// this actually don't make sense, but we'll let it slide for now
 	if (this != &that) {
 		state = that.state;
+		canvas = that.canvas;
 		point[0] = that.point[0];
 		point[1] = that.point[1];
 		point[2] = that.point[2];
@@ -34,12 +36,6 @@ void TriangleController::leftDown(int x, int y) {
 
 void TriangleController::leftUp(int x, int y) {
 	state++;
-	// rectangle creation goes here..
-
-	if (poly != NULL) {
-		poly->drawPersistent(canvas, canvas->pixel_color(255,255,0));
-		// canvas->flushPersistent();
-	}
 }
 
 void TriangleController::movement(int x, int y) {

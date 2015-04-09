@@ -3,6 +3,7 @@
 #include "mouse.h"
 #include "rectangle_controller.h"
 #include "triangle_controller.h"
+#include "circle_controller.h"
 #include "../core/graphicsio.h"
 int main() {
     Canvas canvas;
@@ -13,6 +14,7 @@ int main() {
 
 	RectangleController* rectangleController = new RectangleController(&canvas);
     TriangleController* triangleController = new TriangleController(&canvas);
+    CircleController* circleController = new CircleController(&canvas);
     MouseListener* mouseListener = new MouseListener(&canvas);
     mouse.registerListener(mouseListener);
     mouse.startListening();
@@ -32,6 +34,11 @@ int main() {
             getchar();
             mouse.stopListening();
             mouse.registerListener(triangleController);
+            mouse.startListening();
+        } else if (c == 51) {
+            getchar();
+            mouse.stopListening();
+            mouse.registerListener(circleController);
             mouse.startListening();
         }
         

@@ -24,6 +24,7 @@ RectangleController& RectangleController::operator= (const RectangleController& 
 		width = that.width;
 		height = that.height;
 		dragged= that.dragged;
+		canvas = that.canvas;
 	}
 	return *this;
 }
