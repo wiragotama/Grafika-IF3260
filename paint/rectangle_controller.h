@@ -5,7 +5,7 @@
 #include <iostream>
 #include "../3D_Perspective/canvas.h"
 #include "../3D_Perspective/line.h"
-
+#include "../3D_Perspective/polygon.h"
 class RectangleController : public MouseListener {
 	public:
 	RectangleController(Canvas*);

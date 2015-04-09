@@ -17,10 +17,13 @@ int main() {
 	// wait for enter
 	char c; 
     do {
-        c = getchar();
+        c = fgetc(stdin);
+        printf("%d\n", c == 49); //49 kode ascii untuk 1
+        int x = mouse.getX();
+        int y = mouse.getY();
+        // canvas.flush();
+        if (c == '\n') mouse.stopListening();
     } while (c!='\n');
-
-	mouse.stopListening();
 
 	/*
     int fd;

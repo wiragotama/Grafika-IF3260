@@ -30,6 +30,7 @@ RectangleController& RectangleController::operator= (const RectangleController& 
 RectangleController::~RectangleController() {}
 
 void RectangleController::leftDown(int x, int y) {
+	// MouseListener::leftDown(x,y);
 	dragged = true;
 	leftX = x;
 	topY = y;

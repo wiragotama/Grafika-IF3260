@@ -3,6 +3,7 @@
 #include "../3D_Perspective/canvas.h"
 #include "../3D_Perspective/point.h"
 #include "../3D_Perspective/line.h"
+#include "../3D_Perspective/polygon.h"
 class MouseListener {
 	public:
 
