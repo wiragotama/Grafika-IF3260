@@ -3,16 +3,16 @@
 GradientPalette::GradientPalette(int x_offset, int y_offset) {
 	this->x_offset = x_offset;
 	this->y_offset = y_offset;
-	cursor_x = 0;
-	cursor_y = 0;
+	cursor_x = 255;
+	cursor_y = 255;
 }
 
 GradientPalette::~GradientPalette() {}
 
 void GradientPalette::drawColorGradient(uint32_t color, Canvas *canvas) {
 	int x, y;
-	uint8_t rr = (color >> canvas->get_vinfo().red.offset) & 0xFF, 
-	    gg = (color >> canvas->get_vinfo().green.offset) & 0xFF, 
+	uint8_t rr = (color >> canvas->get_vinfo().red.offset) & 0xFF,
+	    gg = (color >> canvas->get_vinfo().green.offset) & 0xFF,
 		bb = (color >> canvas->get_vinfo().blue.offset) & 0xFF;
 	uint8_t r, g, b;
 	for (y = 0; y < GRADIENTPALETTE_HEIGHT; y++) {
@@ -28,8 +28,8 @@ void GradientPalette::drawColorGradient(uint32_t color, Canvas *canvas) {
 
 void GradientPalette::drawColorGradientPersistent(uint32_t color, Canvas *canvas) {
 	int x, y;
-	uint8_t rr = (color >> canvas->get_vinfo().red.offset) & 0xFF, 
-	    gg = (color >> canvas->get_vinfo().green.offset) & 0xFF, 
+	uint8_t rr = (color >> canvas->get_vinfo().red.offset) & 0xFF,
+	    gg = (color >> canvas->get_vinfo().green.offset) & 0xFF,
 		bb = (color >> canvas->get_vinfo().blue.offset) & 0xFF;
 	uint8_t r, g, b;
 	for (y = 0; y < GRADIENTPALETTE_HEIGHT; y++) {

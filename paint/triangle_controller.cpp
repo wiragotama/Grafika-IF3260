@@ -9,6 +9,7 @@ TriangleController::TriangleController(Canvas* canvas) : MouseListener(canvas) {
 TriangleController::TriangleController(const TriangleController& that) : MouseListener (canvas) {
 	// this actually don't make sense, but we'll let it slide for now
 	state = that.state;
+	canvas = that.canvas;
 	point[0] = that.point[0];
 	point[1] = that.point[1];
 	point[2] = that.point[2];
@@ -18,6 +19,7 @@ TriangleController& TriangleController::operator= (const TriangleController& tha
 	// this actually don't make sense, but we'll let it slide for now
 	if (this != &that) {
 		state = that.state;
+		canvas = that.canvas;
 		point[0] = that.point[0];
 		point[1] = that.point[1];
 		point[2] = that.point[2];
@@ -34,24 +36,18 @@ void TriangleController::leftDown(int x, int y) {
 
 void TriangleController::leftUp(int x, int y) {
 	state++;
-	// rectangle creation goes here..
-
-	if (poly != NULL) {
-		poly->drawPersistent(canvas, canvas->pixel_color(255,255,0));
-		// canvas->flushPersistent();
-	}
 }
 
 void TriangleController::movement(int x, int y) {
 		// std::cout << "new location (" << x << "," << y << ")" << std::endl;
 	if (state == 1) {
 		Line l = Line(point[0], Point(x,y));
-		l.draw(canvas,1,canvas->pixel_color(255,255,0));
+		l.draw(canvas,1,canvas->getCurrentColor());
 	} else if (state == 2) {
 		Line l = Line(point[0], point[1]);
-		l.draw(canvas,1,canvas->pixel_color(255,255,0));
+		l.draw(canvas,1,canvas->getCurrentColor());
 		Line l1 = Line(point[1], Point(x,y));
-		l1.draw(canvas,1,canvas->pixel_color(255,255,0));
+		l1.draw(canvas,1,canvas->getCurrentColor());
 	} else if (state == 3) {
 		drawTriangle();
 		state = 0;
@@ -60,7 +56,7 @@ void TriangleController::movement(int x, int y) {
 	MouseListener::movement(x,y);
 }
 
-void TriangleController::drawTriangle() {	
+void TriangleController::drawTriangle() {
 	vector <Point> p;
 	p.push_back(point[0]);
 	p.push_back(point[1]);
@@ -69,5 +65,5 @@ void TriangleController::drawTriangle() {
 	if (poly != NULL)
 		delete poly;
 	poly = new Polygon(p);
-	poly->drawPersistent(canvas, canvas->pixel_color(255,255,0));
+	poly->drawfillPersistent(canvas, canvas->getCurrentColor());
 }
