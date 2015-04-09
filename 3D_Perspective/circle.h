@@ -13,6 +13,7 @@ class Circle {
 		Circle(double a, double b, double r);
 		
 		void drawfill(Canvas *canvas, uint32_t color);
+		void drawfillPersistent(Canvas *canvas, uint32_t color);
 		
 	private:
 		double a,b,r;
