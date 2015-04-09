@@ -23,6 +23,10 @@ class Canvas {
 
 		void clearScreen();
 		void flush();
+
+		//for colorpicker purpose
+		struct fb_fix_screeninfo get_finfo();
+		struct fb_var_screeninfo get_vinfo();
 	
 	private:
 		/**
@@ -31,8 +35,7 @@ class Canvas {
 		 *  Mengembalikan -1 jika diluar layar 
 		 **/
 		long getCursorLocation(int screen_x, int screen_y);
-		struct fb_fix_screeninfo get_finfo();
-		struct fb_var_screeninfo get_vinfo();
+		
 		int get_fbfd();
 		long getScreensize();
 	
