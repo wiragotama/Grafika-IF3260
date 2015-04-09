@@ -18,7 +18,10 @@ int main() {
 	char c; 
     do {
         c = fgetc(stdin);
-        printf("%d\n", c == 49); //49 kode ascii untuk 1
+        // printf("%d\n", c == 49); //49 kode ascii untuk 1
+        if (c == 49) { //kode ascii untuk 1
+            
+        }
         int x = mouse.getX();
         int y = mouse.getY();
         // canvas.flush();

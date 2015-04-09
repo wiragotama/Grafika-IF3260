@@ -38,7 +38,7 @@ void GraphicsIO::gotoxy(int x, int y) {
 
 void GraphicsIO::nonblock(int state){
 	struct termios ttystate;
- 
+
     //get the terminal state
     tcgetattr(STDIN_FILENO, &ttystate);
  
@@ -60,7 +60,7 @@ void GraphicsIO::nonblock(int state){
 
 
 int GraphicsIO::kbhit(){
-	struct timeval tv;
+    struct timeval tv;
     fd_set fds;
     tv.tv_sec = 0;
     tv.tv_usec = 33000;
