@@ -16,6 +16,7 @@ Canvas::Canvas() {
 	screensize = vinfo.yres_virtual * finfo.line_length;
 
 	backbuffer = new uint8_t[screensize];
+	persistentBuffer = new uint8_t[screensize];
 	fbp = (uint8_t*) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, (off_t)0);
 }
 
@@ -82,7 +83,7 @@ void Canvas::putPixelColorPersistent(int screen_x, int screen_y, uint32_t color)
 	if(location >= getScreensize() || location < 0);
 		//nothing
 	else {
-		*((uint32_t*)(persistenBuffer + location)) = color;
+		*((uint32_t*)(persistentBuffer + location)) = color;
 	}
 }
 
@@ -91,5 +92,5 @@ void Canvas::flushPersistent() {
 }
 
 void Canvas::resetPersistentBuffer() {
-	memset(persistenBuffer,0, screensize);
+	memset(persistentBuffer,0, screensize);
 }
