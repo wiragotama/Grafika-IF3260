@@ -18,8 +18,12 @@ class RectangleController : public MouseListener {
 	virtual void movement(int, int);
 
 	private:
+	void drawRectangle(int, int, int, int);
+
+	Polygon* poly;
 	int leftX, topY, width, height;
 	bool dragged;
+
 };
 
 #endif

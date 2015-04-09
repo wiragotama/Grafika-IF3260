@@ -2,7 +2,7 @@
 #include <cstdio>
 #include "mouse.h"
 #include "rectangle_controller.h"
-
+#include "../core/graphicsio.h"
 int main() {
     Canvas canvas;
 	Mouse& mouse = Mouse::getInstance();
@@ -11,19 +11,30 @@ int main() {
 	mouse.setY(240);
 
 	RectangleController* rectangleController = new RectangleController(&canvas);
-	mouse.registerListener(rectangleController);
-	mouse.startListening();
-
+    MouseListener* mouseListener = new MouseListener(&canvas);
+    mouse.registerListener(mouseListener);
+    mouse.startListening();
 	// wait for enter
 	char c; 
     do {
-        c = fgetc(stdin);
+        c = getchar();    
+
         // printf("%d\n", c == 49); //49 kode ascii untuk 1
         if (c == 49) { //kode ascii untuk 1
-            
+            getchar();
+            mouse.stopListening();
+            mouse.registerListener(rectangleController);
+            mouse.startListening();
+
+        } else if (c == 50) {
+            getchar();
+            mouse.stopListening();
+            mouse.registerListener(mouseListener);
+            mouse.startListening();
         }
-        int x = mouse.getX();
-        int y = mouse.getY();
+        
+        // int x = mouse.getX();
+        // int y = mouse.getY();
         // canvas.flush();
         if (c == '\n') mouse.stopListening();
     } while (c!='\n');

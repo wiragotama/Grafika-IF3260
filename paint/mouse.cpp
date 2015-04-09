@@ -97,7 +97,6 @@ void Mouse::startListening() {
 void Mouse::stopListening() {
 	listening = false;
 	pthread_join(tid, NULL);
-	delete mouseListener;
 }
 
 int Mouse::getX() const {

@@ -8,7 +8,7 @@
 #include <algorithm>
 #include "point.h"
 #include "line.h"
-
+#include "canvas.h"
 using namespace std;
 
 class Polygon {

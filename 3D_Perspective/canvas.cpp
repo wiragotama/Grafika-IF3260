@@ -17,6 +17,7 @@ Canvas::Canvas() {
 
 	backbuffer = new uint8_t[screensize];
 	persistentBuffer = new uint8_t[screensize];
+	resetPersistentBuffer();
 	fbp = (uint8_t*) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, (off_t)0);
 }
 
@@ -59,7 +60,7 @@ void Canvas::clearScreen() {
 
 void Canvas::flush() {
 	memcpy(fbp, backbuffer, screensize);
-	memset(backbuffer,0, screensize);
+	memcpy(backbuffer, persistentBuffer, screensize);
 }
 
 struct fb_fix_screeninfo Canvas::get_finfo() {
@@ -85,10 +86,6 @@ void Canvas::putPixelColorPersistent(int screen_x, int screen_y, uint32_t color)
 	else {
 		*((uint32_t*)(persistentBuffer + location)) = color;
 	}
-}
-
-void Canvas::flushPersistent() {
-	memcpy(fbp, persistentBuffer, screensize);
 }
 
 void Canvas::resetPersistentBuffer() {

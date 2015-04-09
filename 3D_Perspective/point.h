@@ -1,6 +1,6 @@
 #ifndef _POINT_H
 #define _POINT_H
-
+#include "canvas.h"
 
 class Point {
 	public :

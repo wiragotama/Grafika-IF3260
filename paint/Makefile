@@ -20,4 +20,4 @@
 # 	g++ -g ../3D_Perspective/point.cpp -c
 
 mouse: 
-	g++ -o mouse mouse_driver.cpp mouse_listener.cpp rectangle_controller.cpp ../3D_Perspective/canvas.cpp ../3D_Perspective/polygon.cpp ../3D_Perspective/line.cpp ../3D_Perspective/point.cpp mouse.cpp -lpthread
+	g++ -o mouse ../core/graphicsio.cpp mouse_driver.cpp mouse_listener.cpp rectangle_controller.cpp ../3D_Perspective/canvas.cpp ../3D_Perspective/polygon.cpp ../3D_Perspective/line.cpp ../3D_Perspective/point.cpp mouse.cpp -lpthread
