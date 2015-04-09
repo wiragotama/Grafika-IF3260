@@ -31,7 +31,7 @@ uint32_t Canvas::pixel_color(uint8_t r, uint8_t g, uint8_t b) {
 }
 
 //letakkan warna pada koordinat screen_x,screen_y di layar
-void Canvas::putPixelColor(int screen_x, int screen_y, uint32_t color) { 
+void Canvas::putPixelColor(int screen_x, int screen_y, uint32_t color) {
 	long location = getCursorLocation(screen_x,screen_y);
 	if(location >= getScreensize() || location < 0);
 		//nothing
@@ -41,14 +41,14 @@ void Canvas::putPixelColor(int screen_x, int screen_y, uint32_t color) {
 }
 
 //mendapatkan lokasi pixel (pointer ke framebuffer) untuk posisi screen_x, screen_y di layar
-long Canvas::getCursorLocation(int screen_x, int screen_y) { 
+long Canvas::getCursorLocation(int screen_x, int screen_y) {
 	if (screen_x >=0 && screen_y>=0 && (unsigned)screen_x <= vinfo.xres && (unsigned) screen_y <= vinfo.yres)
 		return (screen_x+vinfo.xoffset) * (vinfo.bits_per_pixel/8) + (screen_y+vinfo.yoffset) * finfo.line_length;
 	else
-		return -1; 
+		return -1;
 }
 
-uint32_t Canvas::getColor(int screen_x, int screen_y) { 
+uint32_t Canvas::getColor(int screen_x, int screen_y) {
 	return *((uint32_t*)(fbp + getCursorLocation(screen_x, screen_y)));
 }
 
@@ -79,7 +79,7 @@ long Canvas::getScreensize() {
 	return screensize;
 }
 
-void Canvas::putPixelColorPersistent(int screen_x, int screen_y, uint32_t color) { 
+void Canvas::putPixelColorPersistent(int screen_x, int screen_y, uint32_t color) {
 	long location = getCursorLocation(screen_x,screen_y);
 	if(location >= getScreensize() || location < 0);
 		//nothing
@@ -90,4 +90,12 @@ void Canvas::putPixelColorPersistent(int screen_x, int screen_y, uint32_t color)
 
 void Canvas::resetPersistentBuffer() {
 	memset(persistentBuffer,0, screensize);
+}
+
+void Canvas::setCurrentColor(uint32_t color) {
+	currentColor = color;
+}
+
+uint32_t Canvas::getCurrentColor() {
+	return currentColor;
 }

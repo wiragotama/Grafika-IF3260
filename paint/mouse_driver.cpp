@@ -3,8 +3,10 @@
 #include "mouse.h"
 #include "rectangle_controller.h"
 #include "../core/graphicsio.h"
+
 int main() {
     Canvas canvas;
+    canvas.setCurrentColor(canvas.pixel_color(255, 255, 0));
 	Mouse& mouse = Mouse::getInstance();
 
 	mouse.setX(320);
@@ -15,9 +17,9 @@ int main() {
     mouse.registerListener(mouseListener);
     mouse.startListening();
 	// wait for enter
-	char c; 
+	char c;
     do {
-        c = getchar();    
+        c = getchar();
 
         // printf("%d\n", c == 49); //49 kode ascii untuk 1
         if (c == 49) { //kode ascii untuk 1
@@ -32,7 +34,7 @@ int main() {
             mouse.registerListener(mouseListener);
             mouse.startListening();
         }
-        
+
         // int x = mouse.getX();
         // int y = mouse.getY();
         // canvas.flush();

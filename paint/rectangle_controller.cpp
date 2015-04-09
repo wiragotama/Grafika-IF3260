@@ -46,6 +46,7 @@ void RectangleController::leftUp(int x, int y) {
 
 	if (poly != NULL) {
 		poly->drawPersistent(canvas, canvas->pixel_color(255,255,0));
+		poly->drawfillPersistent(canvas, canvas->pixel_color(255,255,0));
 		// canvas->flushPersistent();
 	}
 }
@@ -65,7 +66,7 @@ void RectangleController::drawRectangle(int leftX, int topY, int rightX, int bot
 	Point p2 = Point(rightX, topY);
 	Point p3 = Point(rightX, botY);
 	Point p4 = Point(leftX, botY);
-	
+
 	vector <Point> p;
 	p.push_back(p1);
 	p.push_back(p2);
@@ -74,5 +75,5 @@ void RectangleController::drawRectangle(int leftX, int topY, int rightX, int bot
 	if (poly != NULL)
 		delete poly;
 	poly = new Polygon(p);
-	poly->draw(canvas, canvas->pixel_color(255,255,0));
+	poly->draw(canvas, canvas->getCurrentColor());
 }
