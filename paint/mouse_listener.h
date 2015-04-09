@@ -1,7 +1,8 @@
 #ifndef GRAFIKA_MOUSE_LISTENER_H
 #define GRAFIKA_MOUSE_LISTENER_H
-#include "../core/canvas.h"
-#include "../core/line.h"
+#include "../3D_Perspective/canvas.h"
+#include "../3D_Perspective/point.h"
+#include "../3D_Perspective/line.h"
 class MouseListener {
 	public:
 

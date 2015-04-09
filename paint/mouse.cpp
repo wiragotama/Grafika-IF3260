@@ -46,9 +46,9 @@ void Mouse::mouseLoop() {
         unsigned char *ptr = (unsigned char*)&ie;
         int i;
 
-        button=ptr[0];
-        bLeft = button & 0x1;
-        bMiddle = ( button & 0x4 ) > 0;
+		button=ptr[0];
+		bLeft = button & 0x1;
+		bMiddle = ( button & 0x4 ) > 0;
         bRight = ( button & 0x2 ) > 0;
         dx=(char) ptr[1];
         dy=(char) ptr[2];
@@ -68,14 +68,14 @@ void Mouse::mouseLoop() {
 			mouseListener->middleUp(x, y);
 
 		x += dx;
-        y -= dy;
+		y -= dy;
 
-        if (x < 0) x = 0;
-        if (x >= maxX) x = maxX-1;
-        if (y < 0) y = 0;
-        if (y >= maxY) y = maxY-1;
+		if (x < 0) x = 0;
+		if (x >= maxX) x = maxX-1;
+		if (y < 0) y = 0;
+		if (y >= maxY) y = maxY-1;
 
-        if (x != px || y != py)
+		if (x != px || y != py)
 			mouseListener->movement(x, y);
 
 		pLeft = bLeft;
@@ -83,7 +83,7 @@ void Mouse::mouseLoop() {
 		pMiddle = bMiddle;
 		px = x;
 		py = y;
-    }
+	}
 }
 
 void Mouse::registerListener(MouseListener* mMouseListener) {

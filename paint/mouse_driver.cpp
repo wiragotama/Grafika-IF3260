@@ -15,7 +15,10 @@ int main() {
 	mouse.startListening();
 
 	// wait for enter
-	while (getchar() != '\n');
+	while (getchar() != '\n') 
+    {
+        //PRINT COLOR PICKER
+    }
 
 	mouse.stopListening();
 
