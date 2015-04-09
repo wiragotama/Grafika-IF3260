@@ -27,6 +27,12 @@ canvas.o: canvas.cpp canvas.h
 
 graphicsio.o: graphicsio.cpp graphicsio.h
 	g++ -g -c graphicsio.cpp
+	
+circle.o: circle.cpp circle.h
+	g++ -g -c circle.cpp
+	
+fill: point.o line.o polygon.o canvas.o circle.o fill_driver.cpp
+	g++ -g fill_driver.cpp point.o line.o polygon.o canvas.o circle.o -o fill
 
 cube3d: cube.o camera3d.o matrix.o point3D.o globals.o point.o line.o polygon.o canvas.o graphicsio.o cube3d_driver.cpp
 	g++ -g cube3d_driver.cpp cube.o camera3d.o matrix.o point3D.o globals.o point.o \

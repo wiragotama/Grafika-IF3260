@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <vector>
 #include <cstdlib>
+#include <cmath>
+#include <algorithm>
 #include "point.h"
 #include "line.h"
 
@@ -17,7 +19,13 @@ class Polygon {
 		vector<Line> getLines() const;
 		
 		void draw(Canvas *canvas, uint32_t color);
+		void drawfill(Canvas *canvas, uint32_t color);
 		
+		double getMinX();
+		double getMaxX();
+		double getMinY();
+		double getMaxY();
+	
 	private:
 		vector<Point> nodes;
 };
