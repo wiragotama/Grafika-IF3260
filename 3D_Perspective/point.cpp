@@ -29,3 +29,11 @@ void Point::setOrdinat(double y){
 bool Point::operator==(const Point p) const{
 	return (getAbsis() == p.getAbsis()) && (getOrdinat() == p.getOrdinat());
 }
+
+void Point::draw(Canvas *canvas, uint32_t color) {
+	canvas->putPixelColor(getAbsis(), getOrdinat(), color);
+}
+
+void Point::drawPersistent(Canvas *canvas, uint32_t color) {
+	canvas->putPixelColorPersistent(getAbsis(), getOrdinat(), color);
+}

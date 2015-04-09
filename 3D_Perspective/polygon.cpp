@@ -26,6 +26,13 @@ void Polygon::draw(Canvas *canvas, uint32_t color){
 	}
 }
 
+void Polygon::drawPersistent(Canvas *canvas, uint32_t color) {
+	vector<Line> lines = getLines();
+	for(int i=0; i<(int)lines.size(); i++){
+		lines[i].drawPersistent(canvas, 1, color);
+	}
+}
+
 void Polygon::drawfill(Canvas *canvas, uint32_t color){
 	const double EPSILON = 1e-3;
 	vector<Line> lines = getLines();
@@ -63,6 +70,47 @@ void Polygon::drawfill(Canvas *canvas, uint32_t color){
 		for(int i=0; i+1<intersect.size(); i+=2){
 			Line line( Point(intersect[i],y) , Point(intersect[i+1],y));
 			line.draw(canvas, 1, color);
+		}
+	}
+}
+
+void Polygon::drawfillPersistent(Canvas *canvas, uint32_t color) {
+	const double EPSILON = 1e-3;
+	vector<Line> lines = getLines();
+	double slope[lines.size()];
+	
+	for(int i=0; i<lines.size(); i++)
+	{
+		Point p1 = lines[i].getPointOne();
+		Point p2 = lines[i].getPointTwo();
+		
+		double dy = p2.getOrdinat() - p1.getOrdinat();
+		double dx = p2.getAbsis() - p1.getAbsis();
+
+		if(fabs(dy) < EPSILON) slope[i]=1.0;
+		else if(fabs(dx) < EPSILON) slope[i]=0.0;
+		else slope[i] = dx/dy;
+	}
+	
+	int minY = floor( getMinY() );
+	int maxY = ceil( getMaxY() );
+	for(int y=minY; y<=maxY; y++){
+		
+		vector<int> intersect;
+		for(int i=0; i<lines.size(); i++){
+			Point p1 = lines[i].getPointOne();
+			Point p2 = lines[i].getPointTwo();
+			if( ((round(p1.getOrdinat())<=y)&&(round(p2.getOrdinat())>y)) || 
+				((round(p1.getOrdinat())>y)&&(round(p2.getOrdinat())<=y)) ){
+				intersect.push_back( round(p1.getAbsis()+slope[i]*(y-p1.getOrdinat())) );
+			}
+		}
+		
+		sort(intersect.begin(), intersect.end());
+		
+		for(int i=0; i+1<intersect.size(); i+=2){
+			Line line( Point(intersect[i],y) , Point(intersect[i+1],y));
+			line.drawPersistent(canvas, 1, color);
 		}
 	}
 }

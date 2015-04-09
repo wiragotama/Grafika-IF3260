@@ -19,7 +19,9 @@ class Polygon {
 		vector<Line> getLines() const;
 		
 		void draw(Canvas *canvas, uint32_t color);
+		void drawPersistent(Canvas *canvas, uint32_t color);
 		void drawfill(Canvas *canvas, uint32_t color);
+		void drawfillPersistent(Canvas *canvas, uint32_t color);
 		
 		double getMinX();
 		double getMaxX();

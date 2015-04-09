@@ -19,6 +19,7 @@ class Line {
 		void setPointTwo(Point P);
 
 		void draw(Canvas *canvas, int thickness, uint32_t color);
+		void drawPersistent(Canvas *canvas, int thickness, uint32_t color);
 
 	private :
 		Point point[2];
