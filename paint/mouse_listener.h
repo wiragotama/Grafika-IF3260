@@ -1,9 +1,11 @@
 #ifndef GRAFIKA_MOUSE_LISTENER_H
 #define GRAFIKA_MOUSE_LISTENER_H
-
+#include "../core/canvas.h"
+#include "../core/line.h"
 class MouseListener {
 	public:
-	MouseListener();
+
+	MouseListener(Canvas*);
 	MouseListener(const MouseListener&);
 	MouseListener& operator= (const MouseListener&);
 	virtual ~MouseListener();
@@ -15,6 +17,9 @@ class MouseListener {
 	virtual void middleDown(int, int);
 	virtual void middleUp(int, int);
 	virtual void movement(int, int);
+
+	public:
+		Canvas *canvas;
 };
 
 #endif

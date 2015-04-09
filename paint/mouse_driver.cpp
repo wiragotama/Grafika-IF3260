@@ -4,12 +4,13 @@
 #include "rectangle_controller.h"
 
 int main() {
+    Canvas canvas;
 	Mouse& mouse = Mouse::getInstance();
 
 	mouse.setX(320);
 	mouse.setY(240);
 
-	RectangleController* rectangleController = new RectangleController();
+	RectangleController* rectangleController = new RectangleController(&canvas);
 	mouse.registerListener(rectangleController);
 	mouse.startListening();
 

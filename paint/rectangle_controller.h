@@ -3,10 +3,11 @@
 
 #include "mouse_listener.h"
 #include <iostream>
-
+#include "../core/canvas.h"
+#include "../core/line.h"
 class RectangleController : public MouseListener {
 	public:
-	RectangleController();
+	RectangleController(Canvas*);
 	RectangleController(const RectangleController&);
 	RectangleController& operator= (const RectangleController&);
 	virtual ~RectangleController();
