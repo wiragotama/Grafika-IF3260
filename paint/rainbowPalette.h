@@ -15,6 +15,7 @@ class RainbowPalette {
 		void initRainbowColor(Canvas *canvas);
 		void drawCursor(Canvas *canvas);
 		void drawPalette(Canvas *canvas);
+		void drawPalettePersistent(Canvas *canvas);
 		void moveCursor(char c);
 		
 		void setXOffset(int x);
@@ -29,6 +30,12 @@ class RainbowPalette {
 		int getScreenX(); //mendapatkan posisi kursor pada pixel di layar (global)
 		int getScreenY(); //mendapatkan posisi kursor pada pixel di layar (global)
 		uint32_t getColorTable(int pos_width, int pos_height);
+		uint32_t getRainbowColor(double position, Canvas *canvas);
+		
+		int getTopLeftX();
+		int getTopLeftY();
+		int getBottomRightX();
+		int getBottomRightY();
 		
 	private :
 		int x_offset;

@@ -32,13 +32,12 @@ int main() {
 		gradientPalette.drawCursor(&canvas);
 		canvas.flush();
 		
-		canvas.putColorInfo(rainbowPalette.getScreenX(), rainbowPalette.getScreenY(), msgPalette.c_str());
-		canvas.putColorInfo(gradientPalette.getScreenX(), gradientPalette.getScreenY(), msgGradient.c_str());
-		
-		c = graphicsIO.getch();
-		rainbowPalette.moveCursor(c);
-		gradientPalette.moveCursor(c);
+		//c = graphicsIO.getch();
+		//rainbowPalette.moveCursor(c);
+		//gradientPalette.moveCursor(c);
 		
 	} while (c!='\n');
 	return 0;
 }
+
+

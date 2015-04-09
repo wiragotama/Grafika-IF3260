@@ -17,12 +17,15 @@ Canvas::Canvas() {
 
 	backbuffer = new uint8_t[screensize];
 	persistentBuffer = new uint8_t[screensize];
+	backupBuffer = new uint8_t[screensize];
 	resetPersistentBuffer();
 	fbp = (uint8_t*) mmap(0, screensize, PROT_READ | PROT_WRITE, MAP_SHARED, fbfd, (off_t)0);
 }
 
 Canvas::~Canvas() {
 	delete[] backbuffer;
+	delete[] persistentBuffer;
+	delete[] backupBuffer;
 	close(fbfd);
 }
 
@@ -90,6 +93,14 @@ void Canvas::putPixelColorPersistent(int screen_x, int screen_y, uint32_t color)
 
 void Canvas::resetPersistentBuffer() {
 	memset(persistentBuffer,0, screensize);
+}
+
+void Canvas::savePersistentBuffer() {
+	memcpy(backupBuffer, persistentBuffer, screensize);
+}
+
+void Canvas::loadPersistentBuffer() {
+	memcpy(persistentBuffer, backupBuffer, screensize);
 }
 
 void Canvas::setCurrentColor(uint32_t color) {

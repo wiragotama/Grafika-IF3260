@@ -14,10 +14,69 @@ void RainbowPalette::initRainbowColor(Canvas *canvas) {
 	float colorRainbow = 0;
 	for(y=0; y<COLORTABLE_HEIGHT ;y++) {
 		for(x=0; x<COLORTABLE_WIDTH ;x++) {
-			 color_table[y][x] = canvas->getRainbowColor(colorRainbow);
+			 color_table[y][x] = getRainbowColor(colorRainbow, canvas);
 			 colorRainbow+=(1.0/(double)(COLORTABLE_HEIGHT*COLORTABLE_WIDTH));
 		}
 	}
+}
+
+uint32_t RainbowPalette::getRainbowColor(double position, Canvas *canvas) {
+	if (position>1.0){if (position-(int)position==0.0)position=1.0; else position=position-(int)position;}
+
+	unsigned char nmax=6; /* number of color segments */
+	double m=nmax* position;
+
+	char c[3];
+	int n=(int)m; // integer of m
+
+	double f=m-n;  // fraction of m
+	unsigned char t=(int)(f*255);
+
+	switch( n){
+		case 0: {
+			c[0] = 255;
+			c[1] = t;
+			c[2] = 0;
+			break;
+		};
+		case 1: {
+			c[0] = 255 - t;
+			c[1] = 255;
+			c[2] = 0;
+			break;
+		};
+		case 2: {
+			c[0] = 0;
+			c[1] = 255;
+			c[2] = t;
+			break;
+		};
+		case 3: {
+			c[0] = 0;
+			c[1] = 255 - t;
+			c[2] = 255;
+			break;
+		};
+		case 4: {
+			c[0] = t;
+			c[1] = 0;
+			c[2] = 255;
+			break;
+		};
+		case 5: {
+			c[0] = 255;
+			c[1] = 0;
+			c[2] = 255 - t;
+			break;
+		};
+		default: {
+			c[0] = 255;
+			c[1] = 0;
+			c[2] = 0;
+			break;
+		};
+	}; // case
+	return canvas->pixel_color(c[0],c[1],c[2]);
 }
 
 void RainbowPalette::drawCursor(Canvas *canvas) {
@@ -47,6 +106,37 @@ void RainbowPalette::drawPalette(Canvas *canvas) {
 	else {
 		printf("Sreensize not enough\n");
 	}
+}
+
+void RainbowPalette::drawPalettePersistent(Canvas *canvas) {
+	int x, y;
+	if(x_offset>=0 && y_offset>=0){
+		for (x=x_offset; x<x_offset+COLORTABLE_WIDTH*COLORTABLE_CELLSIZE; x++)
+			for (y=y_offset; y<y_offset+COLORTABLE_HEIGHT*COLORTABLE_CELLSIZE; y++) {
+				int colortable_y = (y-y_offset)/COLORTABLE_CELLSIZE;
+				int colortable_x = (x-x_offset)/COLORTABLE_CELLSIZE;
+				canvas->putPixelColorPersistent(x,y,color_table[colortable_y][colortable_x]);
+			}
+	} 
+	else {
+		printf("Sreensize not enough\n");
+	}
+}
+
+int RainbowPalette::getTopLeftX() {
+	return x_offset;
+}
+
+int RainbowPalette::getTopLeftY() {
+	return y_offset;
+}
+
+int RainbowPalette::getBottomRightX() {
+	return x_offset + x_offset+COLORTABLE_WIDTH*COLORTABLE_CELLSIZE;
+}
+
+int RainbowPalette::getBottomRightY() {
+	return y_offset + y_offset+COLORTABLE_HEIGHT*COLORTABLE_CELLSIZE;
 }
 
 void RainbowPalette::moveCursor(char c) {

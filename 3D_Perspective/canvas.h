@@ -35,6 +35,8 @@ class Canvas {
 
 		void setCurrentColor(uint32_t);
 		uint32_t getCurrentColor();
+		void loadPersistentBuffer();
+		void savePersistentBuffer();
 
 	private:
 		/**
@@ -53,6 +55,7 @@ class Canvas {
 		long screensize;
 		uint8_t *backbuffer;
 		uint8_t *persistentBuffer;
+		uint8_t *backupBuffer;
 		uint8_t *fbp;
 
 		uint32_t currentColor;

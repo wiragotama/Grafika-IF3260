@@ -45,8 +45,7 @@ void RectangleController::leftUp(int x, int y) {
 	// rectangle creation goes here..
 
 	if (poly != NULL) {
-		poly->drawPersistent(canvas, canvas->pixel_color(255,255,0));
-		poly->drawfillPersistent(canvas, canvas->pixel_color(255,255,0));
+		poly->drawfillPersistent(canvas, canvas->getCurrentColor());
 		// canvas->flushPersistent();
 	}
 }

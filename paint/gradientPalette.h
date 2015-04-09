@@ -14,6 +14,7 @@ class GradientPalette {
 		~GradientPalette();
 		
 		void drawColorGradient(uint32_t color, Canvas *canvas);
+		void drawColorGradientPersistent(uint32_t color, Canvas *canvas);
 		void drawCursor(Canvas *canvas);
 		void moveCursor(char c);
 		
@@ -29,6 +30,11 @@ class GradientPalette {
 		int getScreenX(); //mendapatkan posisi kursor pada pixel di layar (global)
 		int getScreenY(); //mendapatkan posisi kursor pada pixel di layar (global)
 		uint32_t getColorTable(int pos_width, int pos_height);
+		
+		int getTopLeftX();
+		int getTopLeftY();
+		int getBottomRightX();
+		int getBottomRightY();
 		
 	private :
 		int x_offset;

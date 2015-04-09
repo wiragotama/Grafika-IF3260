@@ -19,5 +19,5 @@
 # point.o: ../3D_Perspective/point.h ../3D_Perspective/point.cpp
 # 	g++ -g ../3D_Perspective/point.cpp -c
 
-mouse: 
-	g++ -o mouse ../core/graphicsio.cpp mouse_driver.cpp mouse_listener.cpp rectangle_controller.cpp triangle_controller.cpp ../3D_Perspective/canvas.cpp ../3D_Perspective/polygon.cpp ../3D_Perspective/line.cpp ../3D_Perspective/point.cpp mouse.cpp -lpthread
+mouse:
+	g++ -o mouse ../core/graphicsio.cpp mouse_driver.cpp mouse_listener.cpp gradientPalette.cpp rainbowPalette.cpp colorPickerController.cpp rectangle_controller.cpp triangle_controller.cpp ../3D_Perspective/canvas.cpp ../3D_Perspective/polygon.cpp ../3D_Perspective/line.cpp ../3D_Perspective/point.cpp mouse.cpp -lpthread
