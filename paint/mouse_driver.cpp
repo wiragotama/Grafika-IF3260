@@ -2,6 +2,7 @@
 #include <cstdio>
 #include "mouse.h"
 #include "rectangle_controller.h"
+#include "triangle_controller.h"
 #include "../core/graphicsio.h"
 int main() {
     Canvas canvas;
@@ -11,6 +12,7 @@ int main() {
 	mouse.setY(240);
 
 	RectangleController* rectangleController = new RectangleController(&canvas);
+    TriangleController* triangleController = new TriangleController(&canvas);
     MouseListener* mouseListener = new MouseListener(&canvas);
     mouse.registerListener(mouseListener);
     mouse.startListening();
@@ -29,7 +31,7 @@ int main() {
         } else if (c == 50) {
             getchar();
             mouse.stopListening();
-            mouse.registerListener(mouseListener);
+            mouse.registerListener(triangleController);
             mouse.startListening();
         }
         
