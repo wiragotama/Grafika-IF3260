@@ -26,6 +26,23 @@ void GradientPalette::drawColorGradient(uint32_t color, Canvas *canvas) {
 	}
 }
 
+void GradientPalette::drawColorGradientPersistent(uint32_t color, Canvas *canvas) {
+	int x, y;
+	uint8_t rr = (color >> canvas->get_vinfo().red.offset) & 0xFF, 
+	    gg = (color >> canvas->get_vinfo().green.offset) & 0xFF, 
+		bb = (color >> canvas->get_vinfo().blue.offset) & 0xFF;
+	uint8_t r, g, b;
+	for (y = 0; y < GRADIENTPALETTE_HEIGHT; y++) {
+		for (x = 0; x < GRADIENTPALETTE_WIDTH; x++) {
+			r = (y * (255-x) + rr * x * y / 255)/255;
+			g = (y * (255-x) + gg * x * y / 255)/255;
+			b = (y * (255-x) + bb * x * y / 255)/255;
+			this->color_table[y][x] = canvas->pixel_color(r,g,b);
+			canvas->putPixelColorPersistent(x_offset+x, y_offset+y, canvas->pixel_color(r,g,b));
+		}
+	}
+}
+
 void GradientPalette::drawCursor(Canvas *canvas) {
 	int x, y;
 	int coor_x = getScreenX();

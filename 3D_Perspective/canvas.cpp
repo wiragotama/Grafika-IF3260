@@ -77,3 +77,19 @@ long Canvas::getScreensize() {
 	return screensize;
 }
 
+void Canvas::putPixelColorPersistent(int screen_x, int screen_y, uint32_t color) { 
+	long location = getCursorLocation(screen_x,screen_y);
+	if(location >= getScreensize() || location < 0);
+		//nothing
+	else {
+		*((uint32_t*)(persistenBuffer + location)) = color;
+	}
+}
+
+void Canvas::flushPersistent() {
+	memcpy(fbp, persistentBuffer, screensize);
+}
+
+void Canvas::resetPersistentBuffer() {
+	memset(persistenBuffer,0, screensize);
+}

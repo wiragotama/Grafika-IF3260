@@ -14,6 +14,7 @@ class GradientPalette {
 		~GradientPalette();
 		
 		void drawColorGradient(uint32_t color, Canvas *canvas);
+		void drawColorGradientPersistent(uint32_t color, Canvas *canvas);
 		void drawCursor(Canvas *canvas);
 		void moveCursor(char c);
 		

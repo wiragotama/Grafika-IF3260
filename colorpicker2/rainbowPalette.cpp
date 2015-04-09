@@ -108,6 +108,21 @@ void RainbowPalette::drawPalette(Canvas *canvas) {
 	}
 }
 
+void RainbowPalette::drawPalettePersistent(Canvas *canvas) {
+	int x, y;
+	if(x_offset>=0 && y_offset>=0){
+		for (x=x_offset; x<x_offset+COLORTABLE_WIDTH*COLORTABLE_CELLSIZE; x++)
+			for (y=y_offset; y<y_offset+COLORTABLE_HEIGHT*COLORTABLE_CELLSIZE; y++) {
+				int colortable_y = (y-y_offset)/COLORTABLE_CELLSIZE;
+				int colortable_x = (x-x_offset)/COLORTABLE_CELLSIZE;
+				canvas->putPixelColorPersistent(x,y,color_table[colortable_y][colortable_x]);
+			}
+	} 
+	else {
+		printf("Sreensize not enough\n");
+	}
+}
+
 int RainbowPalette::getTopLeftX() {
 	return x_offset;
 }

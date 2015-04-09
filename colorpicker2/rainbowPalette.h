@@ -15,6 +15,7 @@ class RainbowPalette {
 		void initRainbowColor(Canvas *canvas);
 		void drawCursor(Canvas *canvas);
 		void drawPalette(Canvas *canvas);
+		void drawPalettePersistent(Canvas *canvas);
 		void moveCursor(char c);
 		
 		void setXOffset(int x);

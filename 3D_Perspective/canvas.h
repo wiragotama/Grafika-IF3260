@@ -27,6 +27,11 @@ class Canvas {
 		//for colorpicker purpose
 		struct fb_fix_screeninfo get_finfo();
 		struct fb_var_screeninfo get_vinfo();
+		
+		//tambahan
+		void flushPersistent();
+		void resetPersistentBuffer();
+		void putPixelColorPersistent(int screen_x, int screen_y, uint32_t color);
 	
 	private:
 		/**
@@ -44,6 +49,7 @@ class Canvas {
 		int fbfd;
 		long screensize;
 		uint8_t *backbuffer;
+		uint8_t *persistentBuffer;
 		uint8_t *fbp;
 };
 
