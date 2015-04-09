@@ -41,10 +41,9 @@ void Mouse::mouseLoop() {
 	unsigned char button, bLeft, pLeft, bMiddle, pMiddle, bRight, pRight;
     char dx, px, dy, py;
 
-	while(listening && read(mouseFd, &ie, sizeof(struct input_event)))
-    {
-        unsigned char *ptr = (unsigned char*)&ie;
-        int i;
+	while(listening && read(mouseFd, &ie, sizeof(struct input_event))) {
+		unsigned char *ptr = (unsigned char*)&ie;
+		int i;
 
 		button=ptr[0];
 		bLeft = button & 0x1;
